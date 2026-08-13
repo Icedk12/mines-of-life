@@ -22,6 +22,7 @@ func _physics_process(delta: float) -> void:
 	# Handle jump
 	if Input.is_action_just_pressed("jump") and player.is_on_floor():
 		player.velocity.y = -stats.default_jump_velocity
+		_animate_scale(Vector2(1.0, 1.6), 0.2)
 
 	# Handle horizontal movement & sprite flipping
 	var direction := Input.get_axis("move_left", "move_right")
@@ -32,10 +33,10 @@ func _physics_process(delta: float) -> void:
 	else:
 		player.velocity.x = move_toward(player.velocity.x, 0, stats.default_deceleration)
 
-	# 1. Run physics update FIRST
+	# Run physics update FIRST
 	player.move_and_slide()
 
-	# 2. Check landing condition AFTER physics update
+	# Check landing condition AFTER physics update
 	var is_currently_on_floor := player.is_on_floor()
 	var just_landed := not was_on_floor and is_currently_on_floor
 
@@ -51,24 +52,46 @@ func _update_sprite_state(just_landed: bool) -> void:
 
 	# --- LANDING ---
 	if just_landed:
-		_animate_scale(Vector2(1.6, 0.8), 0.1) # Squash on land, then recover
+		_animate_landing()
+		return
+
+	# Don't interrupt the landing squash/recovery while it's playing
+	if active_tween and active_tween.is_running() and active_tween.get_meta("is_landing", false):
 		return
 
 	# --- AIRBORNE STATES ---
 	if not player.is_on_floor():
-		_animate_scale(Vector2(0.9, 1.1), 0.15) # Stretch while falling
+		_animate_scale(Vector2(0.9, 1.2), 0.15) # Stretch while falling
 		return
 
 	# --- GROUND STATES ---
-	if abs(player.velocity.x) > 10.0:
-		pass
-	else:
-		# Use approx comparison to avoid floating-point issues
+	if abs(player.velocity.x) <= 10.0:
 		if not sprite.scale.is_equal_approx(Vector2.ONE):
 			_animate_scale(Vector2.ONE, 0.15)
+	else:
+		pass # TODO: Moving
+
+## Specialized animation sequence for landing
+func _animate_landing() -> void:
+	if active_tween and active_tween.is_running():
+		active_tween.kill()
+
+	active_tween = create_tween()
+	active_tween.set_meta("is_landing", true) # Mark this tween as a landing animation
+	
+	# Squash
+	active_tween.tween_property(sprite, "scale", Vector2(1.6, 0.8), 0.08)\
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	# Recover back to normal size
+	active_tween.tween_property(sprite, "scale", Vector2.ONE, 0.1)\
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 
 ## Helper method to safely stop previous tweens before starting a new one
 func _animate_scale(target_scale: Vector2, duration: float) -> void:
+	# Avoid restarting the tween if we are already scaling towards the target
+	if sprite.scale.is_equal_approx(target_scale):
+		return
+
 	if active_tween and active_tween.is_running():
 		active_tween.kill()
 
