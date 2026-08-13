@@ -8,8 +8,8 @@
 
 [sub_resource type="Resource" id="Resource_4kuee"]
 script = ExtResource("2_gfjak")
-default_walkspeed = 200.0
-default_jump_velocity = 250.0
+default_walkspeed = 150.0
+default_jump_velocity = 300.0
 metadata/_custom_type_script = "uid://dyqndyq57hvpd"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4kuee"]
@@ -24,18 +24,20 @@ stats = SubResource("Resource_4kuee")
 texture = ExtResource("3_4kuee")
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=2041257211]
+visible = false
 shape = SubResource("CapsuleShape2D_4kuee")
 
-[node name="PlayerMovement" type="Node" parent="." unique_id=1625122667]
+[node name="PlayerMovement" type="Node" parent="." unique_id=1625122667 node_paths=PackedStringArray("sprite")]
 script = ExtResource("4_524rm")
+sprite = NodePath("../Sprite")
 is_player_child = true
 metadata/_custom_type_script = "uid://t6x0naand26q"
 
 [node name="Camera" type="Camera2D" parent="." unique_id=689899775]
-zoom = Vector2(3, 3)
+zoom = Vector2(4, 4)
 
 [node name="FPSLabel" parent="Camera" unique_id=417441743 instance=ExtResource("5_tpg5x")]
-offset_left = -319.0
-offset_top = -179.0
-offset_right = -254.0
-offset_bottom = -156.0
+offset_left = -234.0
+offset_top = -131.0
+offset_right = -169.0
+offset_bottom = -108.0
