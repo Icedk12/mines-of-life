@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://c6n7p8ewo6lwu"]
+
+[ext_resource type="LabelSettings" uid="uid://deqse088eb6bt" path="res://assets/labels/FPSLabelSettings.tres" id="1_klgx8"]
+[ext_resource type="Script" uid="uid://crlam6hyxcj0" path="res://scripts/ui/FPSLabel.gd" id="2_jccmt"]
+
+[node name="FPSLabel" type="Label" unique_id=417441743]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "FPS: "
+label_settings = ExtResource("1_klgx8")
+script = ExtResource("2_jccmt")
