@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dyqndyq57hvpd" path="res://scripts/player/StatContainer.gd" id="2_gfjak"]
 [ext_resource type="Texture2D" uid="uid://bitf3omcq8m71" path="res://assets/player/PlayerRecolourable.png" id="3_4kuee"]
 [ext_resource type="Script" uid="uid://t6x0naand26q" path="res://scripts/player/PlayerMovement.gd" id="4_524rm"]
+[ext_resource type="PackedScene" uid="uid://c6n7p8ewo6lwu" path="res://scenes/ui/FPSLabel.tscn" id="5_tpg5x"]
 
 [sub_resource type="Resource" id="Resource_4kuee"]
 script = ExtResource("2_gfjak")
@@ -32,3 +33,9 @@ metadata/_custom_type_script = "uid://t6x0naand26q"
 
 [node name="Camera" type="Camera2D" parent="." unique_id=689899775]
 zoom = Vector2(3, 3)
+
+[node name="FPSLabel" parent="Camera" unique_id=417441743 instance=ExtResource("5_tpg5x")]
+offset_left = -319.0
+offset_top = -179.0
+offset_right = -254.0
+offset_bottom = -156.0
