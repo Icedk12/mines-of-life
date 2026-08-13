@@ -1,24 +1,8 @@
 [gd_scene format=3 uid="uid://roccjewn3t63"]
 
-[ext_resource type="Texture2D" uid="uid://bitf3omcq8m71" path="res://assets/player/PlayerRecolourable.png" id="1_elqb8"]
 [ext_resource type="PackedScene" uid="uid://dw8qkxkdhxep7" path="res://scenes/player/Player.tscn" id="2_rvslj"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_spnw5"]
-size = Vector2(529, 160)
-
 [node name="Main" type="Node2D" unique_id=791347418]
-
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=233432918]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=386942180]
-position = Vector2(230, 90)
-shape = SubResource("RectangleShape2D_spnw5")
-
-[node name="Bruh" type="Sprite2D" parent="StaticBody2D" unique_id=1700637988]
-position = Vector2(231.29424, 90.87622)
-rotation = -1.5707964
-scale = Vector2(20.088217, 43.944435)
-texture = ExtResource("1_elqb8")
 
 [node name="Player" parent="." unique_id=872088493 instance=ExtResource("2_rvslj")]
 position = Vector2(17, -10)

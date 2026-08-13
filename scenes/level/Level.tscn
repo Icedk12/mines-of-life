@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://ba4y285bqj0ui"]
+
+[ext_resource type="TileSet" uid="uid://d032x3h6ws4lp" path="res://assets/level/CouchTileset.tres" id="1_751o5"]
+
+[node name="Level" type="Node2D" unique_id=131454242]
+
+[node name="LevelMapLayer1" type="TileMapLayer" parent="." unique_id=1300922217]
+tile_set = ExtResource("1_751o5")
