@@ -1,20 +1,20 @@
 class_name LevelGenerator extends Node
 
-@export var tilemap : TileMapLayer ## TileMapLayer
-@export var terrain_set_id : int = 0  ## The index of Terrain Set (usually 0)
-@export var terrain_id : int = 0 ## The index of specific Terrain (e.g., "Couch" / Ground)
+@export var tilemap : TileMapLayer
+@export var terrain_set_id : int = 0
+@export var terrain_id : int = 0
 
 @export var tile_generate_chance : float = 0.25
-@export var unload_buffer : int = 2 ## How many extra chunks past render_distance to keep before unloading
+@export var unload_buffer : int = 2
 
 @onready var player = get_parent().get_parent().player as Player
 
 var cave_noise : FastNoiseLite = FastNoiseLite.new()
 var loaded_chunks := {}
+var generation_queue : Array[Vector2i] = [] # Queue for time-slicing
 var last_player_chunk := Vector2i(999999, 999999)
 
-
-var modified_tiles := {} ## Tracks tile modifications made by the player so edits stay saved on unload/reload. Example format: modified_tiles[Vector2i(x, y)] = true (is_solid) or false (is_air)
+var modified_tiles := {}
 
 func _ready() -> void:
 	cave_noise.seed = GameSettings.seed_
@@ -25,6 +25,14 @@ func _ready() -> void:
 	update_chunks(start_pos)
 
 func _process(_delta: float) -> void:
+	# Process one chunk from the queue per frame to prevent frame spikes
+	if generation_queue.size() > 0:
+		var next_chunk = generation_queue.pop_front()
+		# Make sure it wasn't loaded in the meantime
+		if not loaded_chunks.has(next_chunk):
+			generate_chunk(next_chunk.x, next_chunk.y)
+			loaded_chunks[next_chunk] = true
+
 	if not player:
 		return
 		
@@ -43,13 +51,23 @@ func update_chunks(world_position: Vector2) -> void:
 	var center_chunk_x = int(floor(float(center_tile.x) / GameSettings.chunk_size))
 	var center_chunk_y = int(floor(float(center_tile.y) / GameSettings.chunk_size))
 	
-	# LOAD NEW CHUNKS
+	# QUEUE NEW CHUNKS (Sort by distance so closest load first)
+	var new_chunks_to_queue := []
+	
 	for x in range(center_chunk_x - GameSettings.render_distance, center_chunk_x + GameSettings.render_distance + 1):
 		for y in range(center_chunk_y - GameSettings.render_distance, center_chunk_y + GameSettings.render_distance + 1):
 			var chunk_key = Vector2i(x, y)
-			if not loaded_chunks.has(chunk_key):
-				generate_chunk(x, y)
-				loaded_chunks[chunk_key] = true
+			if not loaded_chunks.has(chunk_key) and not generation_queue.has(chunk_key):
+				new_chunks_to_queue.append(chunk_key)
+
+	# Sort queued chunks so the ones closest to the player load FIRST
+	new_chunks_to_queue.sort_custom(func(a, b):
+		var dist_a = a.distance_squared_to(Vector2i(center_chunk_x, center_chunk_y))
+		var dist_b = b.distance_squared_to(Vector2i(center_chunk_x, center_chunk_y))
+		return dist_a < dist_b
+	)
+
+	generation_queue.append_array(new_chunks_to_queue)
 
 	# UNLOAD FARAWAY CHUNKS
 	var unload_limit = GameSettings.render_distance + unload_buffer
@@ -66,6 +84,13 @@ func update_chunks(world_position: Vector2) -> void:
 	for key in chunks_to_remove:
 		loaded_chunks.erase(key)
 
+	# Clean up any queued chunks that moved out of render distance before generating
+	generation_queue = generation_queue.filter(func(chunk_key):
+		var dist_x = abs(chunk_key.x - center_chunk_x)
+		var dist_y = abs(chunk_key.y - center_chunk_y)
+		return dist_x <= unload_limit and dist_y <= unload_limit
+	)
+
 func generate_chunk(chunk_x: int, chunk_y: int) -> void:
 	var start_x = chunk_x * GameSettings.chunk_size
 	var start_y = chunk_y * GameSettings.chunk_size
@@ -74,16 +99,14 @@ func generate_chunk(chunk_x: int, chunk_y: int) -> void:
 	
 	for x in range(start_x, start_x + GameSettings.chunk_size):
 		for y in range(start_y, start_y + GameSettings.chunk_size):
-			var tile_pos : Vector2i = Vector2i(x, y)
+			var tile_pos := Vector2i(x, y)
 			
-			# Check if player has modified this tile previously
 			if modified_tiles.has(tile_pos):
 				if modified_tiles[tile_pos] == true:
 					tiles_to_place.append(tile_pos)
 				else:
 					tilemap.erase_cell(tile_pos)
 			else:
-				# Default noise-based generation
 				var cave_val = cave_noise.get_noise_2d(x, y)
 				if cave_val > tile_generate_chance:
 					tilemap.erase_cell(tile_pos)
@@ -91,6 +114,7 @@ func generate_chunk(chunk_x: int, chunk_y: int) -> void:
 					tiles_to_place.append(tile_pos)
 				
 	if tiles_to_place.size() > 0:
+		# terrain_connect updates autotiling borders smoothly
 		tilemap.set_cells_terrain_connect(tiles_to_place, terrain_set_id, terrain_id)
 
 func unload_chunk(chunk_x: int, chunk_y: int) -> void:
@@ -101,7 +125,6 @@ func unload_chunk(chunk_x: int, chunk_y: int) -> void:
 		for y in range(start_y, start_y + GameSettings.chunk_size):
 			tilemap.erase_cell(Vector2i(x, y))
 
-# Helper methods to call when player mines or places blocks
 func modify_tile(tile_pos: Vector2i, is_solid: bool) -> void:
 	modified_tiles[tile_pos] = is_solid
 	if is_solid:
