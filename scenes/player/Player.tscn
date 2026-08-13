@@ -12,15 +12,14 @@ default_jump_velocity = 250.0
 metadata/_custom_type_script = "uid://dyqndyq57hvpd"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4kuee"]
-radius = 8.0
-height = 24.0
+radius = 4.0
+height = 12.0
 
 [node name="Player" type="CharacterBody2D" unique_id=872088493]
 script = ExtResource("1_wr5hl")
 stats = SubResource("Resource_4kuee")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=139533162]
-scale = Vector2(2, 2)
 texture = ExtResource("3_4kuee")
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=2041257211]

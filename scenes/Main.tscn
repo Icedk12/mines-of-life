@@ -1,8 +1,13 @@
 [gd_scene format=3 uid="uid://roccjewn3t63"]
 
+[ext_resource type="Script" uid="uid://cc5arcpxxbg8x" path="res://scripts/Main.gd" id="1_0bbpv"]
+[ext_resource type="PackedScene" uid="uid://ba4y285bqj0ui" path="res://scenes/level/Level.tscn" id="2_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://dw8qkxkdhxep7" path="res://scenes/player/Player.tscn" id="2_rvslj"]
 
-[node name="Main" type="Node2D" unique_id=791347418]
+[node name="Main" type="Node2D" unique_id=791347418 node_paths=PackedStringArray("player")]
+script = ExtResource("1_0bbpv")
+player = NodePath("Player")
+
+[node name="Level" parent="." unique_id=131454242 instance=ExtResource("2_0bbpv")]
 
 [node name="Player" parent="." unique_id=872088493 instance=ExtResource("2_rvslj")]
-position = Vector2(17, -10)
