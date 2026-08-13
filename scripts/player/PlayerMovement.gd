@@ -13,14 +13,13 @@ func _physics_process(delta: float) -> void:
 
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and player.is_on_floor():
-		player.velocity.y = JUMP_VELOCITY
+		player.velocity.y = stats.default_walkspeed
 
 	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("move_left", "move_right")
 	if direction:
-		player.velocity.x = direction * SPEED
+		player.velocity.x = direction * stats.default_walkspeed
 	else:
-		player.velocity.x = move_toward(player.velocity.x, 0, SPEED)
+		player.velocity.x = move_toward(player.velocity.x, 0, delta)
 
 	player.move_and_slide()
