@@ -1,25 +1,30 @@
 class_name PlayerMovement extends Component
 
-@onready var player : CharacterBody2D
 var stats : StatContainer
 
-func _ready() -> void:
-	stats = player.stats
+func _is_player_child() -> void:
+	super._is_player_child()
+	if player:
+		stats = player.stats
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
+	if not player or not stats:
+		return
+
+	# Add gravity
 	if not player.is_on_floor():
 		player.velocity += player.get_gravity() * delta
 
-	# Handle jump.
+	# Handle jump
 	if Input.is_action_just_pressed("jump") and player.is_on_floor():
-		player.velocity.y = stats.default_walkspeed
+		player.velocity.y = -stats.default_jump_velocity
 
-	# Get the input direction and handle the movement/deceleration.
+	# Handle horizontal movement
 	var direction := Input.get_axis("move_left", "move_right")
-	if direction:
+	if direction != 0:
 		player.velocity.x = direction * stats.default_walkspeed
 	else:
-		player.velocity.x = move_toward(player.velocity.x, 0, delta)
+		# Use friction/deceleration stat to slow down properly
+		player.velocity.x = move_toward(player.velocity.x, 0, stats.default_deceleration)
 
 	player.move_and_slide()
