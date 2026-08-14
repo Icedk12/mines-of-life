@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://3gwm6kc7l0s" path="res://assets/player/PlayerRecolourable.png" id="3_4kuee"]
 [ext_resource type="Script" uid="uid://t6x0naand26q" path="res://scripts/components/MovementComponent.gd" id="4_524rm"]
 [ext_resource type="PackedScene" uid="uid://c6n7p8ewo6lwu" path="res://scenes/ui/FPSLabel.tscn" id="5_tpg5x"]
+[ext_resource type="Script" uid="uid://b23pa557xdb" path="res://scripts/components/SpriteModifierComponent.gd" id="6_c3xxp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yx65c"]
 size = Vector2(6, 7.5)
@@ -36,3 +37,8 @@ metadata/_custom_type_script = "uid://t6x0naand26q"
 [node name="StatComponent" type="Node" parent="." unique_id=1960417249]
 script = ExtResource("2_gfjak")
 metadata/_custom_type_script = "uid://dyqndyq57hvpd"
+
+[node name="SpriteModifierComponent" type="Node" parent="." unique_id=1970386051 node_paths=PackedStringArray("sprite")]
+script = ExtResource("6_c3xxp")
+sprite = NodePath("../Sprite")
+metadata/_custom_type_script = "uid://b23pa557xdb"
