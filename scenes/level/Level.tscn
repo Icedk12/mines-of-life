@@ -11,5 +11,4 @@ tile_set = ExtResource("1_751o5")
 [node name="LevelGenerator" type="Node" parent="." unique_id=877058791 node_paths=PackedStringArray("tilemap")]
 script = ExtResource("2_cne4c")
 tilemap = NodePath("../LevelMapLayer1")
-tile_generate_chance = 0.1
 metadata/_custom_type_script = "uid://bmmky33tl7eb0"
