@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b5jqwmyjnj5yd" path="res://scripts/player/PlayerHandler.gd" id="1_wr5hl"]
 [ext_resource type="Script" uid="uid://dyqndyq57hvpd" path="res://scripts/player/StatContainer.gd" id="2_gfjak"]
-[ext_resource type="Texture2D" uid="uid://bitf3omcq8m71" path="res://assets/player/PlayerRecolourable.png" id="3_4kuee"]
+[ext_resource type="Texture2D" uid="uid://3gwm6kc7l0s" path="res://assets/player/PlayerRecolourable.png" id="3_4kuee"]
 [ext_resource type="Script" uid="uid://t6x0naand26q" path="res://scripts/player/PlayerMovement.gd" id="4_524rm"]
 [ext_resource type="PackedScene" uid="uid://c6n7p8ewo6lwu" path="res://scenes/ui/FPSLabel.tscn" id="5_tpg5x"]
 
@@ -12,9 +12,8 @@ default_walkspeed = 150.0
 default_jump_velocity = 300.0
 metadata/_custom_type_script = "uid://dyqndyq57hvpd"
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4kuee"]
-radius = 4.0
-height = 12.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yx65c"]
+size = Vector2(6, 7.5)
 
 [node name="Player" type="CharacterBody2D" unique_id=872088493]
 script = ExtResource("1_wr5hl")
@@ -24,8 +23,8 @@ stats = SubResource("Resource_4kuee")
 texture = ExtResource("3_4kuee")
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=2041257211]
-visible = false
-shape = SubResource("CapsuleShape2D_4kuee")
+position = Vector2(0, 0.25)
+shape = SubResource("RectangleShape2D_yx65c")
 
 [node name="PlayerMovement" type="Node" parent="." unique_id=1625122667 node_paths=PackedStringArray("sprite")]
 script = ExtResource("4_524rm")
