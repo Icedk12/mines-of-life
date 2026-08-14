@@ -1,43 +1,34 @@
-class_name PlayerMovement extends Component
+class_name MovementComponent extends CharacterComponent
 
-var stats: StatContainer
+@export var stats: StatComponent
 @export var sprite: Sprite2D
 
 var was_on_floor: bool = true
 var active_tween: Tween  ## Track active tween to prevent spamming
 
-func _is_player_child() -> void:
-	super._is_player_child()
-	if player:
-		stats = player.stats
-
 func _physics_process(delta: float) -> void:
-	if not player or not stats:
+	if not character or not stats:
 		return
 
-	# Apply gravity
-	if not player.is_on_floor():
-		player.velocity += player.get_gravity() * delta
-
 	# Handle jump
-	if Input.is_action_just_pressed("jump") and player.is_on_floor():
-		player.velocity.y = -stats.default_jump_velocity
+	if Input.is_action_just_pressed("jump") and character.is_on_floor():
+		character.velocity.y = -stats.default_jump_velocity
 		_animate_scale(Vector2(1.0, 1.6), 0.2)
 
 	# Handle horizontal movement & sprite flipping
 	var direction := Input.get_axis("move_left", "move_right")
 	if direction != 0:
-		player.velocity.x = direction * stats.default_walkspeed
+		character.velocity.x = direction * stats.default_walkspeed
 		if sprite:
 			sprite.flip_h = (direction < 0)
 	else:
-		player.velocity.x = move_toward(player.velocity.x, 0, stats.default_deceleration)
+		character.velocity.x = move_toward(character.velocity.x, 0, stats.default_deceleration)
 
 	# Run physics update FIRST
-	player.move_and_slide()
+	character.move_and_slide()
 
 	# Check landing condition AFTER physics update
-	var is_currently_on_floor := player.is_on_floor()
+	var is_currently_on_floor := character.is_on_floor()
 	var just_landed := not was_on_floor and is_currently_on_floor
 
 	# 3. Update sprite visual state
@@ -60,12 +51,12 @@ func _update_sprite_state(just_landed: bool) -> void:
 		return
 
 	# --- AIRBORNE STATES ---
-	if not player.is_on_floor():
+	if not character.is_on_floor():
 		_animate_scale(Vector2(0.9, 1.2), 0.15) # Stretch while falling
 		return
 
 	# --- GROUND STATES ---
-	if abs(player.velocity.x) <= 10.0:
+	if abs(character.velocity.x) <= 10.0:
 		if not sprite.scale.is_equal_approx(Vector2.ONE):
 			_animate_scale(Vector2.ONE, 0.15)
 	else:

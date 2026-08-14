@@ -1,23 +1,16 @@
 [gd_scene format=3 uid="uid://dw8qkxkdhxep7"]
 
 [ext_resource type="Script" uid="uid://b5jqwmyjnj5yd" path="res://scripts/player/PlayerHandler.gd" id="1_wr5hl"]
-[ext_resource type="Script" uid="uid://dyqndyq57hvpd" path="res://scripts/player/StatContainer.gd" id="2_gfjak"]
+[ext_resource type="Script" uid="uid://dyqndyq57hvpd" path="res://scripts/components/StatComponent.gd" id="2_gfjak"]
 [ext_resource type="Texture2D" uid="uid://3gwm6kc7l0s" path="res://assets/player/PlayerRecolourable.png" id="3_4kuee"]
-[ext_resource type="Script" uid="uid://t6x0naand26q" path="res://scripts/player/PlayerMovement.gd" id="4_524rm"]
+[ext_resource type="Script" uid="uid://t6x0naand26q" path="res://scripts/components/MovementComponent.gd" id="4_524rm"]
 [ext_resource type="PackedScene" uid="uid://c6n7p8ewo6lwu" path="res://scenes/ui/FPSLabel.tscn" id="5_tpg5x"]
-
-[sub_resource type="Resource" id="Resource_4kuee"]
-script = ExtResource("2_gfjak")
-default_walkspeed = 150.0
-default_jump_velocity = 300.0
-metadata/_custom_type_script = "uid://dyqndyq57hvpd"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yx65c"]
 size = Vector2(6, 7.5)
 
 [node name="Player" type="CharacterBody2D" unique_id=872088493]
 script = ExtResource("1_wr5hl")
-stats = SubResource("Resource_4kuee")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=139533162]
 texture = ExtResource("3_4kuee")
@@ -25,12 +18,6 @@ texture = ExtResource("3_4kuee")
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=2041257211]
 position = Vector2(0, 0.25)
 shape = SubResource("RectangleShape2D_yx65c")
-
-[node name="PlayerMovement" type="Node" parent="." unique_id=1625122667 node_paths=PackedStringArray("sprite")]
-script = ExtResource("4_524rm")
-sprite = NodePath("../Sprite")
-is_player_child = true
-metadata/_custom_type_script = "uid://t6x0naand26q"
 
 [node name="Camera" type="Camera2D" parent="." unique_id=689899775]
 zoom = Vector2(4, 4)
@@ -40,3 +27,12 @@ offset_left = -234.0
 offset_top = -131.0
 offset_right = -169.0
 offset_bottom = -108.0
+
+[node name="MovementComponent" type="Node" parent="." unique_id=1495297037 node_paths=PackedStringArray("sprite")]
+script = ExtResource("4_524rm")
+sprite = NodePath("../Sprite")
+metadata/_custom_type_script = "uid://t6x0naand26q"
+
+[node name="StatComponent" type="Node" parent="." unique_id=1960417249]
+script = ExtResource("2_gfjak")
+metadata/_custom_type_script = "uid://dyqndyq57hvpd"
