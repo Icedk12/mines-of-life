@@ -49,7 +49,7 @@ func _stretch() -> void:
 func _sprite_sin_offset(delta : float) -> void:
 	if not sprite: return
 	_sin_time += delta
-	sprite.offset.y = -sin((_sin_time * frequency)) * amplitude
+	sprite.offset.y = (-sin((_sin_time * frequency)) * amplitude) - 1
 
 # ============= HELPER FUNCTIONS ============= #
 ## Tweens the sprite to Vector2.ONE, aka default scale
