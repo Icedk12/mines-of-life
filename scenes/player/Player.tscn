@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://d2t1hwt0q1jim" path="res://scripts/components/GravityComponent.gd" id="6_pn6s4"]
 [ext_resource type="Script" uid="uid://bg8ci2wt7hdkj" path="res://scripts/components/JumpComponent.gd" id="7_7oing"]
 [ext_resource type="Script" uid="uid://vfnsma812ipo" path="res://scripts/components/MovementComponent.gd" id="8_5stf6"]
+[ext_resource type="Texture2D" uid="uid://bvff41lpr285n" path="res://assets/above/pointlight-smooth.jpg" id="10_7oing"]
+[ext_resource type="Texture2D" uid="uid://cw7lyqdtall7y" path="res://assets/level/Parallax.png" id="11_5stf6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yx65c"]
 size = Vector2(6, 7.5)
@@ -35,6 +37,16 @@ script = ExtResource("1_wr5hl")
 control_component = NodePath("ControlComponent")
 sprite_modifier_component = NodePath("SpriteModifierComponent")
 
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=863853037]
+z_index = -1
+repeat_size = Vector2(64, 64)
+repeat_times = 8
+follow_viewport = false
+ignore_camera_scroll = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=539120511]
+texture = ExtResource("11_5stf6")
+
 [node name="Sprite" type="Sprite2D" parent="." unique_id=139533162]
 texture = ExtResource("3_4kuee")
 
@@ -46,6 +58,7 @@ shape = SubResource("RectangleShape2D_yx65c")
 zoom = Vector2(4, 4)
 
 [node name="FPSLabel" parent="Camera" unique_id=417441743 instance=ExtResource("5_tpg5x")]
+top_level = true
 offset_left = -234.0
 offset_top = -131.0
 offset_right = -169.0
@@ -80,4 +93,8 @@ script = ExtResource("8_5stf6")
 control_component = NodePath("../ControlComponent")
 sprite_modifier_component = NodePath("../SpriteModifierComponent")
 walk_speed = 120.0
+acceleration = 3.0
 metadata/_custom_type_script = "uid://vfnsma812ipo"
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=2081477168]
+texture = ExtResource("10_7oing")
