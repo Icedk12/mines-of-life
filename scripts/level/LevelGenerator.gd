@@ -127,7 +127,10 @@ func unload_chunk(chunk_x: int, chunk_y: int) -> void:
 
 func modify_tile(tile_pos: Vector2i, is_solid: bool) -> void:
 	modified_tiles[tile_pos] = is_solid
+	
 	if is_solid:
+		# Add tile and connect surrounding terrain
 		tilemap.set_cells_terrain_connect([tile_pos], terrain_set_id, terrain_id)
 	else:
-		tilemap.erase_cell(tile_pos)
+
+		tilemap.set_cells_terrain_connect([tile_pos], terrain_set_id, -1)

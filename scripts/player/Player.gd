@@ -2,6 +2,7 @@ class_name Player extends CharacterBody2D
 
 @export var control_component : ControlComponent
 @export var sprite_modifier_component : SpriteModifierComponent
+@export var level : Level
 
 var was_in_air : bool = false
 

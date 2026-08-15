@@ -5,9 +5,7 @@ class_name SpriteModifierComponent extends CharacterComponent
 
 @export_group("Tweens")
 @export var squash_tween : TweenInfo
-
 @export var stretch_tween : TweenInfo
-
 @export var return_tween : TweenInfo ## How long it takes to return to normal value after tween
 
 @export_group("Sin")

@@ -10,4 +10,5 @@ player = NodePath("Player")
 
 [node name="Level" parent="." unique_id=131454242 instance=ExtResource("2_0bbpv")]
 
-[node name="Player" parent="." unique_id=872088493 instance=ExtResource("2_rvslj")]
+[node name="Player" parent="." unique_id=872088493 node_paths=PackedStringArray("level") instance=ExtResource("2_rvslj")]
+level = NodePath("../Level")
