@@ -1,9 +1,12 @@
 [gd_scene format=3 uid="uid://ba4y285bqj0ui"]
 
 [ext_resource type="TileSet" uid="uid://d032x3h6ws4lp" path="res://assets/level/CouchTileset.tres" id="1_751o5"]
+[ext_resource type="Script" uid="uid://b5kh7fpv0ui22" path="res://scripts/level/Level.gd" id="1_l1x8v"]
 [ext_resource type="Script" uid="uid://bmmky33tl7eb0" path="res://scripts/level/LevelGenerator.gd" id="2_cne4c"]
 
-[node name="Level" type="Node2D" unique_id=131454242]
+[node name="Level" type="Node2D" unique_id=131454242 node_paths=PackedStringArray("level_generator")]
+script = ExtResource("1_l1x8v")
+level_generator = NodePath("LevelGenerator")
 
 [node name="LevelMapLayer1" type="TileMapLayer" parent="." unique_id=1300922217]
 tile_set = ExtResource("1_751o5")
