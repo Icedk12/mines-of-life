@@ -118,11 +118,11 @@ collide_with_areas = true
 script = ExtResource("14_ov1oi")
 selection_component = NodePath("../SelectionBoxComponent")
 ray = NodePath("../MiningRaycast")
+max_mining_distance = null
 metadata/_custom_type_script = "uid://bit2831m4pg0f"
 
-[node name="SelectionBoxComponent" type="Node" parent="." unique_id=1548235890 node_paths=PackedStringArray("mine_component", "sprite")]
+[node name="SelectionBoxComponent" type="Node" parent="." unique_id=1548235890 node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_ov1oi")
-mine_component = NodePath("../MineComponent")
 sprite = NodePath("SelectionSprite")
 metadata/_custom_type_script = "uid://cs7i6acbb7w5c"
 

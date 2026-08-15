@@ -132,5 +132,4 @@ func modify_tile(tile_pos: Vector2i, is_solid: bool) -> void:
 		# Add tile and connect surrounding terrain
 		tilemap.set_cells_terrain_connect([tile_pos], terrain_set_id, terrain_id)
 	else:
-
 		tilemap.set_cells_terrain_connect([tile_pos], terrain_set_id, -1)
