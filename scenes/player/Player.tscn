@@ -84,13 +84,14 @@ metadata/_custom_type_script = "uid://cawa5dkvuk8it"
 [node name="GravityComponent" type="Node" parent="." unique_id=1443024567 node_paths=PackedStringArray("control_component")]
 script = ExtResource("6_pn6s4")
 control_component = NodePath("../ControlComponent")
+gravity_multiplier = 0.8
 metadata/_custom_type_script = "uid://d2t1hwt0q1jim"
 
 [node name="JumpComponent" type="Node" parent="." unique_id=1399277520 node_paths=PackedStringArray("control_component", "sprite_modifier_component")]
 script = ExtResource("7_7oing")
 control_component = NodePath("../ControlComponent")
 sprite_modifier_component = NodePath("../SpriteModifierComponent")
-jump_velocity = 230.0
+jump_velocity = 170.0
 metadata/_custom_type_script = "uid://bg8ci2wt7hdkj"
 
 [node name="MovementComponent" type="Node" parent="." unique_id=1623111960 node_paths=PackedStringArray("control_component", "sprite_modifier_component", "input_component")]
@@ -98,9 +99,9 @@ script = ExtResource("8_5stf6")
 control_component = NodePath("../ControlComponent")
 sprite_modifier_component = NodePath("../SpriteModifierComponent")
 input_component = NodePath("../InputAxisComponent")
-walk_speed = 120.0
+walk_speed = 70.0
 acceleration = 1500.0
-deceleration = 350.0
+deceleration = 700.0
 metadata/_custom_type_script = "uid://vfnsma812ipo"
 
 [node name="InputAxisComponent" type="Node" parent="." unique_id=1777324633]
@@ -118,6 +119,7 @@ collide_with_areas = true
 script = ExtResource("14_ov1oi")
 selection_component = NodePath("../SelectionBoxComponent")
 ray = NodePath("../MiningRaycast")
+max_mining_distance = 20.0
 metadata/_custom_type_script = "uid://bit2831m4pg0f"
 
 [node name="SelectionBoxComponent" type="Node" parent="." unique_id=1548235890 node_paths=PackedStringArray("mine_component", "sprite")]
