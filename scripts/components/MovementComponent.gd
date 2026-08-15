@@ -11,6 +11,7 @@ class_name MovementComponent extends CharacterComponent
 @export var deceleration : float = 1000.0 # Increased: unit is pixels/sec^2
 
 var input_direction : float = 0.0
+var walking : bool = false
 
 func _physics_process(delta: float) -> void:
 	if _is_character_null(): 
