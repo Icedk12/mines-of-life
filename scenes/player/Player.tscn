@@ -49,7 +49,7 @@ repeat_times = 8
 follow_viewport = false
 ignore_camera_scroll = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=539120511]
+[node name="ParallaxSprite" type="Sprite2D" parent="Parallax2D" unique_id=539120511]
 texture = ExtResource("11_5stf6")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=139533162]

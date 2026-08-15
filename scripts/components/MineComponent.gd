@@ -2,7 +2,7 @@ class_name MineComponent extends CharacterComponent
 
 @export var selection_component : SelectionBoxComponent
 @export var ray : RayCast2D
-@export var max_mining_distance : float = 30.0
+@export var max_mining_distance : float = 40.0
 
 var level_generator : LevelGenerator
 
@@ -43,7 +43,7 @@ func update_selection() -> void:
 		# Convert world position to tile map coordinates and set cursor position
 		var tile_pos = level_generator.tilemap.local_to_map(inside_tile_point)
 		selection_component.selected_tile_global_pos = level_generator.tilemap.to_global(tile_pos * 8) + Vector2(4, 4)
-
+		
 func mine() -> void:
 	# Raycast is updated via update_selection() in process
 	if ray and ray.is_colliding() and level_generator and level_generator.tilemap:
@@ -51,7 +51,7 @@ func mine() -> void:
 			var hit_point = ray.get_collision_point()
 			var hit_normal = ray.get_collision_normal()
 			var inside_tile_point = hit_point - (hit_normal * 2.0)
-			var tile_pos = level_generator.tilemap.local_to_map(inside_tile_point)
+			var tile_pos = level_generator.tilemap.local_to_map(selection_component.selected_tile_global_pos)
 
 			# Mine tile
 			level_generator.modify_tile(tile_pos, false)
