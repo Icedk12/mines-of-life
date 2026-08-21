@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://dw8qkxkdhxep7"]
 
-[ext_resource type="Script" uid="uid://cs7i6acbb7w5c" path="res://scripts/components/SelectionBoxComponent.gd" id="1_ov1oi"]
 [ext_resource type="Script" uid="uid://b5jqwmyjnj5yd" path="res://scripts/player/Player.gd" id="1_wr5hl"]
 [ext_resource type="Texture2D" uid="uid://3gwm6kc7l0s" path="res://assets/player/PlayerRecolourable.png" id="3_4kuee"]
-[ext_resource type="Script" uid="uid://d164jamb4hq8l" path="res://scripts/types/TweenInfo.gd" id="5_pn6s4"]
+[ext_resource type="Material" uid="uid://8xkndevfkt7s" path="res://assets/materials/UnshadedMaterial.tres" id="5_180ig"]
+[ext_resource type="Script" uid="uid://d164jamb4hq8l" path="res://scripts/resources/TweenInfo.gd" id="5_pn6s4"]
+[ext_resource type="PackedScene" uid="uid://c6n7p8ewo6lwu" path="res://scenes/ui/FPSLabel.tscn" id="5_tpg5x"]
 [ext_resource type="Script" uid="uid://cawa5dkvuk8it" path="res://scripts/components/ControlComponent.gd" id="5_v42im"]
 [ext_resource type="Script" uid="uid://b23pa557xdb" path="res://scripts/components/SpriteModifierComponent.gd" id="6_c3xxp"]
 [ext_resource type="Script" uid="uid://d2t1hwt0q1jim" path="res://scripts/components/GravityComponent.gd" id="6_pn6s4"]
@@ -13,10 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://cw7lyqdtall7y" path="res://assets/level/Parallax.png" id="11_5stf6"]
 [ext_resource type="Script" uid="uid://calji8g712e2u" path="res://scripts/components/InputAxisComponent.gd" id="12_20koh"]
 [ext_resource type="Script" uid="uid://bit2831m4pg0f" path="res://scripts/components/MineComponent.gd" id="14_ov1oi"]
-[ext_resource type="Texture2D" uid="uid://dvcwwtstrhn57" path="res://assets/player/SelectionBox12x12.png" id="16_8qjgm"]
-[ext_resource type="PackedScene" uid="uid://b3cik7817ehfv" path="res://scenes/ui/PlayerGUI.tscn" id="17_2xrq6"]
-[ext_resource type="Script" uid="uid://d31hwdoqfjbcb" path="res://scripts/components/InventoryComponent.gd" id="17_ejd4k"]
-[ext_resource type="Script" uid="uid://hho3xa5gaxdb" path="res://scripts/components/BuildComponent.gd" id="18_2xrq6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yx65c"]
 size = Vector2(6, 7.5)
@@ -50,7 +47,7 @@ repeat_times = 8
 follow_viewport = false
 ignore_camera_scroll = true
 
-[node name="ParallaxSprite" type="Sprite2D" parent="Parallax2D" unique_id=539120511]
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=539120511]
 texture = ExtResource("11_5stf6")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=139533162]
@@ -60,6 +57,16 @@ texture = ExtResource("3_4kuee")
 position = Vector2(0, 0.25)
 shape = SubResource("RectangleShape2D_yx65c")
 
+[node name="Camera" type="Camera2D" parent="." unique_id=689899775]
+zoom = Vector2(4, 4)
+
+[node name="FPSLabel" parent="Camera" unique_id=417441743 instance=ExtResource("5_tpg5x")]
+material = ExtResource("5_180ig")
+offset_left = -234.0
+offset_top = -131.0
+offset_right = -169.0
+offset_bottom = -108.0
+
 [node name="SpriteModifierComponent" type="Node" parent="." unique_id=1970386051 node_paths=PackedStringArray("sprite")]
 script = ExtResource("6_c3xxp")
 sprite = NodePath("../Sprite")
@@ -68,76 +75,46 @@ stretch_tween = SubResource("Resource_pn6s4")
 return_tween = SubResource("Resource_7oing")
 metadata/_custom_type_script = "uid://b23pa557xdb"
 
-[node name="SelfLight" type="PointLight2D" parent="." unique_id=2081477168]
-texture = ExtResource("10_7oing")
-
 [node name="ControlComponent" type="Node" parent="." unique_id=1672489934]
 script = ExtResource("5_v42im")
 metadata/_custom_type_script = "uid://cawa5dkvuk8it"
 
-[node name="MiningRaycast" type="RayCast2D" parent="." unique_id=650662761]
-target_position = Vector2(0, 0)
-collide_with_areas = true
-
 [node name="GravityComponent" type="Node" parent="." unique_id=1443024567 node_paths=PackedStringArray("control_component")]
 script = ExtResource("6_pn6s4")
 control_component = NodePath("../ControlComponent")
-gravity_multiplier = 0.8
 metadata/_custom_type_script = "uid://d2t1hwt0q1jim"
 
 [node name="JumpComponent" type="Node" parent="." unique_id=1399277520 node_paths=PackedStringArray("control_component", "sprite_modifier_component")]
 script = ExtResource("7_7oing")
 control_component = NodePath("../ControlComponent")
 sprite_modifier_component = NodePath("../SpriteModifierComponent")
-jump_velocity = 170.0
+jump_velocity = 230.0
 metadata/_custom_type_script = "uid://bg8ci2wt7hdkj"
-
-[node name="MineComponent" type="Node" parent="." unique_id=481997199 node_paths=PackedStringArray("inventory_component", "selection_component")]
-script = ExtResource("14_ov1oi")
-inventory_component = NodePath("../InventoryComponent")
-selection_component = NodePath("../SelectionBoxComponent")
-max_mining_distance = 20.0
-metadata/_custom_type_script = "uid://bit2831m4pg0f"
 
 [node name="MovementComponent" type="Node" parent="." unique_id=1623111960 node_paths=PackedStringArray("control_component", "sprite_modifier_component", "input_component")]
 script = ExtResource("8_5stf6")
 control_component = NodePath("../ControlComponent")
 sprite_modifier_component = NodePath("../SpriteModifierComponent")
 input_component = NodePath("../InputAxisComponent")
-walk_speed = 70.0
+walk_speed = 120.0
 acceleration = 1500.0
-deceleration = 700.0
+deceleration = 350.0
 metadata/_custom_type_script = "uid://vfnsma812ipo"
-
-[node name="SelectionBoxComponent" type="Node" parent="." unique_id=1548235890 node_paths=PackedStringArray("mine_component", "sprite")]
-script = ExtResource("1_ov1oi")
-mine_component = NodePath("../MineComponent")
-sprite = NodePath("SelectionSprite")
-metadata/_custom_type_script = "uid://cs7i6acbb7w5c"
-
-[node name="SelectionSprite" type="Sprite2D" parent="SelectionBoxComponent" unique_id=979960632]
-texture = ExtResource("16_8qjgm")
 
 [node name="InputAxisComponent" type="Node" parent="." unique_id=1777324633]
 script = ExtResource("12_20koh")
 metadata/_custom_type_script = "uid://calji8g712e2u"
 
-[node name="InventoryComponent" type="Node" parent="." unique_id=721310458]
-script = ExtResource("17_ejd4k")
-metadata/_custom_type_script = "uid://d31hwdoqfjbcb"
+[node name="SelfLight" type="PointLight2D" parent="." unique_id=2081477168]
+texture = ExtResource("10_7oing")
 
-[node name="BuildComponent" type="Node" parent="." unique_id=125261280 node_paths=PackedStringArray("inventory_component", "selection_component")]
-script = ExtResource("18_2xrq6")
-inventory_component = NodePath("../InventoryComponent")
-selection_component = NodePath("../SelectionBoxComponent")
-metadata/_custom_type_script = "uid://hho3xa5gaxdb"
+[node name="MiningRaycast" type="RayCast2D" parent="." unique_id=650662761]
+target_position = Vector2(0, 0)
+collide_with_areas = true
 
-[node name="Camera" type="Camera2D" parent="." unique_id=689899775]
-zoom = Vector2(4, 4)
-
-[node name="PlayerGUI" parent="Camera" unique_id=1953480870 instance=ExtResource("17_2xrq6")]
-offset_left = -255.0
-offset_top = -135.0
-offset_right = -255.0
-offset_bottom = -135.0
-scale = Vector2(0.2, 0.2)
+[node name="MineComponent" type="Node" parent="." unique_id=481997199 node_paths=PackedStringArray("ray", "target_tile_component")]
+script = ExtResource("14_ov1oi")
+ray = NodePath("../MiningRaycast")
+max_mining_distance = null
+target_tile_component = NodePath("")
+metadata/_custom_type_script = "uid://bit2831m4pg0f"

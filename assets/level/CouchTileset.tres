@@ -397,4 +397,6 @@ physics_layer_0/collision_layer = 1
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "0"
 terrain_set_0/terrain_0/color = Color(0.7273674, 0, 0.16621003, 1)
+custom_data_layer_0/name = "block_id"
+custom_data_layer_0/type = 2
 sources/0 = SubResource("TileSetAtlasSource_akadf")

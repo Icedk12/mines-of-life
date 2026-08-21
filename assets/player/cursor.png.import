@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2k5l1mimbnus"
-path="res://.godot/imported/CouchTilemap2.png-3fd70e00f8647c6428dd28eb015acffa.ctex"
+uid="uid://c66isq1evv4gh"
+path="res://.godot/imported/cursor.png-e319b7ec6b77fd3992bc5b35fefc71d6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/level/CouchTilemap2.png"
-dest_files=["res://.godot/imported/CouchTilemap2.png-3fd70e00f8647c6428dd28eb015acffa.ctex"]
+source_file="res://assets/player/cursor.png"
+dest_files=["res://.godot/imported/cursor.png-e319b7ec6b77fd3992bc5b35fefc71d6.ctex"]
 
 [params]
 

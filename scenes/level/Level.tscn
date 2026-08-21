@@ -4,16 +4,17 @@
 [ext_resource type="Script" uid="uid://b5kh7fpv0ui22" path="res://scripts/level/Level.gd" id="1_l1x8v"]
 [ext_resource type="Script" uid="uid://bmmky33tl7eb0" path="res://scripts/level/LevelGenerator.gd" id="2_cne4c"]
 
-[node name="Level" type="Node2D" unique_id=131454242 node_paths=PackedStringArray("level_generator")]
+[node name="Level" type="Node2D" unique_id=131454242 node_paths=PackedStringArray("level_generator", "_layer1")]
 script = ExtResource("1_l1x8v")
 level_generator = NodePath("LevelGenerator")
+_layer1 = NodePath("Layer1")
 
-[node name="LevelMapLayer1" type="TileMapLayer" parent="." unique_id=1300922217]
+[node name="Layer1" type="TileMapLayer" parent="." unique_id=1300922217]
 tile_set = ExtResource("1_751o5")
 
 [node name="LevelGenerator" type="Node" parent="." unique_id=877058791 node_paths=PackedStringArray("tilemap")]
 script = ExtResource("2_cne4c")
-tilemap = NodePath("../LevelMapLayer1")
+tilemap = NodePath("../Layer1")
 metadata/_custom_type_script = "uid://bmmky33tl7eb0"
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=696853006]

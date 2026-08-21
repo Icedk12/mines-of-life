@@ -125,12 +125,15 @@ func unload_chunk(chunk_x: int, chunk_y: int) -> void:
 		for y in range(start_y, start_y + GameSettings.chunk_size):
 			tilemap.erase_cell(Vector2i(x, y))
 
-func modify_tile(tile_pos: Vector2i, is_solid: bool) -> void:
+func modify_tile(tile_pos: Vector2i, is_solid: bool) -> int:
 	modified_tiles[tile_pos] = is_solid
 	
+	var td : TileData = tilemap.get_cell_tile_data(tile_pos)
+	var block_id : int = td.get_custom_data("block_id") if td else -1
+
 	if is_solid:
-		# Add tile and connect surrounding terrain
 		tilemap.set_cells_terrain_connect([tile_pos], terrain_set_id, terrain_id)
 	else:
-
 		tilemap.set_cells_terrain_connect([tile_pos], terrain_set_id, -1)
+	
+	return block_id
