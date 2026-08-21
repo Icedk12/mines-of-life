@@ -1,8 +1,9 @@
-class_name MineComponent extends CharacterComponent
+class_name BuildComponent extends CharacterComponent
 
 @export var inventory_component : InventoryComponent
 @export var selection_component : SelectionBoxComponent
-@export var max_mining_distance : float = 40.0
+@export var max_build_distance : float = 40.0
+@export var selected_block_id : int = 0
 
 var level_generator : LevelGenerator
 
@@ -11,10 +12,11 @@ func _process(_delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
-			mine()
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.is_pressed():
+			build()
 
 func update_selection() -> void:
+	# Initialize level_generator reference from character
 	if not level_generator and character and character.level:
 		level_generator = character.level.level_generator
 
@@ -22,32 +24,27 @@ func update_selection() -> void:
 		return
 
 	var mouse_pos = character.get_global_mouse_position()
-	
-	# Cursor
+
 	var tile_pos = level_generator.tilemap.local_to_map(mouse_pos)
 	selection_component.selected_tile_global_pos = level_generator.tilemap.to_global(tile_pos * 8) + Vector2(4, 4)
 
-
-func mine() -> void:
+func build() -> void:
 	if not level_generator or not level_generator.tilemap:
 		return
 
 	var mouse_pos = character.get_global_mouse_position()
 	var char_pos = character.global_position
 
-	# Distance validation check
-	if char_pos.distance_to(mouse_pos) > max_mining_distance:
+	if char_pos.distance_to(mouse_pos) > max_build_distance:
 		return
 
 	var tile_pos = level_generator.tilemap.local_to_map(mouse_pos)
-	
-	# Ensure cell is not empty before mining
-	if level_generator.tilemap.get_cell_source_id(tile_pos) == -1:
+
+	# Only build if space is currently empty (-1 source ID)
+	if level_generator.tilemap.get_cell_source_id(tile_pos) != -1:
 		return
 
-	# Mine the tile and get returned block ID
-	var block_id = level_generator.modify_tile(tile_pos, false)
-
-	# Add block to inventory if valid
-	if inventory_component and block_id != -1:
-		inventory_component.add_item_by_id(block_id)
+	# Verify inventory has the item before placing
+	if inventory_component and inventory_component.has_item(selected_block_id):
+		if inventory_component.remove_item_by_id(selected_block_id):
+			level_generator.modify_tile(tile_pos, true)
