@@ -1,5 +1,5 @@
 extends TextureButton
-@onready var main : Main = $"../../.."
+@onready var main : Main = $"../../../.."
 
 var inital : bool = true
 
