@@ -51,7 +51,6 @@ metadata/_custom_type_script = "uid://d164jamb4hq8l"
 
 [node name="Player" type="CharacterBody2D" unique_id=872088493 node_paths=PackedStringArray("control_component", "sprite_modifier_component")]
 script = ExtResource("1_wr5hl")
-camera = NodePath("Camera")
 control_component = NodePath("ControlComponent")
 sprite_modifier_component = NodePath("SpriteModifierComponent")
 

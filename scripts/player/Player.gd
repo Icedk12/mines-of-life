@@ -1,6 +1,6 @@
 class_name Player extends CharacterBody2D
 
-@export var camera : ShakeableCamera2D
+@onready var camera : ShakeableCamera2D = $Camera
 @export var control_component : ControlComponent
 @export var sprite_modifier_component : SpriteModifierComponent
 @export var level : Level

@@ -22,6 +22,7 @@ main_menu = NodePath("../MainMenu")
 player = NodePath("../Player")
 
 [node name="Player" parent="." unique_id=872088493 node_paths=PackedStringArray("level") instance=ExtResource("2_rvslj")]
+motion_mode = 1
 level = NodePath("../Level")
 
 [node name="MainMenu" type="Node2D" parent="." unique_id=815849707]
