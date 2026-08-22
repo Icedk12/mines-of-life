@@ -1,18 +1,26 @@
 [gd_scene format=3 uid="uid://b3cik7817ehfv"]
 
-[ext_resource type="Script" uid="uid://rphshvvk02ya" path="res://scenes/ui/PlayerGUI.gd" id="1_34not"]
+[ext_resource type="Script" uid="uid://rphshvvk02ya" path="res://scripts/ui/PlayerGUI.gd" id="1_34not"]
 [ext_resource type="Material" uid="uid://8xkndevfkt7s" path="res://assets/materials/UnshadedMaterial.tres" id="1_o75iu"]
 [ext_resource type="LabelSettings" uid="uid://deqse088eb6bt" path="res://assets/labels/FPSLabelSettings.tres" id="1_xn0hd"]
 [ext_resource type="Script" uid="uid://crlam6hyxcj0" path="res://scripts/ui/FPSLabel.gd" id="3_wkpe3"]
 [ext_resource type="Script" uid="uid://dg65yfjw86ln4" path="res://scripts/ui/InventoryUI.gd" id="5_34not"]
+[ext_resource type="Texture2D" uid="uid://dvcwwtstrhn57" path="res://assets/player/SelectionBox12x12.png" id="6_rtmgd"]
 
 [node name="PlayerGUI" type="Control" unique_id=1953480870 node_paths=PackedStringArray("inventory_ui")]
 material = ExtResource("1_o75iu")
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1920.0
+offset_bottom = -1080.0
+grow_horizontal = 2
+grow_vertical = 2
 scale = Vector2(0.5, 0.5)
+mouse_filter = 1
 script = ExtResource("1_34not")
-inventory_ui = NodePath("GridContainer/InventoryUI")
+inventory_ui = NodePath("InventoryUI")
 
 [node name="FPS_Label" type="Label" parent="." unique_id=165018761]
 material = ExtResource("1_o75iu")
@@ -32,9 +40,20 @@ layout_mode = 0
 offset_top = 42.0
 offset_right = 518.0
 offset_bottom = 560.0
-columns = 10
+columns = 5
 
-[node name="InventoryUI" type="Node" parent="GridContainer" unique_id=1320300530 node_paths=PackedStringArray("grid")]
+[node name="InventoryUI" type="Node" parent="." unique_id=1320300530 node_paths=PackedStringArray("grid", "selection_rect")]
 script = ExtResource("5_34not")
-grid = NodePath("..")
+grid = NodePath("../GridContainer")
+selection_rect = NodePath("../TextureRect")
 metadata/_custom_type_script = "uid://dg65yfjw86ln4"
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1470341005]
+material = ExtResource("1_o75iu")
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
+offset_top = 42.0
+offset_right = 100.0
+offset_bottom = 142.0
+pivot_offset = Vector2(20, 20)
+texture = ExtResource("6_rtmgd")
