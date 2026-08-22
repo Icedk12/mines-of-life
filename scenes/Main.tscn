@@ -101,7 +101,7 @@ offset_right = 532.0
 offset_bottom = 328.0
 texture = ExtResource("5_lhr70")
 
-[node name="ColorRect" type="ColorRect" parent="MainMenu/CanvasLayer/Control" unique_id=2031621681]
+[node name="Vignette" type="ColorRect" parent="MainMenu/CanvasLayer/Control" unique_id=2031621681]
 material = SubResource("ShaderMaterial_qmy6f")
 layout_mode = 0
 offset_left = 11.0
@@ -109,7 +109,7 @@ offset_top = 55.75
 offset_right = 531.75
 offset_bottom = 328.25
 
-[node name="VignetteFade" type="AnimationPlayer" parent="MainMenu/CanvasLayer/Control/ColorRect" unique_id=1203124428]
+[node name="VignetteFade" type="AnimationPlayer" parent="MainMenu/CanvasLayer/Control/Vignette" unique_id=1203124428]
 libraries/ = SubResource("AnimationLibrary_3p2gp")
 autoplay = &"fade_vignette"
 
