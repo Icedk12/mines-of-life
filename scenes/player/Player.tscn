@@ -134,36 +134,28 @@ metadata/_custom_type_script = "uid://calji8g712e2u"
 
 [node name="InventoryComponent" type="Node" parent="." unique_id=721310458]
 script = ExtResource("17_ejd4k")
+inventory_size = 7
 metadata/_custom_type_script = "uid://d31hwdoqfjbcb"
 
-[node name="BuildComponent" type="Node" parent="." unique_id=125261280 node_paths=PackedStringArray("inventory_component", "selection_component", "camera", "audio_source", "character")]
+[node name="BuildComponent" type="Node" parent="." unique_id=125261280 node_paths=PackedStringArray("inventory_component", "player_gui", "selection_component", "camera", "audio_source", "character")]
 script = ExtResource("18_2xrq6")
 inventory_component = NodePath("../InventoryComponent")
+player_gui = NodePath("../UILayer/PlayerGUI")
 selection_component = NodePath("../SelectionBoxComponent")
-selected_block_id = 1
 camera = NodePath("../Camera")
 audio_source = NodePath("../AudioSourceComponent")
 character = NodePath("..")
 metadata/_custom_type_script = "uid://hho3xa5gaxdb"
 
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=1527233409]
+
+[node name="PlayerGUI" parent="UILayer" unique_id=1953480870 node_paths=PackedStringArray("inventory_component") instance=ExtResource("17_2xrq6")]
+inventory_component = NodePath("../../InventoryComponent")
+
 [node name="Camera" type="Camera2D" parent="." unique_id=689899775]
 enabled = false
 zoom = Vector2(4, 4)
 script = ExtResource("14_kvwax")
-
-[node name="PlayerGUI" parent="Camera" unique_id=1953480870 node_paths=PackedStringArray("inventory_component") instance=ExtResource("17_2xrq6")]
-custom_minimum_size = Vector2(100, 0)
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = -256.0
-offset_top = -135.0
-offset_right = 700.0
-offset_bottom = 403.0
-grow_horizontal = 1
-grow_vertical = 1
-scale = Vector2(0.2, 0.2)
-inventory_component = NodePath("../../InventoryComponent")
 
 [node name="MineComponent" type="Node" parent="." unique_id=164825942 node_paths=PackedStringArray("inventory_component", "selection_component", "camera", "audio_source", "tile_damage_component", "cd_timer", "character")]
 script = ExtResource("14_ov1oi")

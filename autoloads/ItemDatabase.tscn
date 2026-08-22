@@ -16,6 +16,7 @@ script = ExtResource("2_gp7j7")
 item_id = 1
 item_name = "Leather Scrap"
 icon = ExtResource("4_3xla5")
+block_id = 1
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
 [node name="ItemDatabase" type="Node" unique_id=1572723925]
