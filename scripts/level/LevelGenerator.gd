@@ -26,11 +26,11 @@ var is_initial_generation : bool = true
 var initial_generation_complete : bool = false
 
 func _ready() -> void:
-	cave_noise.seed = GameSettings.seed_
 	cave_noise.frequency = 0.03
 	cave_noise.fractal_type = FastNoiseLite.FRACTAL_FBM
 
 func generate_initial_world() -> void:
+	cave_noise.seed = GameSettings.seed_
 	is_initial_generation = true
 	initial_generation_complete = false
 	is_generating = true # Start processing
