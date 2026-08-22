@@ -22,6 +22,45 @@ hit_sounds = Array[AudioStream]([ExtResource("3_kxxcu")])
 place_sounds = Array[AudioStream]([ExtResource("3_kxxcu")])
 metadata/_custom_type_script = "uid://h7cwu8wnif38"
 
+[sub_resource type="Resource" id="Resource_ui66f"]
+script = ExtResource("2_kxxcu")
+block_id = 2
+display_name = "Gunk"
+terrain_id = 2
+hardness = 5
+hit_sounds = Array[AudioStream]([ExtResource("3_kxxcu")])
+place_sounds = Array[AudioStream]([ExtResource("3_kxxcu")])
+metadata/_custom_type_script = "uid://h7cwu8wnif38"
+
+[sub_resource type="Resource" id="Resource_xqib3"]
+script = ExtResource("2_kxxcu")
+block_id = 3
+display_name = "Crafting Table"
+terrain_id = 3
+hardness = 2
+hit_sounds = Array[AudioStream]([ExtResource("3_kxxcu")])
+place_sounds = Array[AudioStream]([ExtResource("3_kxxcu")])
+metadata/_custom_type_script = "uid://h7cwu8wnif38"
+
+[sub_resource type="Resource" id="Resource_32n22"]
+script = ExtResource("2_kxxcu")
+block_id = 4
+display_name = "Chest"
+terrain_id = 4
+hit_sounds = Array[AudioStream]([ExtResource("3_kxxcu")])
+place_sounds = Array[AudioStream]([ExtResource("3_kxxcu")])
+metadata/_custom_type_script = "uid://h7cwu8wnif38"
+
+[sub_resource type="Resource" id="Resource_p6eds"]
+script = ExtResource("2_kxxcu")
+block_id = 5
+display_name = "Door"
+terrain_id = 5
+hardness = 2
+hit_sounds = Array[AudioStream]([ExtResource("3_kxxcu")])
+place_sounds = Array[AudioStream]([ExtResource("3_kxxcu")])
+metadata/_custom_type_script = "uid://h7cwu8wnif38"
+
 [node name="BlockDatabase" type="Node" unique_id=1572723925]
 script = ExtResource("1_v6wp7")
-blocks = Array[ExtResource("2_kxxcu")]([SubResource("Resource_6ojj1"), SubResource("Resource_8nn5r")])
+blocks = Array[ExtResource("2_kxxcu")]([SubResource("Resource_6ojj1"), SubResource("Resource_8nn5r"), SubResource("Resource_ui66f"), SubResource("Resource_xqib3"), SubResource("Resource_32n22"), SubResource("Resource_p6eds")])
