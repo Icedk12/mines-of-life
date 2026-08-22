@@ -13,11 +13,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1920.0
-offset_bottom = -1080.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.5, 0.5)
 mouse_filter = 1
 script = ExtResource("1_34not")
 inventory_ui = NodePath("InventoryUI")
@@ -37,23 +34,22 @@ script = ExtResource("3_wkpe3")
 use_parent_material = true
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
+offset_left = 8.0
 offset_top = 42.0
-offset_right = 518.0
+offset_right = 526.0
 offset_bottom = 560.0
-columns = 5
+columns = 7
 
-[node name="InventoryUI" type="Node" parent="." unique_id=1320300530 node_paths=PackedStringArray("grid", "selection_rect")]
+[node name="InventoryUI" type="Node" parent="." unique_id=407773419 node_paths=PackedStringArray("grid", "selection_rect")]
 script = ExtResource("5_34not")
 grid = NodePath("../GridContainer")
-selection_rect = NodePath("../TextureRect")
+selection_rect = NodePath("../SelectionRect")
+tween_duration = 0.2
 metadata/_custom_type_script = "uid://dg65yfjw86ln4"
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=1470341005]
-material = ExtResource("1_o75iu")
-custom_minimum_size = Vector2(32, 32)
+[node name="SelectionRect" type="TextureRect" parent="." unique_id=758682430]
 layout_mode = 0
-offset_top = 42.0
-offset_right = 100.0
-offset_bottom = 142.0
-pivot_offset = Vector2(20, 20)
+offset_right = 50.0
+offset_bottom = 50.0
+scale = Vector2(2, 2)
 texture = ExtResource("6_rtmgd")

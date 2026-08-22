@@ -1,4 +1,4 @@
-extends Control
+class_name PlayerGUI extends Control
 
 @export var inventory_ui : InventoryUI
 @export var inventory_component : InventoryComponent

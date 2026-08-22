@@ -1,5 +1,7 @@
 class_name LevelGenerator extends Node
 
+signal initial_generation_finished
+
 @export var tilemap : TileMapLayer
 @export var terrain_set_id : int = 0
 @export var terrain_id : int = 0
@@ -19,22 +21,59 @@ var last_player_chunk := Vector2i(999999, 999999)
 
 var modified_tiles := {}
 
+var is_generating : bool = false
+var is_initial_generation : bool = true
+var initial_generation_complete : bool = false
+
 func _ready() -> void:
 	cave_noise.seed = GameSettings.seed_
 	cave_noise.frequency = 0.03
 	cave_noise.fractal_type = FastNoiseLite.FRACTAL_FBM
+
+func generate_initial_world() -> void:
+	is_initial_generation = true
+	initial_generation_complete = false
+	is_generating = true # Start processing
 	
 	var start_pos = player.global_position if player else Vector2.ZERO
-	update_chunks(start_pos)
+	var center_tile = tilemap.local_to_map(start_pos)
+	var center_chunk_x = int(floor(float(center_tile.x) / GameSettings.chunk_size))
+	var center_chunk_y = int(floor(float(center_tile.y) / GameSettings.chunk_size))
+	
+	last_player_chunk = Vector2i(center_chunk_x, center_chunk_y)
+	
+	# Clear any leftover queue items before building
+	generation_queue.clear()
+	
+	var initial_chunks: Array[Vector2i] = []
+	for x in range(center_chunk_x - GameSettings.render_distance, center_chunk_x + GameSettings.render_distance + 1):
+		for y in range(center_chunk_y - GameSettings.render_distance, center_chunk_y + GameSettings.render_distance + 1):
+			initial_chunks.append(Vector2i(x, y))
+
+	initial_chunks.sort_custom(func(a, b):
+		var dist_a = a.distance_squared_to(Vector2i(center_chunk_x, center_chunk_y))
+		var dist_b = b.distance_squared_to(Vector2i(center_chunk_x, center_chunk_y))
+		return dist_a < dist_b
+	)
+
+	generation_queue.append_array(initial_chunks)
 
 func _process(_delta: float) -> void:
-	# Process one chunk from the queue per frame to prevent frame spikes
+	if not is_generating:
+		return
+
+	# Process one chunk from the queue per frame
 	if generation_queue.size() > 0:
 		var next_chunk = generation_queue.pop_front()
-		# Make sure it wasn't loaded in the meantime
 		if not loaded_chunks.has(next_chunk):
 			generate_chunk(next_chunk.x, next_chunk.y)
 			loaded_chunks[next_chunk] = true
+
+	# Check if the initial chunk load just completed
+	if is_initial_generation and generation_queue.is_empty():
+		is_initial_generation = false
+		initial_generation_complete = true
+		_on_initial_generation_finished()
 
 	if not player:
 		return
@@ -48,6 +87,9 @@ func _process(_delta: float) -> void:
 	if current_chunk != last_player_chunk:
 		last_player_chunk = current_chunk
 		update_chunks(player.global_position)
+
+func _on_initial_generation_finished() -> void:
+	initial_generation_finished.emit()
 
 func update_chunks(world_position: Vector2) -> void:
 	var center_tile = tilemap.local_to_map(world_position)
