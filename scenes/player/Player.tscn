@@ -44,8 +44,10 @@ easing_style = 2
 duration = 0.1
 metadata/_custom_type_script = "uid://d164jamb4hq8l"
 
-[node name="Player" type="CharacterBody2D" unique_id=872088493 node_paths=PackedStringArray("control_component", "sprite_modifier_component")]
+[node name="Player" type="CharacterBody2D" unique_id=872088493 node_paths=PackedStringArray("camera", "control_component", "sprite_modifier_component")]
+motion_mode = 1
 script = ExtResource("1_wr5hl")
+camera = NodePath("Camera")
 control_component = NodePath("ControlComponent")
 sprite_modifier_component = NodePath("SpriteModifierComponent")
 
@@ -65,6 +67,7 @@ texture = ExtResource("3_4kuee")
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=2041257211]
 position = Vector2(0, 0.25)
 shape = SubResource("RectangleShape2D_yx65c")
+disabled = true
 
 [node name="SpriteModifierComponent" type="Node" parent="." unique_id=1970386051 node_paths=PackedStringArray("sprite")]
 script = ExtResource("6_c3xxp")

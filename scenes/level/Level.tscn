@@ -19,3 +19,5 @@ metadata/_custom_type_script = "uid://bmmky33tl7eb0"
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=696853006]
 color = Color(0, 0, 0, 1)
+
+[connection signal="initial_generation_finished" from="LevelGenerator" to="." method="finished_generation_inital"]

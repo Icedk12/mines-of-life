@@ -1,7 +1,9 @@
 extends TextureButton
-@onready var mainmenu = $"../.."
-@onready var main = $"../../.."
+@onready var main : Main = $"../../.."
+
+var inital : bool = true
 
 func _on_pressed() -> void:
-	main.player.State = get_parent().player.State.PLAYING
-	mainmenu.queue_free()
+	if not inital: return
+	main.level.level_generator.generate_initial_world()
+	$Label.text = "LOADING..."
