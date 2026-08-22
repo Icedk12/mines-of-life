@@ -4,13 +4,59 @@
 [ext_resource type="PackedScene" uid="uid://ba4y285bqj0ui" path="res://scenes/level/Level.tscn" id="2_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://dw8qkxkdhxep7" path="res://scenes/player/Player.tscn" id="2_rvslj"]
 [ext_resource type="Material" uid="uid://8xkndevfkt7s" path="res://assets/materials/UnshadedMaterial.tres" id="4_vcsgt"]
+[ext_resource type="AudioStream" uid="uid://16yktjp50fwn" path="res://assets/sounds/music/CavesOfCould.wav" id="4_wp0k4"]
 [ext_resource type="Texture2D" uid="uid://brnvqkom0svjv" path="res://assets/ui/main_bg.png" id="5_lhr70"]
 [ext_resource type="Texture2D" uid="uid://bikasj8gy6jmy" path="res://assets/ui/main_play.png" id="6_c01mt"]
 [ext_resource type="Texture2D" uid="uid://c53bxv8h1qlg1" path="res://assets/ui/main_play-press.png" id="7_nxtc6"]
 [ext_resource type="Texture2D" uid="uid://2an0wuakfbm1" path="res://assets/ui/Title.png" id="8_jlsqs"]
 [ext_resource type="LabelSettings" uid="uid://kpj4f245y1v6" path="res://assets/labels/MenuLabelSettings.tres" id="8_lhr70"]
 [ext_resource type="Script" uid="uid://cq10g2fnfrkmf" path="res://scripts/ui/PlayButton.gd" id="8_wp0k4"]
-[ext_resource type="AudioStream" uid="uid://h8jpkj0fwqnr" path="res://assets/sounds/EnterTheMines.wav" id="9_q8u5g"]
+[ext_resource type="Script" uid="uid://bgrobf4mavkho" path="res://scripts/ui/Hover.gd" id="12_bjd11"]
+[ext_resource type="Shader" uid="uid://5hogyrnpyfc3" path="res://scripts/shaders/Vignette.gdshader" id="13_qmy6f"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qmy6f"]
+shader = ExtResource("13_qmy6f")
+shader_parameter/vignette_radius = 0.69200003287
+shader_parameter/vignette_softness = 0.346000016435
+shader_parameter/vignette_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_qmy6f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/vignette_radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.69200003287]
+}
+
+[sub_resource type="Animation" id="Animation_mwfav"]
+resource_name = "fade_vignette"
+length = 6.0333333
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/vignette_radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3.0666666, 6.01),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.69200003287, 0.82800003933, 0.69200003287]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3p2gp"]
+_data = {
+&"RESET": SubResource("Animation_qmy6f"),
+&"fade_vignette": SubResource("Animation_mwfav")
+}
 
 [node name="Main" type="Node2D" unique_id=791347418 node_paths=PackedStringArray("player", "level")]
 script = ExtResource("1_0bbpv")
@@ -30,9 +76,9 @@ level = NodePath("../Level")
 [node name="CameraMainMenu" type="Camera2D" parent="MainMenu" unique_id=2085208049]
 zoom = Vector2(4, 4)
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="MainMenu" unique_id=843395466]
+[node name="MainMenuTheme" type="AudioStreamPlayer2D" parent="MainMenu" unique_id=843395466]
 position = Vector2(-270, -193)
-stream = ExtResource("9_q8u5g")
+stream = ExtResource("4_wp0k4")
 autoplay = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="MainMenu" unique_id=30027952]
@@ -55,23 +101,38 @@ offset_right = 532.0
 offset_bottom = 328.0
 texture = ExtResource("5_lhr70")
 
+[node name="ColorRect" type="ColorRect" parent="MainMenu/CanvasLayer/Control" unique_id=2031621681]
+material = SubResource("ShaderMaterial_qmy6f")
+layout_mode = 0
+offset_left = 11.0
+offset_top = 55.75
+offset_right = 531.75
+offset_bottom = 328.25
+
+[node name="VignetteFade" type="AnimationPlayer" parent="MainMenu/CanvasLayer/Control/ColorRect" unique_id=1203124428]
+libraries/ = SubResource("AnimationLibrary_3p2gp")
+autoplay = &"fade_vignette"
+
 [node name="PlayBtn" type="TextureButton" parent="MainMenu/CanvasLayer/Control" unique_id=318958663]
 material = ExtResource("4_vcsgt")
 layout_mode = 0
 offset_left = 199.0
-offset_top = 193.0
+offset_top = 206.25
 offset_right = 342.0
-offset_bottom = 216.0
+offset_bottom = 256.25
 texture_normal = ExtResource("6_c01mt")
 texture_pressed = ExtResource("7_nxtc6")
 stretch_mode = 3
 script = ExtResource("8_wp0k4")
+hover_speed = 5.0
 
 [node name="Label" type="Label" parent="MainMenu/CanvasLayer/Control/PlayBtn" unique_id=1078016419]
 use_parent_material = true
 layout_mode = 0
-offset_right = 143.0
-offset_bottom = 23.0
+offset_left = 23.5
+offset_top = 1.75
+offset_right = 119.5
+offset_bottom = 48.0
 text = "PLAY"
 label_settings = ExtResource("8_lhr70")
 horizontal_alignment = 1
@@ -79,11 +140,18 @@ vertical_alignment = 1
 
 [node name="Title" type="TextureRect" parent="MainMenu/CanvasLayer/Control" unique_id=1117939590]
 material = ExtResource("4_vcsgt")
-layout_mode = 0
-offset_left = 142.0
-offset_top = 69.0
-offset_right = 399.0
-offset_bottom = 178.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 6.762
+anchor_top = 3.0870001
+anchor_right = 6.762
+anchor_bottom = 3.0870001
+offset_left = -128.48001
+offset_top = -54.480003
+offset_right = 128.51999
+offset_bottom = 54.519997
+pivot_offset = Vector2(128.5, 54.5)
 texture = ExtResource("8_jlsqs")
+script = ExtResource("12_bjd11")
 
 [connection signal="pressed" from="MainMenu/CanvasLayer/Control/PlayBtn" to="MainMenu/CanvasLayer/Control/PlayBtn" method="_on_pressed"]

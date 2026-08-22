@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://cqj3bvrl7lun5"]
-
-[ext_resource type="Texture2D" uid="uid://bvff41lpr285n" path="res://assets/above/pointlight-smooth.jpg" id="1_dtl1n"]
-
-[node name="Light" type="PointLight2D" unique_id=582318357]
-texture = ExtResource("1_dtl1n")
