@@ -1,7 +1,9 @@
-class_name SpriteModifierComponent extends CharacterComponent
+class_name SpriteModifierComponent
+extends CharacterComponent
 
 @export_group("Objects")
 @export var sprite : Sprite2D ## Character's sprite you want to modify
+@export var audio_source : AudioSourceComponent ## Sibling component that plays footstep sounds
 
 @export_group("Tweens")
 @export var squash_tween : TweenInfo
@@ -11,43 +13,68 @@ class_name SpriteModifierComponent extends CharacterComponent
 @export_group("Sin")
 @export var frequency : float = 25.0
 @export var amplitude : float = 1.0
+@export var rot_amplitude : float = 5.0
+@export var rot_frequency : float = 25.0
 
 var active_tween : Tween ## Track active tween to prevent spamming
 var _sin_time : float = 0.0
+var _played_step_this_cycle : bool = false
 
 ## Face the sprite in the direction given (either left or right)
 func _face_dir(direction : float):
 	if not sprite: return
 	sprite.flip_h = (direction < 0) # If direction is greater than 0 flip
 
+## Rotate sprite while moving for animation
+func _sprite_rotation(delta : float, is_moving : bool) -> void:
+	if not sprite: return
+
+	if is_moving:
+		_sin_time += delta
+		sprite.rotation_degrees = sin(_sin_time * rot_frequency) * rot_amplitude
+	else:
+		sprite.rotation_degrees = lerp(sprite.rotation_degrees, 0.0, 0.1)
+
 ## Squash the sprite
 func _squash() -> void:
 	if not sprite or not squash_tween or not return_tween: return
 	_verify_tween()
 	
-	
 	# Tween the sprite's scale
 	active_tween.tween_property(sprite, "scale", squash_tween.scale, squash_tween.duration)\
-		.set_trans(squash_tween.transition_type).set_ease(squash_tween.easing_style) # Set transition type to selected
+		.set_trans(squash_tween.transition_type).set_ease(squash_tween.easing_style)
 	
-	_return_from_tween() # Return to default
+	_return_from_tween()
 
 ## Stretch the sprite
 func _stretch() -> void:
 	if not sprite or not stretch_tween or not return_tween: return
 	_verify_tween()
 	
-	# Tween the sprite's scale
 	active_tween.tween_property(sprite, "scale", stretch_tween.scale, stretch_tween.duration)\
-		.set_trans(stretch_tween.transition_type).set_ease(stretch_tween.easing_style) # Set transition type to selected
+		.set_trans(stretch_tween.transition_type).set_ease(stretch_tween.easing_style)
 	
-	_return_from_tween() # Return to default
+	_return_from_tween()
 
-## Offset the Y value of the sprite using sin() and delta
-func _sprite_sin_offset(delta : float) -> void:
+## Offset the Y value of the sprite using sin() and delta, and trigger footsteps at the bob's low point
+func _sprite_sin_offset(delta : float, is_moving : bool) -> void:
 	if not sprite: return
-	_sin_time += delta
-	sprite.offset.y = (-sin((_sin_time * frequency)) * amplitude) - 1
+
+	if is_moving:
+		_sin_time += delta
+		var wave := sin(_sin_time * frequency)
+		sprite.offset.y = (-wave * amplitude) - 1
+
+		if wave < -0.9:
+			if not _played_step_this_cycle:
+				if audio_source:
+					audio_source.play_footstep()
+				_played_step_this_cycle = true
+		else:
+			_played_step_this_cycle = false
+	else:
+		sprite.offset.y = lerp(sprite.offset.y, -1.0, delta * 10.0)
+		_played_step_this_cycle = false
 
 # ============= HELPER FUNCTIONS ============= #
 ## Tweens the sprite to Vector2.ONE, aka default scale

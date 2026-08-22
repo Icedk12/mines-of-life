@@ -8,6 +8,10 @@ class_name JumpComponent extends CharacterComponent
 @export var jump_velocity : float = 100.0
 @export var coyote_time : float = 0.15 ## Grace period in seconds
 
+@export_group("Audio")
+@export var jump_sound : Array[AudioStream]
+@export var audio_source : AudioSourceComponent
+
 var coyote_timer : float = 0.0
 
 func _physics_process(delta: float) -> void:
@@ -30,10 +34,11 @@ func _can_jump() -> bool:
 ## Applies upward velocity and resets coyote time
 func _execute_jump() -> void:
 	_on_jump()
-	
 	control_component.set_y(-jump_velocity) # Apply jump velocity
 	if sprite_modifier_component:
 		sprite_modifier_component._stretch() # Stretch sprite
+	if audio_source:
+		audio_source.play_sound(jump_sound)
 	
 	coyote_timer = 0.0 # Consume coyote time so player can't jump again in mid-air
 

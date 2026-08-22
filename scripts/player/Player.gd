@@ -16,3 +16,5 @@ func _physics_process(delta: float) -> void:
 	if was_in_air and is_on_floor():
 		if sprite_modifier_component:
 			sprite_modifier_component._squash()
+
+	sprite_modifier_component._sprite_rotation(delta, velocity.length() > 0.1)

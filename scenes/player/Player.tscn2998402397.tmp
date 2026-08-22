@@ -14,7 +14,6 @@
 [ext_resource type="AudioStream" uid="uid://ccyut302q2g4h" path="res://assets/sounds/step.wav" id="10_76i7i"]
 [ext_resource type="Texture2D" uid="uid://cw7lyqdtall7y" path="res://assets/level/Parallax.png" id="11_5stf6"]
 [ext_resource type="Script" uid="uid://calji8g712e2u" path="res://scripts/components/InputAxisComponent.gd" id="12_20koh"]
-[ext_resource type="AudioStream" uid="uid://cx0t33i7lkmw0" path="res://assets/sounds/jump.wav" id="12_mndc6"]
 [ext_resource type="Script" uid="uid://dlhvsyq85r1g2" path="res://scripts/ui/CameraManager.gd" id="14_kvwax"]
 [ext_resource type="Script" uid="uid://bit2831m4pg0f" path="res://scripts/components/MineComponent.gd" id="14_ov1oi"]
 [ext_resource type="Texture2D" uid="uid://dvcwwtstrhn57" path="res://assets/player/SelectionBox12x12.png" id="16_8qjgm"]
@@ -114,7 +113,6 @@ script = ExtResource("7_7oing")
 control_component = NodePath("../ControlComponent")
 sprite_modifier_component = NodePath("../SpriteModifierComponent")
 jump_velocity = 170.0
-jump_sound = Array[AudioStream]([ExtResource("12_mndc6")])
 audio_source = NodePath("../AudioSourceComponent")
 character = NodePath("..")
 metadata/_custom_type_script = "uid://bg8ci2wt7hdkj"

@@ -11,10 +11,8 @@
 [ext_resource type="Script" uid="uid://vfnsma812ipo" path="res://scripts/components/MovementComponent.gd" id="8_5stf6"]
 [ext_resource type="Script" uid="uid://bkn8koxdnb8w0" path="res://scripts/components/AudioSource.gd" id="9_x3qp0"]
 [ext_resource type="Texture2D" uid="uid://bvff41lpr285n" path="res://assets/above/pointlight-smooth.jpg" id="10_7oing"]
-[ext_resource type="AudioStream" uid="uid://ccyut302q2g4h" path="res://assets/sounds/step.wav" id="10_76i7i"]
 [ext_resource type="Texture2D" uid="uid://cw7lyqdtall7y" path="res://assets/level/Parallax.png" id="11_5stf6"]
 [ext_resource type="Script" uid="uid://calji8g712e2u" path="res://scripts/components/InputAxisComponent.gd" id="12_20koh"]
-[ext_resource type="AudioStream" uid="uid://cx0t33i7lkmw0" path="res://assets/sounds/jump.wav" id="12_mndc6"]
 [ext_resource type="Script" uid="uid://dlhvsyq85r1g2" path="res://scripts/ui/CameraManager.gd" id="14_kvwax"]
 [ext_resource type="Script" uid="uid://bit2831m4pg0f" path="res://scripts/components/MineComponent.gd" id="14_ov1oi"]
 [ext_resource type="Texture2D" uid="uid://dvcwwtstrhn57" path="res://assets/player/SelectionBox12x12.png" id="16_8qjgm"]
@@ -49,8 +47,6 @@ easing_style = 2
 duration = 0.1
 metadata/_custom_type_script = "uid://d164jamb4hq8l"
 
-[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_mndc6"]
-
 [node name="Player" type="CharacterBody2D" unique_id=872088493 node_paths=PackedStringArray("control_component", "sprite_modifier_component")]
 script = ExtResource("1_wr5hl")
 control_component = NodePath("ControlComponent")
@@ -73,10 +69,9 @@ texture = ExtResource("3_4kuee")
 position = Vector2(0, 0.25)
 shape = SubResource("RectangleShape2D_yx65c")
 
-[node name="SpriteModifierComponent" type="Node" parent="." unique_id=1970386051 node_paths=PackedStringArray("sprite", "audio_source")]
+[node name="SpriteModifierComponent" type="Node" parent="." unique_id=1970386051 node_paths=PackedStringArray("sprite")]
 script = ExtResource("6_c3xxp")
 sprite = NodePath("../Sprite")
-audio_source = NodePath("../AudioSourceComponent")
 squash_tween = SubResource("Resource_v42im")
 stretch_tween = SubResource("Resource_pn6s4")
 return_tween = SubResource("Resource_7oing")
@@ -99,24 +94,15 @@ control_component = NodePath("../ControlComponent")
 gravity_multiplier = 0.8
 metadata/_custom_type_script = "uid://d2t1hwt0q1jim"
 
-[node name="AudioSourceComponent" type="Node" parent="." unique_id=2044513012 node_paths=PackedStringArray("audio_player", "character")]
+[node name="AudioSourceComponent" type="Node" parent="." unique_id=2044513012]
 script = ExtResource("9_x3qp0")
-audio_player = NodePath("AudioStreamPlayer2D")
-footstep_sounds = Array[AudioStream]([ExtResource("10_76i7i")])
-character = NodePath("..")
 metadata/_custom_type_script = "uid://bg8ci2wt7hdkj"
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="AudioSourceComponent" unique_id=226303235]
-stream = SubResource("AudioStreamWAV_mndc6")
-
-[node name="JumpComponent" type="Node" parent="." unique_id=1399277520 node_paths=PackedStringArray("control_component", "sprite_modifier_component", "audio_source", "character")]
+[node name="JumpComponent" type="Node" parent="." unique_id=1399277520 node_paths=PackedStringArray("control_component", "sprite_modifier_component")]
 script = ExtResource("7_7oing")
 control_component = NodePath("../ControlComponent")
 sprite_modifier_component = NodePath("../SpriteModifierComponent")
 jump_velocity = 170.0
-jump_sound = Array[AudioStream]([ExtResource("12_mndc6")])
-audio_source = NodePath("../AudioSourceComponent")
-character = NodePath("..")
 metadata/_custom_type_script = "uid://bg8ci2wt7hdkj"
 
 [node name="MovementComponent" type="Node" parent="." unique_id=1623111960 node_paths=PackedStringArray("control_component", "sprite_modifier_component", "input_component")]
@@ -137,14 +123,11 @@ metadata/_custom_type_script = "uid://calji8g712e2u"
 script = ExtResource("17_ejd4k")
 metadata/_custom_type_script = "uid://d31hwdoqfjbcb"
 
-[node name="BuildComponent" type="Node" parent="." unique_id=125261280 node_paths=PackedStringArray("inventory_component", "selection_component", "camera", "audio_source", "character")]
+[node name="BuildComponent" type="Node" parent="." unique_id=125261280 node_paths=PackedStringArray("inventory_component", "selection_component")]
 script = ExtResource("18_2xrq6")
 inventory_component = NodePath("../InventoryComponent")
 selection_component = NodePath("../SelectionBoxComponent")
 selected_block_id = 1
-camera = NodePath("../Camera")
-audio_source = NodePath("../AudioSourceComponent")
-character = NodePath("..")
 metadata/_custom_type_script = "uid://hho3xa5gaxdb"
 
 [node name="Camera" type="Camera2D" parent="." unique_id=689899775]
@@ -159,26 +142,23 @@ offset_bottom = -135.0
 scale = Vector2(0.2, 0.2)
 inventory_component = NodePath("../../InventoryComponent")
 
-[node name="MineComponent" type="Node" parent="." unique_id=164825942 node_paths=PackedStringArray("inventory_component", "selection_component", "camera", "audio_source", "tile_damage_component", "cd_timer", "character")]
+[node name="MineComponent" type="Node" parent="." unique_id=164825942 node_paths=PackedStringArray("inventory_component", "selection_component", "camera", "tile_damage_component", "cd_timer")]
 script = ExtResource("14_ov1oi")
 inventory_component = NodePath("../InventoryComponent")
 selection_component = NodePath("../SelectionBoxComponent")
 camera = NodePath("../Camera")
-audio_source = NodePath("../AudioSourceComponent")
 tile_damage_component = NodePath("../TileDamageComponent")
 cd_timer = NodePath("MineCooldown")
-character = NodePath("..")
 metadata/_custom_type_script = "uid://bit2831m4pg0f"
 
 [node name="MineCooldown" type="Timer" parent="MineComponent" unique_id=658795911]
 wait_time = 0.3
 one_shot = true
 
-[node name="TileDamageComponent" type="Node" parent="." unique_id=566282509 node_paths=PackedStringArray("overlay_sprite", "character")]
+[node name="TileDamageComponent" type="Node" parent="." unique_id=566282509 node_paths=PackedStringArray("overlay_sprite")]
 script = ExtResource("18_pi3ps")
 overlay_sprite = NodePath("DamageSprite")
 crack_frames = Array[Texture2D]([ExtResource("19_pi3ps"), ExtResource("20_p1lr0"), ExtResource("21_ro0t8"), ExtResource("22_8nn5r")])
-character = NodePath("..")
 metadata/_custom_type_script = "uid://d3bncier3mv1h"
 
 [node name="DamageSprite" type="Sprite2D" parent="TileDamageComponent" unique_id=1039861236]

@@ -1,9 +1,11 @@
-class_name MineComponent extends CharacterComponent
+class_name MineComponent
+extends CharacterComponent
 
 @export_group("Components")
 @export var inventory_component : InventoryComponent
 @export var selection_component : SelectionBoxComponent
 @export var camera : ShakeableCamera2D
+@export var audio_source : AudioSourceComponent
 
 @export_group("Mining")
 @export var max_mining_distance : float = 40.0
@@ -61,10 +63,14 @@ func mine() -> bool:
 			inventory_component.add_item_by_id(result.block_id)
 		if tile_damage_component:
 			tile_damage_component.clear()
+		if audio_source:
+			audio_source.play_sound(result.block_data.hit_sounds)
 	else:
 		if tile_damage_component:
 			tile_damage_component.play_hit(tile_pos, result.hits, result.max_hits, result.block_data)
-	
+		if audio_source:
+			audio_source.play_sound(result.block_data.hit_sounds)
+
 	camera.add_trauma(0.15)
 	camera.shake()
 	if cd_timer:
