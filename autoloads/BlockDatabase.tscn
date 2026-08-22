@@ -8,6 +8,7 @@
 [sub_resource type="Resource" id="Resource_6ojj1"]
 script = ExtResource("2_kxxcu")
 display_name = "Stuffing"
+hardness = 2
 hit_sounds = Array[AudioStream]([ExtResource("3_ui66f")])
 place_sounds = Array[AudioStream]([ExtResource("3_ui66f")])
 metadata/_custom_type_script = "uid://h7cwu8wnif38"
@@ -17,7 +18,6 @@ script = ExtResource("2_kxxcu")
 block_id = 1
 display_name = "Hardened Leather"
 terrain_id = 1
-hardness = 5
 hit_sounds = Array[AudioStream]([ExtResource("3_kxxcu")])
 place_sounds = Array[AudioStream]([ExtResource("3_kxxcu")])
 metadata/_custom_type_script = "uid://h7cwu8wnif38"
