@@ -4,6 +4,10 @@ class_name BuildComponent extends CharacterComponent
 @export var selection_component : SelectionBoxComponent
 @export var max_build_distance : float = 40.0
 @export var selected_block_id : int = 0
+@export var camera : Camera2D
+
+@export_group("Audio")
+@export var audio_source : AudioSourceComponent
 
 var level_generator : LevelGenerator
 
@@ -49,6 +53,13 @@ func build() -> bool:
 	if inventory_component and inventory_component.has_item(selected_block_id):
 		if inventory_component.remove_item_by_id(selected_block_id):
 			level_generator.modify_tile(tile_pos, true, selected_block_id)
+			## play place audio
+			if audio_source:
+				var block_data := BlockDatabase.get_block_by_id(selected_block_id)
+				if block_data:
+					audio_source.play_sound(block_data.place_sounds)
+			camera.add_trauma(0.15)
+			camera.shake()
 			return true
 			
 	return false

@@ -26,6 +26,8 @@
 [ext_resource type="Texture2D" uid="uid://8tvnxoau813y" path="res://assets/level/crack_02.png" id="20_p1lr0"]
 [ext_resource type="Texture2D" uid="uid://chusgxw2ycsud" path="res://assets/level/crack_03.png" id="21_ro0t8"]
 [ext_resource type="Texture2D" uid="uid://bjc706sf3r3j6" path="res://assets/level/crack_04.png" id="22_8nn5r"]
+[ext_resource type="PackedScene" uid="uid://bqx24qb1nil2g" path="res://scenes/ui/InventoryUI.tscn" id="23_8nn5r"]
+[ext_resource type="Material" uid="uid://8xkndevfkt7s" path="res://assets/materials/UnshadedMaterial.tres" id="24_kvwax"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yx65c"]
 size = Vector2(6, 7.5)
@@ -150,16 +152,10 @@ zoom = Vector2(4, 4)
 script = ExtResource("14_kvwax")
 
 [node name="PlayerGUI" parent="Camera" unique_id=1953480870 node_paths=PackedStringArray("inventory_component") instance=ExtResource("17_2xrq6")]
-custom_minimum_size = Vector2(100, 0)
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = -256.0
+offset_left = -255.0
 offset_top = -135.0
-offset_right = 700.0
-offset_bottom = 403.0
-grow_horizontal = 1
-grow_vertical = 1
+offset_right = -255.0
+offset_bottom = -135.0
 scale = Vector2(0.2, 0.2)
 inventory_component = NodePath("../../InventoryComponent")
 
@@ -197,3 +193,10 @@ metadata/_custom_type_script = "uid://cs7i6acbb7w5c"
 
 [node name="SelectionSprite" type="Sprite2D" parent="SelectionBoxComponent" unique_id=979960632]
 texture = ExtResource("16_8qjgm")
+
+[node name="Inventory" parent="." unique_id=719637500 instance=ExtResource("23_8nn5r")]
+material = ExtResource("24_kvwax")
+offset_left = 143.0
+offset_top = 10.0
+offset_right = 276.52173
+offset_bottom = 121.0

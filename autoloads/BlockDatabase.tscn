@@ -2,10 +2,14 @@
 
 [ext_resource type="Script" uid="uid://cv1o1qoe633a5" path="res://autoloads/BlockIds.gd" id="1_v6wp7"]
 [ext_resource type="Script" uid="uid://h7cwu8wnif38" path="res://scripts/types/BlockData.gd" id="2_kxxcu"]
+[ext_resource type="AudioStream" uid="uid://dygcbsxly28p1" path="res://assets/sounds/hit.mp3" id="3_kxxcu"]
+[ext_resource type="AudioStream" uid="uid://ve6762bpg3ou" path="res://assets/sounds/leather_hit.wav" id="3_ui66f"]
 
 [sub_resource type="Resource" id="Resource_6ojj1"]
 script = ExtResource("2_kxxcu")
 display_name = "Stuffing"
+hit_sounds = Array[AudioStream]([ExtResource("3_ui66f")])
+place_sounds = Array[AudioStream]([ExtResource("3_ui66f")])
 metadata/_custom_type_script = "uid://h7cwu8wnif38"
 
 [sub_resource type="Resource" id="Resource_8nn5r"]
@@ -14,6 +18,8 @@ block_id = 1
 display_name = "Hardened Leather"
 terrain_id = 1
 hardness = 5
+hit_sounds = Array[AudioStream]([ExtResource("3_kxxcu")])
+place_sounds = Array[AudioStream]([ExtResource("3_kxxcu")])
 metadata/_custom_type_script = "uid://h7cwu8wnif38"
 
 [node name="BlockDatabase" type="Node" unique_id=1572723925]
