@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bvff41lpr285n" path="res://assets/above/pointlight-smooth.jpg" id="10_7oing"]
 [ext_resource type="Texture2D" uid="uid://cw7lyqdtall7y" path="res://assets/level/Parallax.png" id="11_5stf6"]
 [ext_resource type="Script" uid="uid://calji8g712e2u" path="res://scripts/components/InputAxisComponent.gd" id="12_20koh"]
+[ext_resource type="Script" uid="uid://dlhvsyq85r1g2" path="res://scripts/ui/CameraManager.gd" id="14_kvwax"]
 [ext_resource type="Script" uid="uid://bit2831m4pg0f" path="res://scripts/components/MineComponent.gd" id="14_ov1oi"]
 [ext_resource type="Texture2D" uid="uid://dvcwwtstrhn57" path="res://assets/player/SelectionBox12x12.png" id="16_8qjgm"]
 [ext_resource type="PackedScene" uid="uid://b3cik7817ehfv" path="res://scenes/ui/PlayerGUI.tscn" id="17_2xrq6"]
@@ -123,6 +124,7 @@ metadata/_custom_type_script = "uid://hho3xa5gaxdb"
 
 [node name="Camera" type="Camera2D" parent="." unique_id=689899775]
 zoom = Vector2(4, 4)
+script = ExtResource("14_kvwax")
 
 [node name="PlayerGUI" parent="Camera" unique_id=1953480870 node_paths=PackedStringArray("inventory_component") instance=ExtResource("17_2xrq6")]
 offset_left = -255.0
@@ -132,10 +134,11 @@ offset_bottom = -135.0
 scale = Vector2(0.2, 0.2)
 inventory_component = NodePath("../../InventoryComponent")
 
-[node name="MineComponent" type="Node" parent="." unique_id=164825942 node_paths=PackedStringArray("inventory_component", "selection_component", "tile_damage_component", "cd_timer")]
+[node name="MineComponent" type="Node" parent="." unique_id=164825942 node_paths=PackedStringArray("inventory_component", "selection_component", "camera", "tile_damage_component", "cd_timer")]
 script = ExtResource("14_ov1oi")
 inventory_component = NodePath("../InventoryComponent")
 selection_component = NodePath("../SelectionBoxComponent")
+camera = NodePath("../Camera")
 tile_damage_component = NodePath("../TileDamageComponent")
 cd_timer = NodePath("MineCooldown")
 metadata/_custom_type_script = "uid://bit2831m4pg0f"
@@ -165,7 +168,7 @@ texture = ExtResource("16_8qjgm")
 
 [node name="Inventory" parent="." unique_id=719637500 instance=ExtResource("23_8nn5r")]
 material = ExtResource("24_kvwax")
-offset_left = -7.0
-offset_top = -36.0
-offset_right = 126.52173
-offset_bottom = 75.0
+offset_left = 143.0
+offset_top = 10.0
+offset_right = 276.52173
+offset_bottom = 121.0

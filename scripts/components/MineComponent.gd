@@ -3,9 +3,10 @@ class_name MineComponent extends CharacterComponent
 @export_group("Components")
 @export var inventory_component : InventoryComponent
 @export var selection_component : SelectionBoxComponent
-@export var max_mining_distance : float = 40.0
+@export var camera : ShakeableCamera2D
 
 @export_group("Mining")
+@export var max_mining_distance : float = 40.0
 @export var mine_strength : int = 1
 @export var hit_amount : int = 1
 @export var tile_damage_component : TileDamageComponent
@@ -64,6 +65,8 @@ func mine() -> bool:
 		if tile_damage_component:
 			tile_damage_component.play_hit(tile_pos, result.hits, result.max_hits, result.block_data)
 	
+	camera.add_trauma(0.15)
+	camera.shake()
 	if cd_timer:
 		cd_timer.start()
 
