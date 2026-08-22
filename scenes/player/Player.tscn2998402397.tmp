@@ -14,7 +14,6 @@
 [ext_resource type="AudioStream" uid="uid://ccyut302q2g4h" path="res://assets/sounds/step.wav" id="10_76i7i"]
 [ext_resource type="Texture2D" uid="uid://cw7lyqdtall7y" path="res://assets/level/Parallax.png" id="11_5stf6"]
 [ext_resource type="Script" uid="uid://calji8g712e2u" path="res://scripts/components/InputAxisComponent.gd" id="12_20koh"]
-[ext_resource type="AudioStream" uid="uid://cx0t33i7lkmw0" path="res://assets/sounds/jump.wav" id="12_mndc6"]
 [ext_resource type="Script" uid="uid://dlhvsyq85r1g2" path="res://scripts/ui/CameraManager.gd" id="14_kvwax"]
 [ext_resource type="Script" uid="uid://bit2831m4pg0f" path="res://scripts/components/MineComponent.gd" id="14_ov1oi"]
 [ext_resource type="Texture2D" uid="uid://dvcwwtstrhn57" path="res://assets/player/SelectionBox12x12.png" id="16_8qjgm"]
@@ -26,6 +25,8 @@
 [ext_resource type="Texture2D" uid="uid://8tvnxoau813y" path="res://assets/level/crack_02.png" id="20_p1lr0"]
 [ext_resource type="Texture2D" uid="uid://chusgxw2ycsud" path="res://assets/level/crack_03.png" id="21_ro0t8"]
 [ext_resource type="Texture2D" uid="uid://bjc706sf3r3j6" path="res://assets/level/crack_04.png" id="22_8nn5r"]
+[ext_resource type="PackedScene" uid="uid://bqx24qb1nil2g" path="res://scenes/ui/InventoryUI.tscn" id="23_8nn5r"]
+[ext_resource type="Material" uid="uid://8xkndevfkt7s" path="res://assets/materials/UnshadedMaterial.tres" id="24_kvwax"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yx65c"]
 size = Vector2(6, 7.5)
@@ -51,7 +52,6 @@ metadata/_custom_type_script = "uid://d164jamb4hq8l"
 
 [node name="Player" type="CharacterBody2D" unique_id=872088493 node_paths=PackedStringArray("control_component", "sprite_modifier_component")]
 script = ExtResource("1_wr5hl")
-camera = NodePath("Camera")
 control_component = NodePath("ControlComponent")
 sprite_modifier_component = NodePath("SpriteModifierComponent")
 
@@ -71,7 +71,6 @@ texture = ExtResource("3_4kuee")
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=2041257211]
 position = Vector2(0, 0.25)
 shape = SubResource("RectangleShape2D_yx65c")
-disabled = true
 
 [node name="SpriteModifierComponent" type="Node" parent="." unique_id=1970386051 node_paths=PackedStringArray("sprite", "audio_source")]
 script = ExtResource("6_c3xxp")
@@ -114,7 +113,6 @@ script = ExtResource("7_7oing")
 control_component = NodePath("../ControlComponent")
 sprite_modifier_component = NodePath("../SpriteModifierComponent")
 jump_velocity = 170.0
-jump_sound = Array[AudioStream]([ExtResource("12_mndc6")])
 audio_source = NodePath("../AudioSourceComponent")
 character = NodePath("..")
 metadata/_custom_type_script = "uid://bg8ci2wt7hdkj"
@@ -148,21 +146,14 @@ character = NodePath("..")
 metadata/_custom_type_script = "uid://hho3xa5gaxdb"
 
 [node name="Camera" type="Camera2D" parent="." unique_id=689899775]
-enabled = false
 zoom = Vector2(4, 4)
 script = ExtResource("14_kvwax")
 
 [node name="PlayerGUI" parent="Camera" unique_id=1953480870 node_paths=PackedStringArray("inventory_component") instance=ExtResource("17_2xrq6")]
-custom_minimum_size = Vector2(100, 0)
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = -256.0
+offset_left = -255.0
 offset_top = -135.0
-offset_right = 700.0
-offset_bottom = 403.0
-grow_horizontal = 1
-grow_vertical = 1
+offset_right = -255.0
+offset_bottom = -135.0
 scale = Vector2(0.2, 0.2)
 inventory_component = NodePath("../../InventoryComponent")
 
@@ -199,5 +190,11 @@ sprite = NodePath("SelectionSprite")
 metadata/_custom_type_script = "uid://cs7i6acbb7w5c"
 
 [node name="SelectionSprite" type="Sprite2D" parent="SelectionBoxComponent" unique_id=979960632]
-visible = false
 texture = ExtResource("16_8qjgm")
+
+[node name="Inventory" parent="." unique_id=719637500 instance=ExtResource("23_8nn5r")]
+material = ExtResource("24_kvwax")
+offset_left = 143.0
+offset_top = 10.0
+offset_right = 276.52173
+offset_bottom = 121.0

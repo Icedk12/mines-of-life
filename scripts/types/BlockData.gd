@@ -9,3 +9,7 @@ class_name BlockData extends Resource
 @export var required_strength : int = 0
 @export var wobble_amplitude : float = 2.0
 @export var wobble_duration : float = 0.06
+
+@export_group("Audio") ## sound played when hit/broken 67
+@export var hit_sounds : Array[AudioStream] = []
+@export var place_sounds : Array[AudioStream] = []

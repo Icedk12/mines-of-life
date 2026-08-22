@@ -190,13 +190,13 @@ func damage_tile(tile_pos: Vector2i, amount: int, tool_strength: int) -> Diction
 
 	var block_data := BlockDatabase.get_block_by_id(td.get_custom_data("block_id"))
 	if block_data == null or tool_strength < block_data.required_strength:
-		return {"broken": false, "blocked": true}
+		return {"broken": false, "blocked": true, "block_data": block_data}
 
 	tile_damage[tile_pos] = tile_damage.get(tile_pos, 0) + amount
 
 	if tile_damage[tile_pos] >= block_data.hardness:
 		tile_damage.erase(tile_pos)
-		return {"broken": true, "block_id": modify_tile(tile_pos, false)}
+		return {"broken": true, "block_id": modify_tile(tile_pos, false), "block_data": block_data}
 
 	return {
 		"broken": false,
