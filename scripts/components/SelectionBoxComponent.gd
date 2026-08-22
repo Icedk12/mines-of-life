@@ -32,3 +32,6 @@ func _set_visible_with_fade(should_hide: bool) -> void:
 	else:
 		sprite.visible = true
 		fade_tween.tween_property(sprite, "self_modulate", Color.WHITE, 0.3)
+	
+	if character.state == character.State.MAIN_MENU:
+		sprite.visible = false
