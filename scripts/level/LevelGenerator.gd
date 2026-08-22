@@ -21,6 +21,7 @@ var last_player_chunk := Vector2i(999999, 999999)
 
 var modified_tiles := {}
 
+var is_generating : bool = false
 var is_initial_generation : bool = true
 var initial_generation_complete : bool = false
 
@@ -28,13 +29,11 @@ func _ready() -> void:
 	cave_noise.seed = GameSettings.seed_
 	cave_noise.frequency = 0.03
 	cave_noise.fractal_type = FastNoiseLite.FRACTAL_FBM
-	
-	var start_pos = player.global_position if player else Vector2.ZERO
-	update_chunks(start_pos)
 
 func generate_initial_world() -> void:
 	is_initial_generation = true
 	initial_generation_complete = false
+	is_generating = true # Start processing
 	
 	var start_pos = player.global_position if player else Vector2.ZERO
 	var center_tile = tilemap.local_to_map(start_pos)
@@ -43,7 +42,9 @@ func generate_initial_world() -> void:
 	
 	last_player_chunk = Vector2i(center_chunk_x, center_chunk_y)
 	
-	# Populate initial generation queue sorted by proximity
+	# Clear any leftover queue items before building
+	generation_queue.clear()
+	
 	var initial_chunks: Array[Vector2i] = []
 	for x in range(center_chunk_x - GameSettings.render_distance, center_chunk_x + GameSettings.render_distance + 1):
 		for y in range(center_chunk_y - GameSettings.render_distance, center_chunk_y + GameSettings.render_distance + 1):
@@ -58,6 +59,9 @@ func generate_initial_world() -> void:
 	generation_queue.append_array(initial_chunks)
 
 func _process(_delta: float) -> void:
+	if not is_generating:
+		return
+
 	# Process one chunk from the queue per frame
 	if generation_queue.size() > 0:
 		var next_chunk = generation_queue.pop_front()
