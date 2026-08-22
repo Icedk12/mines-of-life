@@ -13,6 +13,16 @@
 [ext_resource type="Script" uid="uid://cq10g2fnfrkmf" path="res://scripts/ui/PlayButton.gd" id="8_wp0k4"]
 [ext_resource type="Script" uid="uid://bgrobf4mavkho" path="res://scripts/ui/Hover.gd" id="12_bjd11"]
 [ext_resource type="Shader" uid="uid://5hogyrnpyfc3" path="res://scripts/shaders/Vignette.gdshader" id="13_qmy6f"]
+[ext_resource type="Texture2D" uid="uid://1m67vyv7siox" path="res://assets/ui/StartOptions.png" id="14_mwfav"]
+[ext_resource type="LabelSettings" uid="uid://2lchjb3vtapf" path="res://assets/labels/StartLabelSettings.tres" id="15_3p2gp"]
+[ext_resource type="Texture2D" uid="uid://3gwm6kc7l0s" path="res://assets/player/PlayerRecolourable.png" id="16_cvmbd"]
+[ext_resource type="Script" uid="uid://b8dd8kca0y16v" path="res://scripts/ui/PlayerPreviewer.gd" id="17_ft6cd"]
+[ext_resource type="FontFile" uid="uid://b6h6ryjq6gnbv" path="res://assets/fonts/Ultracouch.ttf" id="18_bb450"]
+[ext_resource type="Texture2D" uid="uid://c8mc17qyn2407" path="res://assets/ui/Seed.png" id="19_yxlcp"]
+[ext_resource type="Texture2D" uid="uid://bx7kjeatemx6d" path="res://assets/ui/Simulation-Distance.png" id="20_ebg2g"]
+[ext_resource type="Texture2D" uid="uid://bftnar1uyjyp4" path="res://assets/ui/Chunk-Size.png" id="21_2ofn6"]
+[ext_resource type="Texture2D" uid="uid://dnribgdmwgxie" path="res://assets/ui/Darkness.png" id="22_xa025"]
+[ext_resource type="Texture2D" uid="uid://dvcwwtstrhn57" path="res://assets/player/SelectionBox12x12.png" id="23_ebg2g"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qmy6f"]
 shader = ExtResource("13_qmy6f")
@@ -46,10 +56,10 @@ tracks/0/path = NodePath(".:material:shader_parameter/vignette_radius")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 3.0666666, 6.01),
+"times": PackedFloat32Array(0.03, 3.01, 6),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [0.69200003287, 0.82800003933, 0.69200003287]
+"values": [0.5910000280725, 0.6590000313025, 0.5910000280725]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3p2gp"]
@@ -57,6 +67,71 @@ _data = {
 &"RESET": SubResource("Animation_qmy6f"),
 &"fade_vignette": SubResource("Animation_mwfav")
 }
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfivy"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="ImageTexture" id="ImageTexture_ebg2g"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_2ofn6"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_xa025"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_36rkl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pnhog"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dg70y"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ebg2g"]
+bg_color = Color(0.28485027, 0.28485027, 0.28485027, 0.5058824)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ma7h6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e2s0e"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8b871"]
+bg_color = Color(0, 0, 0, 0.5058824)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v0vrg"]
+
+[sub_resource type="Theme" id="Theme_36rkl"]
+PopupMenu/font_sizes/font_size = 12
+PopupMenu/fonts/font = ExtResource("18_bb450")
+PopupMenu/icons/radio_checked = SubResource("ImageTexture_ebg2g")
+PopupMenu/icons/radio_checked_disabled = SubResource("ImageTexture_2ofn6")
+PopupMenu/icons/radio_unchecked = SubResource("ImageTexture_xa025")
+PopupMenu/icons/radio_unchecked_disabled = SubResource("ImageTexture_36rkl")
+PopupMenu/styles/embedded_border = SubResource("StyleBoxEmpty_pnhog")
+PopupMenu/styles/embedded_unfocused_border = SubResource("StyleBoxEmpty_dg70y")
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_ebg2g")
+PopupMenu/styles/labeled_separator_left = SubResource("StyleBoxEmpty_ma7h6")
+PopupMenu/styles/labeled_separator_right = SubResource("StyleBoxEmpty_e2s0e")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_8b871")
+PopupMenu/styles/separator = SubResource("StyleBoxEmpty_v0vrg")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ebg2g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2ofn6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xa025"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_36rkl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2c4at"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g6wdg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hq6as"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kxyth"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cobve"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cmqll"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8cp6k"]
 
 [node name="Main" type="Node2D" unique_id=791347418 node_paths=PackedStringArray("player", "level")]
 script = ExtResource("1_0bbpv")
@@ -112,6 +187,7 @@ offset_bottom = 328.25
 [node name="VignetteFade" type="AnimationPlayer" parent="MainMenu/CanvasLayer/Control/Vignette" unique_id=1203124428]
 libraries/ = SubResource("AnimationLibrary_3p2gp")
 autoplay = &"fade_vignette"
+speed_scale = 2.0
 
 [node name="PlayBtn" type="TextureButton" parent="MainMenu/CanvasLayer/Control" unique_id=318958663]
 material = ExtResource("4_vcsgt")
@@ -154,4 +230,286 @@ pivot_offset = Vector2(128.5, 54.5)
 texture = ExtResource("8_jlsqs")
 script = ExtResource("12_bjd11")
 
+[node name="StartMenu" type="Control" parent="MainMenu/CanvasLayer/Control" unique_id=1172606332]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Background" type="TextureRect" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=1112533954]
+layout_mode = 0
+offset_left = 201.0
+offset_top = 90.75
+offset_right = 351.0
+offset_bottom = 290.75
+texture = ExtResource("14_mwfav")
+
+[node name="OptionLbl" type="Label" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=498211588]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 115.0
+offset_right = 276.0
+offset_bottom = 131.0
+text = "seed:"
+label_settings = ExtResource("15_3p2gp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionLbl2" type="Label" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=271464455]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 135.0
+offset_right = 276.0
+offset_bottom = 151.0
+text = "sim dist:"
+label_settings = ExtResource("15_3p2gp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionLbl3" type="Label" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=1682108169]
+layout_mode = 0
+offset_left = 204.75
+offset_top = 154.75
+offset_right = 278.0
+offset_bottom = 170.75
+text = "chunk size:"
+label_settings = ExtResource("15_3p2gp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionLbl4" type="Label" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=2033529996]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 174.75
+offset_right = 276.0
+offset_bottom = 190.75
+text = "darkness:"
+label_settings = ExtResource("15_3p2gp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionLbl7" type="Label" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=1086335548]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 215.0
+offset_right = 276.0
+offset_bottom = 231.0
+text = "colour:"
+label_settings = ExtResource("15_3p2gp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionLbl9" type="Label" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=2124644251]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 254.75
+offset_right = 276.0
+offset_bottom = 270.75
+text = "mining ez?:"
+label_settings = ExtResource("15_3p2gp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionLbl8" type="Label" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=1132766401]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 235.0
+offset_right = 276.0
+offset_bottom = 251.0
+text = "difficulty:"
+label_settings = ExtResource("15_3p2gp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionLbl5" type="Label" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=1073437519]
+layout_mode = 0
+offset_left = 206.75
+offset_top = 95.0
+offset_right = 344.75
+offset_bottom = 110.0
+text = "WORLD OPTIONS"
+label_settings = ExtResource("15_3p2gp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionLbl6" type="Label" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=305052259]
+layout_mode = 0
+offset_left = 206.75
+offset_top = 195.0
+offset_right = 344.75
+offset_bottom = 210.0
+text = "PLAYER OPTIONS"
+label_settings = ExtResource("15_3p2gp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerColour" type="ColorPickerButton" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=1320408116]
+layout_mode = 0
+offset_left = 293.0
+offset_top = 215.0
+offset_right = 340.75
+offset_bottom = 231.0
+icon = ExtResource("16_cvmbd")
+flat = true
+color = Color(1, 1, 1, 1)
+
+[node name="PreviewPlayer" type="TextureRect" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=752059346]
+layout_mode = 0
+offset_left = 279.75
+offset_top = 218.25
+offset_right = 289.75
+offset_bottom = 228.25
+texture = ExtResource("16_cvmbd")
+script = ExtResource("17_ft6cd")
+
+[node name="Seed" type="LineEdit" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=349240231]
+layout_mode = 0
+offset_left = 276.5
+offset_top = 115.0
+offset_right = 343.5
+offset_bottom = 131.0
+theme_override_fonts/font = ExtResource("18_bb450")
+theme_override_font_sizes/font_size = 7
+theme_override_styles/focus = SubResource("StyleBoxFlat_nfivy")
+placeholder_text = "enter seed"
+context_menu_enabled = false
+emoji_menu_enabled = false
+flat = true
+virtual_keyboard_enabled = false
+right_icon = ExtResource("19_yxlcp")
+
+[node name="SimulationDistance" type="LineEdit" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=714740729]
+layout_mode = 0
+offset_left = 276.5
+offset_top = 135.0
+offset_right = 343.5
+offset_bottom = 151.0
+theme_override_fonts/font = ExtResource("18_bb450")
+theme_override_font_sizes/font_size = 7
+theme_override_styles/focus = SubResource("StyleBoxFlat_nfivy")
+text = "3"
+placeholder_text = "3"
+context_menu_enabled = false
+emoji_menu_enabled = false
+flat = true
+virtual_keyboard_enabled = false
+right_icon = ExtResource("20_ebg2g")
+
+[node name="ChunkSize" type="LineEdit" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=1242788948]
+layout_mode = 0
+offset_left = 276.5
+offset_top = 155.0
+offset_right = 343.5
+offset_bottom = 171.0
+theme_override_fonts/font = ExtResource("18_bb450")
+theme_override_font_sizes/font_size = 7
+theme_override_styles/focus = SubResource("StyleBoxFlat_nfivy")
+text = "16"
+placeholder_text = "16"
+context_menu_enabled = false
+emoji_menu_enabled = false
+flat = true
+virtual_keyboard_enabled = false
+right_icon = ExtResource("21_2ofn6")
+
+[node name="Darkness" type="LineEdit" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=1349660056]
+layout_mode = 0
+offset_left = 276.5
+offset_top = 175.25
+offset_right = 343.5
+offset_bottom = 191.25
+theme_override_fonts/font = ExtResource("18_bb450")
+theme_override_font_sizes/font_size = 7
+theme_override_styles/focus = SubResource("StyleBoxFlat_nfivy")
+text = "1"
+placeholder_text = "1"
+context_menu_enabled = false
+emoji_menu_enabled = false
+flat = true
+virtual_keyboard_enabled = false
+right_icon = ExtResource("22_xa025")
+
+[node name="Difficulty" type="OptionButton" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=1158265141]
+layout_mode = 0
+offset_left = 278.0
+offset_top = 235.0
+offset_right = 373.07144
+offset_bottom = 258.0
+scale = Vector2(0.7, 0.7)
+theme = SubResource("Theme_36rkl")
+theme_override_constants/h_separation = 0
+theme_override_fonts/font = ExtResource("18_bb450")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ebg2g")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_2ofn6")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_xa025")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_36rkl")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_2c4at")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_g6wdg")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_hq6as")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_kxyth")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_cobve")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_cmqll")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8cp6k")
+theme_override_icons/arrow = ExtResource("23_ebg2g")
+flat = true
+alignment = 1
+selected = 1
+fit_to_longest_item = false
+item_count = 4
+popup/item_0/text = "EASY"
+popup/item_0/id = 0
+popup/item_1/text = "NORMAL"
+popup/item_1/id = 1
+popup/item_2/text = "HARD"
+popup/item_2/id = 2
+popup/item_3/text = "ETERNITY"
+popup/item_3/id = 3
+
+[node name="MiningEasy" type="OptionButton" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=797381754]
+layout_mode = 0
+offset_left = 278.0
+offset_top = 254.99998
+offset_right = 373.07144
+offset_bottom = 278.0
+scale = Vector2(0.7, 0.7)
+theme = SubResource("Theme_36rkl")
+theme_override_constants/h_separation = 0
+theme_override_fonts/font = ExtResource("18_bb450")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ebg2g")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_2ofn6")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_xa025")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_36rkl")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_2c4at")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_g6wdg")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_hq6as")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_kxyth")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_cobve")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_cmqll")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8cp6k")
+theme_override_icons/arrow = ExtResource("23_ebg2g")
+flat = true
+alignment = 1
+selected = 1
+fit_to_longest_item = false
+item_count = 2
+popup/item_0/text = "YES"
+popup/item_0/id = 0
+popup/item_1/text = "NO"
+popup/item_1/id = 3
+
+[node name="StartButton" type="Button" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=1330418876]
+layout_mode = 0
+offset_left = 226.25
+offset_top = 276.25
+offset_right = 325.25
+offset_bottom = 297.25
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("18_bb450")
+theme_override_font_sizes/font_size = 14
+text = "LET'S START"
+
 [connection signal="pressed" from="MainMenu/CanvasLayer/Control/PlayBtn" to="MainMenu/CanvasLayer/Control/PlayBtn" method="_on_pressed"]
+[connection signal="pressed" from="MainMenu/CanvasLayer/Control/StartMenu/StartButton" to="MainMenu/CanvasLayer/Control/PlayBtn" method="_confirm_pressed"]
