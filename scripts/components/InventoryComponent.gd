@@ -1,11 +1,15 @@
 class_name InventoryComponent extends CharacterComponent
 
-@export var inventory_size: int = 10
+signal inventory_changed
+
+@export var inventory_size : int = 10
+var selected_slot : int = 1
 
 var inventory: Dictionary[int, int] = {}
 
 func _ready() -> void:
-	add_item_by_id(0, 2)
+	add_item_by_id(0, 67)
+	add_item_by_id(1, 41)
 
 ## Checks if the inventory has enough of a specific item ID
 func has_item(id: int, amount: int = 1) -> bool:
@@ -16,7 +20,7 @@ func add_item_by_id(id: int, amount: int = 1) -> void:
 	if amount <= 0:
 		return
 
-	var item_data : Item = ItemIds.get_item_by_id(id)
+	var item_data : ItemData = ItemDatabase.get_item_by_id(id)
 	if item_data == null:
 		print("Error: Item with ID " + str(id) + " not found!")
 		return
@@ -26,7 +30,6 @@ func add_item_by_id(id: int, amount: int = 1) -> void:
 
 	# APPLY STACK SIZE LIMIT
 	if current_amount + amount > max_stack:
-		print("Cannot add all items. Stack limit reached for " + item_data.name + "!")
 		amount = max_stack - current_amount
 		if amount <= 0:
 			return
@@ -38,26 +41,23 @@ func add_item_by_id(id: int, amount: int = 1) -> void:
 
 	# UPDATE INVENTORY COUNT
 	inventory[id] = current_amount + amount
-	print("Gained " + str(amount) + " of " + item_data.item_name + " (Total: " + str(inventory[id]) + "/" + str(max_stack) + ")")
-
+	inventory_changed.emit()
 
 ## Adds an item using an Item object
-func add_item_by_item(item: Item, amount: int = 1) -> void:
+func add_item_by_item(item: ItemData, amount: int = 1) -> void:
 	if item == null:
 		return
 	add_item_by_id(item.get_id(), amount)
 
-
 ## Safely removes an item from the inventory
 func remove_item_by_id(id: int, amount: int = 1) -> bool:
 	if not inventory.has(id) or inventory[id] < amount:
-		print("Not enough items to remove!")
 		return false
 
 	inventory[id] -= amount
-	
-	# Clean up empty slots
 	if inventory[id] <= 0:
 		inventory.erase(id)
-
+		
+	inventory_changed.emit()
+	
 	return true

@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://7cegwdgkngi2"]
+
+[ext_resource type="Script" uid="uid://ujhpyj1ftlg4" path="res://autoloads/ItemIds.gd" id="1_ptkgt"]
+[ext_resource type="Script" uid="uid://cjhkyagc4mdgn" path="res://scripts/types/Item.gd" id="2_gp7j7"]
+[ext_resource type="Texture2D" uid="uid://dv011w32v3pq5" path="res://assets/items/Stuffing.png" id="3_gn7kn"]
+[ext_resource type="Texture2D" uid="uid://2y75d66onj5x" path="res://assets/items/LeatherScrap.png" id="4_3xla5"]
+
+[sub_resource type="Resource" id="Resource_v05ge"]
+script = ExtResource("2_gp7j7")
+item_name = "Stuffing"
+icon = ExtResource("3_gn7kn")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_gn7kn"]
+script = ExtResource("2_gp7j7")
+item_id = 1
+item_name = "Leather Scrap"
+icon = ExtResource("4_3xla5")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[node name="ItemDatabase" type="Node" unique_id=1572723925]
+script = ExtResource("1_ptkgt")
+item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn")])

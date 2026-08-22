@@ -1,8 +1,15 @@
 class_name MineComponent extends CharacterComponent
 
+@export_group("Components")
 @export var inventory_component : InventoryComponent
 @export var selection_component : SelectionBoxComponent
 @export var max_mining_distance : float = 40.0
+
+@export_group("Mining")
+@export var mine_strength : int = 1
+@export var hit_amount : int = 1
+@export var tile_damage_component : TileDamageComponent
+@export var cd_timer : Timer
 
 var level_generator : LevelGenerator
 
@@ -12,7 +19,8 @@ func _process(_delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
-			mine()
+			if mine():
+				get_viewport().set_input_as_handled()
 
 func update_selection() -> void:
 	if not level_generator and character and character.level:
@@ -27,27 +35,36 @@ func update_selection() -> void:
 	var tile_pos = level_generator.tilemap.local_to_map(mouse_pos)
 	selection_component.selected_tile_global_pos = level_generator.tilemap.to_global(tile_pos * 8) + Vector2(4, 4)
 
+func mine() -> bool:
+	# Check if the cooldown timer is actively running
+	if cd_timer and cd_timer.time_left > 0:
+		return false
 
-func mine() -> void:
 	if not level_generator or not level_generator.tilemap:
-		return
+		return false
 
 	var mouse_pos = character.get_global_mouse_position()
-	var char_pos = character.global_position
-
-	# Distance validation check
-	if char_pos.distance_to(mouse_pos) > max_mining_distance:
-		return
+	if character.global_position.distance_to(mouse_pos) > max_mining_distance:
+		return false
 
 	var tile_pos = level_generator.tilemap.local_to_map(mouse_pos)
-	
-	# Ensure cell is not empty before mining
 	if level_generator.tilemap.get_cell_source_id(tile_pos) == -1:
-		return
+		return false
 
-	# Mine the tile and get returned block ID
-	var block_id = level_generator.modify_tile(tile_pos, false)
+	var result = level_generator.damage_tile(tile_pos, hit_amount, mine_strength)
+	if result.is_empty() or result.get("blocked", false):
+		return false
 
-	# Add block to inventory if valid
-	if inventory_component and block_id != -1:
-		inventory_component.add_item_by_id(block_id)
+	if result.get("broken", false):
+		if inventory_component and result.block_id != -1:
+			inventory_component.add_item_by_id(result.block_id)
+		if tile_damage_component:
+			tile_damage_component.clear()
+	else:
+		if tile_damage_component:
+			tile_damage_component.play_hit(tile_pos, result.hits, result.max_hits, result.block_data)
+	
+	if cd_timer:
+		cd_timer.start()
+
+	return true

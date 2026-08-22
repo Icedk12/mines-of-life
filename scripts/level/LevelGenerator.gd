@@ -9,6 +9,9 @@ class_name LevelGenerator extends Node
 
 @onready var player = get_parent().get_parent().player as Player
 
+# Store damaged tiles
+var tile_damage : Dictionary[Vector2i, int] = {}
+
 var cave_noise : FastNoiseLite = FastNoiseLite.new()
 var loaded_chunks := {}
 var generation_queue : Array[Vector2i] = [] # Queue for time-slicing
@@ -102,8 +105,10 @@ func generate_chunk(chunk_x: int, chunk_y: int) -> void:
 			var tile_pos := Vector2i(x, y)
 			
 			if modified_tiles.has(tile_pos):
-				if modified_tiles[tile_pos] == true:
-					tiles_to_place.append(tile_pos)
+				var stored_id = modified_tiles[tile_pos]
+				if stored_id != -1:
+					var bd := BlockDatabase.get_block_by_id(stored_id)
+					tilemap.set_cells_terrain_connect([tile_pos], bd.terrain_set_id, bd.terrain_id)
 				else:
 					tilemap.erase_cell(tile_pos)
 			else:
@@ -125,15 +130,39 @@ func unload_chunk(chunk_x: int, chunk_y: int) -> void:
 		for y in range(start_y, start_y + GameSettings.chunk_size):
 			tilemap.erase_cell(Vector2i(x, y))
 
-func modify_tile(tile_pos: Vector2i, is_solid: bool) -> int:
-	modified_tiles[tile_pos] = is_solid
-	
-	var td : TileData = tilemap.get_cell_tile_data(tile_pos)
-	var block_id : int = td.get_custom_data("block_id") if td else -1
-
+func modify_tile(tile_pos: Vector2i, is_solid: bool, block_id: int = -1) -> int:
 	if is_solid:
-		tilemap.set_cells_terrain_connect([tile_pos], terrain_set_id, terrain_id)
+		var block_data := BlockDatabase.get_block_by_id(block_id)
+		if block_data == null:
+			return -1
+		modified_tiles[tile_pos] = block_id
+		tilemap.set_cells_terrain_connect([tile_pos], block_data.terrain_set_id, block_data.terrain_id)
+		return block_id
 	else:
-		tilemap.set_cells_terrain_connect([tile_pos], terrain_set_id, -1)
-	
-	return block_id
+		var td : TileData = tilemap.get_cell_tile_data(tile_pos)
+		var removed_id : int = td.get_custom_data("block_id") if td else -1
+		modified_tiles[tile_pos] = -1 # -1 marks "empty" in the modified_tiles map
+		tilemap.set_cells_terrain_connect([tile_pos], terrain_set_id, -1) # default terrain, cleared
+		return removed_id
+
+func damage_tile(tile_pos: Vector2i, amount: int, tool_strength: int) -> Dictionary:
+	var td : TileData = tilemap.get_cell_tile_data(tile_pos)
+	if td == null:
+		return {}
+
+	var block_data := BlockDatabase.get_block_by_id(td.get_custom_data("block_id"))
+	if block_data == null or tool_strength < block_data.required_strength:
+		return {"broken": false, "blocked": true}
+
+	tile_damage[tile_pos] = tile_damage.get(tile_pos, 0) + amount
+
+	if tile_damage[tile_pos] >= block_data.hardness:
+		tile_damage.erase(tile_pos)
+		return {"broken": true, "block_id": modify_tile(tile_pos, false)}
+
+	return {
+		"broken": false,
+		"hits": tile_damage[tile_pos],
+		"max_hits": block_data.hardness,
+		"block_data": block_data,
+	}

@@ -1,13 +1,18 @@
 [gd_scene format=3 uid="uid://b3cik7817ehfv"]
 
+[ext_resource type="Script" uid="uid://rphshvvk02ya" path="res://scenes/ui/PlayerGUI.gd" id="1_34not"]
 [ext_resource type="Material" uid="uid://8xkndevfkt7s" path="res://assets/materials/UnshadedMaterial.tres" id="1_o75iu"]
 [ext_resource type="LabelSettings" uid="uid://deqse088eb6bt" path="res://assets/labels/FPSLabelSettings.tres" id="1_xn0hd"]
 [ext_resource type="Script" uid="uid://crlam6hyxcj0" path="res://scripts/ui/FPSLabel.gd" id="3_wkpe3"]
+[ext_resource type="Script" uid="uid://dg65yfjw86ln4" path="res://scripts/ui/InventoryUI.gd" id="5_34not"]
 
-[node name="PlayerGUI" type="Control" unique_id=1953480870]
+[node name="PlayerGUI" type="Control" unique_id=1953480870 node_paths=PackedStringArray("inventory_ui")]
+material = ExtResource("1_o75iu")
 layout_mode = 3
 anchors_preset = 0
 scale = Vector2(0.5, 0.5)
+script = ExtResource("1_34not")
+inventory_ui = NodePath("GridContainer/InventoryUI")
 
 [node name="FPS_Label" type="Label" parent="." unique_id=165018761]
 material = ExtResource("1_o75iu")
@@ -19,3 +24,17 @@ offset_bottom = 77.0
 text = "FPS: 60"
 label_settings = ExtResource("1_xn0hd")
 script = ExtResource("3_wkpe3")
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=1340635200]
+use_parent_material = true
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_top = 42.0
+offset_right = 518.0
+offset_bottom = 560.0
+columns = 10
+
+[node name="InventoryUI" type="Node" parent="GridContainer" unique_id=1320300530 node_paths=PackedStringArray("grid")]
+script = ExtResource("5_34not")
+grid = NodePath("..")
+metadata/_custom_type_script = "uid://dg65yfjw86ln4"

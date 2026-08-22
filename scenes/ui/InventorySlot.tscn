@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://de0ktjnsd238p"]
+
+[ext_resource type="Material" uid="uid://8xkndevfkt7s" path="res://assets/materials/UnshadedMaterial.tres" id="1_4fflr"]
+[ext_resource type="Script" uid="uid://bp4gpg1e8jb45" path="res://scripts/ui/InventorySlot.gd" id="1_i34ak"]
+[ext_resource type="LabelSettings" uid="uid://yje3vadd7xff" path="res://assets/labels/PlayerGUILabelSettings.tres" id="3_d7lwx"]
+[ext_resource type="Script" uid="uid://kaphneytvwo7" path="res://scripts/ui/IfStackReached.gd" id="4_4fflr"]
+
+[node name="InventorySlot" type="PanelContainer" unique_id=306371441 node_paths=PackedStringArray("icon_rect", "count_label")]
+material = ExtResource("1_4fflr")
+custom_minimum_size = Vector2(100, 100)
+offset_right = 198.0
+offset_bottom = 198.0
+script = ExtResource("1_i34ak")
+icon_rect = NodePath("Icon")
+count_label = NodePath("Label")
+
+[node name="Icon" type="TextureRect" parent="." unique_id=445969179]
+material = ExtResource("1_4fflr")
+layout_mode = 2
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="." unique_id=643365224]
+material = ExtResource("1_4fflr")
+layout_mode = 2
+label_settings = ExtResource("3_d7lwx")
+script = ExtResource("4_4fflr")
