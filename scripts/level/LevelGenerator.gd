@@ -2,7 +2,7 @@ class_name LevelGenerator extends Node
 
 signal initial_generation_finished
 
-@export var tilemap : TileMapLayer
+@export var tilemap : LevelMap
 @export var terrain_set_id : int = 0
 @export var terrain_id : int = 0
 
@@ -167,6 +167,9 @@ func generate_chunk(chunk_x: int, chunk_y: int) -> void:
 func unload_chunk(chunk_x: int, chunk_y: int) -> void:
 	var start_x = chunk_x * GameSettings.chunk_size
 	var start_y = chunk_y * GameSettings.chunk_size
+	
+	tilemap.unload_chunk_lights(chunk_x, chunk_y)
+	tilemap.spawn_chunk_lights(chunk_x, chunk_y)
 	
 	for x in range(start_x, start_x + GameSettings.chunk_size):
 		for y in range(start_y, start_y + GameSettings.chunk_size):

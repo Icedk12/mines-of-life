@@ -16,6 +16,7 @@ func start_player() -> void:
 	state = State.PLAYING
 	camera.enabled = true
 	$SelectionBoxComponent/SelectionSprite.visible = true
+	$UILayer.visible = true
 	
 	global_position = Vector2i(0,0)
 	

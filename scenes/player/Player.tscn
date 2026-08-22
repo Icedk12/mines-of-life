@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://b23pa557xdb" path="res://scripts/components/SpriteModifierComponent.gd" id="6_c3xxp"]
 [ext_resource type="Script" uid="uid://d2t1hwt0q1jim" path="res://scripts/components/GravityComponent.gd" id="6_pn6s4"]
 [ext_resource type="Script" uid="uid://bg8ci2wt7hdkj" path="res://scripts/components/JumpComponent.gd" id="7_7oing"]
+[ext_resource type="Script" uid="uid://q1sxicnamwum" path="res://scripts/lights/Light.gd" id="7_76i7i"]
 [ext_resource type="Script" uid="uid://vfnsma812ipo" path="res://scripts/components/MovementComponent.gd" id="8_5stf6"]
 [ext_resource type="Script" uid="uid://bkn8koxdnb8w0" path="res://scripts/components/AudioSource.gd" id="9_x3qp0"]
 [ext_resource type="Texture2D" uid="uid://bvff41lpr285n" path="res://assets/above/pointlight-smooth.jpg" id="10_7oing"]
@@ -87,6 +88,7 @@ metadata/_custom_type_script = "uid://b23pa557xdb"
 [node name="SelfLight" type="PointLight2D" parent="." unique_id=2081477168]
 texture = ExtResource("10_7oing")
 texture_scale = 0.5
+script = ExtResource("7_76i7i")
 
 [node name="ControlComponent" type="Node" parent="." unique_id=1672489934]
 script = ExtResource("5_v42im")
@@ -148,6 +150,7 @@ character = NodePath("..")
 metadata/_custom_type_script = "uid://hho3xa5gaxdb"
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=1527233409]
+visible = false
 
 [node name="PlayerGUI" parent="UILayer" unique_id=1953480870 node_paths=PackedStringArray("inventory_component") instance=ExtResource("17_2xrq6")]
 inventory_component = NodePath("../../InventoryComponent")

@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://h8jpkj0fwqnr"
-path="res://.godot/imported/EnterTheMines.wav-abf8a27ca2f2e878dfb5b121765e1f35.sample"
+path="res://.godot/imported/EnterTheMines.wav-e6eaed8c3661c76499e7a8f1464ac764.sample"
 
 [deps]
 
-source_file="res://assets/sounds/EnterTheMines.wav"
-dest_files=["res://.godot/imported/EnterTheMines.wav-abf8a27ca2f2e878dfb5b121765e1f35.sample"]
+source_file="res://assets/sounds/music/EnterTheMines.wav"
+dest_files=["res://.godot/imported/EnterTheMines.wav-e6eaed8c3661c76499e7a8f1464ac764.sample"]
 
 [params]
 

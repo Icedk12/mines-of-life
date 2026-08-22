@@ -3,6 +3,8 @@
 [ext_resource type="TileSet" uid="uid://d032x3h6ws4lp" path="res://assets/level/CouchTileset.tres" id="1_751o5"]
 [ext_resource type="Script" uid="uid://b5kh7fpv0ui22" path="res://scripts/level/Level.gd" id="1_l1x8v"]
 [ext_resource type="Script" uid="uid://bmmky33tl7eb0" path="res://scripts/level/LevelGenerator.gd" id="2_cne4c"]
+[ext_resource type="Script" uid="uid://c1mnta77cea82" path="res://scripts/level/LevelMap.gd" id="3_5l2jw"]
+[ext_resource type="PackedScene" uid="uid://cqj3bvrl7lun5" path="res://scenes/light/TileLight.tscn" id="4_ti4pp"]
 
 [node name="Level" type="Node2D" unique_id=131454242 node_paths=PackedStringArray("level_generator", "_layer1")]
 script = ExtResource("1_l1x8v")
@@ -11,6 +13,8 @@ _layer1 = NodePath("Layer1")
 
 [node name="Layer1" type="TileMapLayer" parent="." unique_id=1300922217]
 tile_set = ExtResource("1_751o5")
+script = ExtResource("3_5l2jw")
+light_scene = ExtResource("4_ti4pp")
 
 [node name="LevelGenerator" type="Node" parent="." unique_id=877058791 node_paths=PackedStringArray("tilemap")]
 script = ExtResource("2_cne4c")
