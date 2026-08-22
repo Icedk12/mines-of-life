@@ -121,6 +121,7 @@ selected_block_id = 1
 metadata/_custom_type_script = "uid://hho3xa5gaxdb"
 
 [node name="Camera" type="Camera2D" parent="." unique_id=689899775]
+enabled = false
 zoom = Vector2(4, 4)
 script = ExtResource("14_kvwax")
 
@@ -168,4 +169,5 @@ sprite = NodePath("SelectionSprite")
 metadata/_custom_type_script = "uid://cs7i6acbb7w5c"
 
 [node name="SelectionSprite" type="Sprite2D" parent="SelectionBoxComponent" unique_id=979960632]
+visible = false
 texture = ExtResource("16_8qjgm")

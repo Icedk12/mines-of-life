@@ -3,6 +3,14 @@
 [ext_resource type="Script" uid="uid://cc5arcpxxbg8x" path="res://scripts/Main.gd" id="1_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://ba4y285bqj0ui" path="res://scenes/level/Level.tscn" id="2_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://dw8qkxkdhxep7" path="res://scenes/player/Player.tscn" id="2_rvslj"]
+[ext_resource type="Material" uid="uid://8xkndevfkt7s" path="res://assets/materials/UnshadedMaterial.tres" id="4_vcsgt"]
+[ext_resource type="Texture2D" uid="uid://brnvqkom0svjv" path="res://assets/ui/main_bg.png" id="5_lhr70"]
+[ext_resource type="Texture2D" uid="uid://bikasj8gy6jmy" path="res://assets/ui/main_play.png" id="6_c01mt"]
+[ext_resource type="Texture2D" uid="uid://c53bxv8h1qlg1" path="res://assets/ui/main_play-press.png" id="7_nxtc6"]
+[ext_resource type="Texture2D" uid="uid://2an0wuakfbm1" path="res://assets/ui/Title.png" id="8_jlsqs"]
+[ext_resource type="LabelSettings" uid="uid://kpj4f245y1v6" path="res://assets/labels/MenuLabelSettings.tres" id="8_lhr70"]
+[ext_resource type="Script" uid="uid://cq10g2fnfrkmf" path="res://scripts/ui/PlayButton.gd" id="8_wp0k4"]
+[ext_resource type="AudioStream" uid="uid://h8jpkj0fwqnr" path="res://assets/sounds/EnterTheMines.wav" id="9_q8u5g"]
 
 [node name="Main" type="Node2D" unique_id=791347418 node_paths=PackedStringArray("player")]
 script = ExtResource("1_0bbpv")
@@ -12,3 +20,63 @@ player = NodePath("Player")
 
 [node name="Player" parent="." unique_id=872088493 node_paths=PackedStringArray("level") instance=ExtResource("2_rvslj")]
 level = NodePath("../Level")
+
+[node name="MainMenu" type="Node2D" parent="." unique_id=815849707]
+
+[node name="Control" type="Control" parent="MainMenu" unique_id=152853203]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -270.0
+offset_top = -193.0
+offset_right = -230.0
+offset_bottom = -153.0
+
+[node name="Background" type="TextureRect" parent="MainMenu/Control" unique_id=200606901]
+material = ExtResource("4_vcsgt")
+layout_mode = 0
+offset_left = 11.0
+offset_top = 57.0
+offset_right = 532.0
+offset_bottom = 328.0
+texture = ExtResource("5_lhr70")
+
+[node name="PlayBtn" type="TextureButton" parent="MainMenu/Control" unique_id=318958663]
+material = ExtResource("4_vcsgt")
+layout_mode = 0
+offset_left = 199.0
+offset_top = 193.0
+offset_right = 342.0
+offset_bottom = 216.0
+texture_normal = ExtResource("6_c01mt")
+texture_pressed = ExtResource("7_nxtc6")
+stretch_mode = 3
+script = ExtResource("8_wp0k4")
+
+[node name="Label" type="Label" parent="MainMenu/Control/PlayBtn" unique_id=1078016419]
+use_parent_material = true
+layout_mode = 0
+offset_right = 143.0
+offset_bottom = 23.0
+text = "NEW GAME"
+label_settings = ExtResource("8_lhr70")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Title" type="TextureRect" parent="MainMenu/Control" unique_id=1117939590]
+material = ExtResource("4_vcsgt")
+layout_mode = 0
+offset_left = 142.0
+offset_top = 69.0
+offset_right = 399.0
+offset_bottom = 178.0
+texture = ExtResource("8_jlsqs")
+
+[node name="CameraMainMenu" type="Camera2D" parent="MainMenu" unique_id=2085208049]
+zoom = Vector2(4, 4)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="MainMenu" unique_id=843395466]
+position = Vector2(-270, -193)
+stream = ExtResource("9_q8u5g")
+autoplay = true
+
+[connection signal="pressed" from="MainMenu/Control/PlayBtn" to="MainMenu/Control/PlayBtn" method="_on_pressed"]
