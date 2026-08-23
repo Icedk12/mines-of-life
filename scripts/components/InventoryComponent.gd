@@ -97,6 +97,20 @@ func _fill_empty_slots(arr: Array[ItemStack], id: int, max_stack: int, remaining
 			remaining -= add
 	return remaining
 
+func recalculate_equipment_stats() -> void:
+	if stat_manager == null:
+		return
+
+	stat_manager.clear_mods()
+
+	for istack : ItemStack in equipment:
+		if istack.is_empty():
+			continue
+			
+		var item : ItemData = ItemDatabase.get_item_by_id(istack.get_item_id())
+		if item != null and item.stat_data != null:
+			stat_manager._add_mod(item.stat_data)
+
 ## Removes from wherever it can find it hotbar first, then inventory.
 func remove_item_by_id(id: int, amount: int = 1) -> bool:
 	if not has_item(id, amount):
@@ -150,12 +164,8 @@ func move_stack(from_container: ItemContainer, from_index: int, to_container: It
 
 	inventory_changed.emit()
 	
-	# Calculate stats
-	for istack : ItemStack in equipment:
-		var item : ItemData = ItemDatabase.get_item_by_id(istack.get_item_id())
-
-		if item != null and item.stat_data != null:
-			stat_manager._add_mod(item.stat_data)
+	# Recalculate stats whenever equipment or inventory items move
+	recalculate_equipment_stats()
 
 func has_space_for(id: int, amount: int) -> bool:
 	var item_data := ItemDatabase.get_item_by_id(id)
