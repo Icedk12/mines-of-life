@@ -8,11 +8,6 @@ class_name CraftingUI extends Node
 var slots : Array[CraftingSlot] = []
 
 func set_up() -> void:
-	print("CraftingUI.set_up() called")
-	print("RecipeDatabase.recipes size: ", RecipeDatabase.recipes.size())
-	print("crafting_component: ", crafting_component)
-	print("inventory_component: ", inventory_component)
-	print("grid: ", grid)
 
 	for recipe in RecipeDatabase.recipes:
 		var slot := slot_scene.instantiate() as CraftingSlot

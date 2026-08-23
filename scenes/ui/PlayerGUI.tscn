@@ -214,8 +214,9 @@ label_settings = ExtResource("12_osq45")
 
 [node name="Control" type="Control" parent="." unique_id=1332188303]
 anchors_preset = 0
+offset_top = 687.0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 727.0
 
 [node name="EquipmentBg" type="TextureRect" parent="Control" unique_id=1198853950]
 layout_mode = 1
