@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://dvcwwtstrhn57" path="res://assets/player/SelectionBox12x12.png" id="16_8qjgm"]
 [ext_resource type="PackedScene" uid="uid://b3cik7817ehfv" path="res://scenes/ui/PlayerGUI.tscn" id="17_2xrq6"]
 [ext_resource type="Script" uid="uid://d31hwdoqfjbcb" path="res://scripts/components/InventoryComponent.gd" id="17_ejd4k"]
+[ext_resource type="Script" uid="uid://cwkc3kw1duqh2" path="res://scripts/components/CraftingComponent.gd" id="17_mndc6"]
 [ext_resource type="Script" uid="uid://hho3xa5gaxdb" path="res://scripts/components/BuildComponent.gd" id="18_2xrq6"]
 [ext_resource type="Script" uid="uid://d3bncier3mv1h" path="res://scripts/components/TileDamageComponent.gd" id="18_pi3ps"]
 [ext_resource type="Texture2D" uid="uid://d3d5le1grptkn" path="res://assets/level/crack_01.png" id="19_pi3ps"]
@@ -140,7 +141,8 @@ metadata/_custom_type_script = "uid://calji8g712e2u"
 
 [node name="InventoryComponent" type="Node" parent="." unique_id=721310458]
 script = ExtResource("17_ejd4k")
-inventory_size = 7
+hotbar_size = 7
+inventory_size = 20
 metadata/_custom_type_script = "uid://d31hwdoqfjbcb"
 
 [node name="BuildComponent" type="Node" parent="." unique_id=125261280 node_paths=PackedStringArray("inventory_component", "player_gui", "selection_component", "camera", "audio_source", "character")]
@@ -156,8 +158,9 @@ metadata/_custom_type_script = "uid://hho3xa5gaxdb"
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=1527233409]
 visible = false
 
-[node name="PlayerGUI" parent="UILayer" unique_id=1953480870 node_paths=PackedStringArray("inventory_component") instance=ExtResource("17_2xrq6")]
+[node name="PlayerGUI" parent="UILayer" unique_id=1953480870 node_paths=PackedStringArray("inventory_component", "crafting_component") instance=ExtResource("17_2xrq6")]
 inventory_component = NodePath("../../InventoryComponent")
+crafting_component = NodePath("../../CraftingComponent")
 
 [node name="Camera" type="Camera2D" parent="." unique_id=689899775]
 enabled = false
@@ -199,3 +202,8 @@ metadata/_custom_type_script = "uid://cs7i6acbb7w5c"
 [node name="SelectionSprite" type="Sprite2D" parent="SelectionBoxComponent" unique_id=979960632]
 visible = false
 texture = ExtResource("16_8qjgm")
+
+[node name="CraftingComponent" type="Node" parent="." unique_id=920644934 node_paths=PackedStringArray("inventory_component")]
+script = ExtResource("17_mndc6")
+inventory_component = NodePath("../InventoryComponent")
+metadata/_custom_type_script = "uid://cwkc3kw1duqh2"

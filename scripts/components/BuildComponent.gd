@@ -35,27 +35,19 @@ func update_selection() -> void:
 	var tile_pos = level_generator.tilemap.local_to_map(mouse_pos)
 	selection_component.selected_tile_global_pos = level_generator.tilemap.to_global(tile_pos * 8) + Vector2(4, 4)
 
-## Returns the currently selected item's id (what gets removed from inventory)
 func _get_selected_item_id() -> int:
 	if not inventory_component or not inventory_ui:
 		return -1
-
-	var item_id := inventory_ui.selected_block_id
+	var item_id := inventory_ui.get_selected_item_id()
 	if item_id == -1 or not inventory_component.has_item(item_id):
 		return -1
-
 	return item_id
 
-## Resolves an item id to the block id it actually places in the world
 func _get_block_id_for_item(item_id: int) -> int:
 	if item_id == -1:
 		return -1
-
 	var item := ItemDatabase.get_item_by_id(item_id)
-	if item == null:
-		return -1
-
-	return item.block_id
+	return item.block_id if item else -1
 
 func build() -> bool:
 	if not level_generator or not level_generator.tilemap:
@@ -70,9 +62,7 @@ func build() -> bool:
 		return false
 
 	var mouse_pos = character.get_global_mouse_position()
-	var char_pos = character.global_position
-
-	if char_pos.distance_to(mouse_pos) > max_build_distance:
+	if character.global_position.distance_to(mouse_pos) > max_build_distance:
 		return false
 
 	var tile_pos = level_generator.tilemap.local_to_map(mouse_pos)
@@ -81,12 +71,10 @@ func build() -> bool:
 
 	if inventory_component.remove_item_by_id(selected_item_id):
 		level_generator.modify_tile(tile_pos, true, selected_block_id)
-
 		if audio_source:
 			var block_data := BlockDatabase.get_block_by_id(selected_block_id)
 			if block_data:
 				audio_source.play_sound(block_data.place_sounds)
-
 		camera.add_trauma(0.15)
 		camera.shake()
 		return true

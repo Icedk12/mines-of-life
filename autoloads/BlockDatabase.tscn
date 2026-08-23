@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://i4ujihhonmig"]
 
-[ext_resource type="Script" uid="uid://cv1o1qoe633a5" path="res://autoloads/BlockIds.gd" id="1_v6wp7"]
+[ext_resource type="Script" uid="uid://cv1o1qoe633a5" path="res://autoloads/BlockDatabase.gd" id="1_v6wp7"]
 [ext_resource type="Script" uid="uid://h7cwu8wnif38" path="res://scripts/types/BlockData.gd" id="2_kxxcu"]
 [ext_resource type="AudioStream" uid="uid://dygcbsxly28p1" path="res://assets/sounds/hit.mp3" id="3_kxxcu"]
 [ext_resource type="AudioStream" uid="uid://ve6762bpg3ou" path="res://assets/sounds/leather_hit.wav" id="3_ui66f"]
