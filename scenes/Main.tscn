@@ -134,6 +134,15 @@ PopupMenu/styles/separator = SubResource("StyleBoxEmpty_v0vrg")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8cp6k"]
 
+[sub_resource type="Curve" id="Curve_fs0b5"]
+_limits = [0.0, 1.0, 0.0, 3.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1.5457317, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_36rkl"]
+texture_mode = 1
+curve = SubResource("Curve_fs0b5")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ebg2g"]
 particle_flag_disable_z = true
 emission_shape_offset = Vector3(14.3, 0, 0)
@@ -144,6 +153,7 @@ spread = 113.914
 gravity = Vector3(0, -98, 0)
 scale_min = 8.0
 scale_max = 8.0
+alpha_curve = SubResource("CurveTexture_36rkl")
 
 [node name="Main" type="Node2D" unique_id=791347418 node_paths=PackedStringArray("player", "level")]
 script = ExtResource("1_0bbpv")
@@ -243,10 +253,11 @@ texture = ExtResource("8_jlsqs")
 script = ExtResource("12_bjd11")
 
 [node name="StartMenu" type="Control" parent="MainMenu/CanvasLayer/Control" unique_id=1172606332]
-visible = false
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -6.25
+offset_top = 244.5
+offset_right = 33.75
+offset_bottom = 284.5
 
 [node name="Background" type="TextureRect" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=1112533954]
 layout_mode = 0
@@ -295,7 +306,7 @@ offset_left = 207.0
 offset_top = 174.75
 offset_right = 276.0
 offset_bottom = 190.75
-text = "darkness:"
+text = "light:"
 label_settings = ExtResource("15_3p2gp")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -475,7 +486,7 @@ popup/item_1/text = "CASUAL"
 popup/item_1/id = 1
 popup/item_2/text = "GAMER"
 popup/item_2/id = 2
-popup/item_3/text = "CHUD"
+popup/item_3/text = "CHAD"
 popup/item_3/id = 3
 
 [node name="MiningEasy" type="OptionButton" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=797381754]

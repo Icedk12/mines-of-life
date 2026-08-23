@@ -19,13 +19,18 @@ func _ready() -> void:
 func _on_pressed() -> void:
 	if not first_press: return
 	first_press = false
-	StartMenu.visible = true
+	var tween : Tween = create_tween().set_trans(Tween.TRANS_EXPO)
+	tween.tween_property($"../StartMenu", "position", Vector2(-6.25, 2), 0.8)
 
 func _physics_process(delta: float) -> void:
 	time_passed += delta * hover_speed
 	rotation = start_rotation + (sin(time_passed) * hover_intensity)
 
 func _confirm_pressed() -> void:
+	var tween : Tween = create_tween().set_trans(Tween.TRANS_EXPO)
+	tween.tween_property($"../StartMenu", "position", Vector2(-6.25, 244.5), 0.8)
+	
+	
 	GameSettings.render_distance = int($"../StartMenu/SimulationDistance".text)
 	GameSettings.chunk_size = int($"../StartMenu/ChunkSize".text)
 	main.player.sprite.self_modulate = $"../StartMenu/PlayerColour".color
@@ -39,10 +44,6 @@ func _confirm_pressed() -> void:
 		GameSettings.seed_ = randi()
 	else:
 		GameSettings.seed_ = int($"../StartMenu/Seed".text)
-		
-	print(int($"../StartMenu/Seed".text))
-	print(GameSettings.seed_)
 	
-	StartMenu.visible = false
 	$Label.text = "LOADING"
 	main.level.level_generator.generate_initial_world()
