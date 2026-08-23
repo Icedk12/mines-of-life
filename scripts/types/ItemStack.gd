@@ -13,3 +13,6 @@ func is_empty() -> bool:
 func clear() -> void:
 	item_id = -1
 	amount = 0
+
+func get_item_id() -> int:
+	return item_id

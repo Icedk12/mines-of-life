@@ -9,6 +9,9 @@ signal selection_changed(item_id: int)
 @export var selection_rect : Control
 @export var tween_duration : float = 0.1
 @export var inventory_panel : Control ## the full backpack view, toggled separately from the always-visible hotbar
+@export var inventory_trans : Tween.TransitionType
+
+@export var equipment_slots : Array[EquipmentSlot] = []
 
 var hotbar_slots : Array[InventorySlot] = []
 var inventory_slots : Array[InventorySlot] = []
@@ -23,15 +26,22 @@ func set_up() -> void:
 	for i in inventory_component.inventory.size():
 		inventory_slots.append(_make_slot(InventoryComponent.ItemContainer.INVENTORY, i, inventory_grid))
 
+	for slot in equipment_slots:
+		slot.bind(InventoryComponent.ItemContainer.EQUIPMENT, slot.category) # index == the slot's own category value
+		slot.hover_label = $"../HoverLabel"
+		slot.slot_pressed.connect(_on_slot_pressed)
+		slot.item_dropped.connect(_on_item_dropped)
+
 	inventory_component.inventory_changed.connect(_refresh)
 
-	await get_tree().process_frame # let GridContainer lay out slots before positioning the selection rect
+	await get_tree().process_frame
 	_refresh()
 	_move_selection_rect(true)
 
 func _make_slot(container: InventoryComponent.ItemContainer, index: int, grid: GridContainer) -> InventorySlot:
 	var slot := slot_scene.instantiate() as InventorySlot
 	slot.bind(container, index)
+	slot.hover_label = $"../HoverLabel"
 	grid.add_child(slot)
 	slot.slot_pressed.connect(_on_slot_pressed)
 	slot.item_dropped.connect(_on_item_dropped)
@@ -47,7 +57,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if inventory_tween and inventory_tween.is_running():
 			inventory_tween.kill()
 
-		inventory_tween = create_tween().set_trans(Tween.TRANS_BOUNCE)
+		inventory_tween = create_tween().set_trans(inventory_trans)
 
 		if not inventory_panel.visible:
 			inventory_panel.visible = true
@@ -120,8 +130,10 @@ func _refresh() -> void:
 		hotbar_slots[i].set_stack(inventory_component._get_stack(InventoryComponent.ItemContainer.HOTBAR, i))
 	for i in inventory_slots.size():
 		inventory_slots[i].set_stack(inventory_component._get_stack(InventoryComponent.ItemContainer.INVENTORY, i))
+	for slot in equipment_slots:
+		slot.set_stack(inventory_component._get_stack(InventoryComponent.ItemContainer.EQUIPMENT, slot.category))
 	_on_selection_changed()
-
+	
 func _move_selection_rect(snap: bool = false) -> void:
 	if not selection_rect or hotbar_slots.is_empty():
 		return

@@ -3,6 +3,7 @@ class_name JumpComponent extends CharacterComponent
 @export_group("Components")
 @export var control_component : ControlComponent
 @export var sprite_modifier_component : SpriteModifierComponent
+@export var stat_manager : StatManager
 
 @export_group("Jump")
 @export var jump_velocity : float = 100.0
@@ -34,7 +35,7 @@ func _can_jump() -> bool:
 ## Applies upward velocity and resets coyote time
 func _execute_jump() -> void:
 	_on_jump()
-	control_component.set_y(-jump_velocity) # Apply jump velocity
+	control_component.set_y((-jump_velocity + stat_manager.final_stats.jump_offset) * stat_manager.final_stats.jump_modifier) # Apply jump velocity
 	if sprite_modifier_component:
 		sprite_modifier_component._stretch() # Stretch sprite
 	if audio_source:

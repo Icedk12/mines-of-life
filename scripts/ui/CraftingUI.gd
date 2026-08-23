@@ -19,8 +19,10 @@ func set_up() -> void:
 		grid.add_child(slot)
 		slot.bind(recipe, crafting_component, inventory_component)
 		slots.append(slot)
+		slot.hover_label = $"../HoverLabel"
 
 	inventory_component.inventory_changed.connect(_refresh_all)
+	
 
 func _refresh_all() -> void:
 	for slot in slots:

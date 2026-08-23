@@ -2,13 +2,15 @@ class_name InventoryComponent extends CharacterComponent
 
 signal inventory_changed
 
-enum ItemContainer { HOTBAR, INVENTORY }
+enum ItemContainer { HOTBAR, INVENTORY, EQUIPMENT }
 
+@export var stat_manager : StatManager
 @export var hotbar_size : int = 9
 @export var inventory_size : int = 27
 
 var hotbar : Array[ItemStack] = []
 var inventory : Array[ItemStack] = []
+var equipment : Array[ItemStack] = []
 
 func _ready() -> void:
 	hotbar.resize(hotbar_size)
@@ -19,11 +21,17 @@ func _ready() -> void:
 	for i in inventory_size:
 		inventory[i] = ItemStack.new()
 	
-	for item in ItemDatabase.item:
-		add_item_by_id(item.item_id, 99)
+	equipment.resize(EquipmentSlotMode.Mode.values().size())
+	for i in equipment.size():
+		equipment[i] = ItemStack.new()
+	
 
 func _get_array(container: ItemContainer) -> Array[ItemStack]:
-	return hotbar if container == ItemContainer.HOTBAR else inventory
+	match container:
+		ItemContainer.HOTBAR: return hotbar
+		ItemContainer.INVENTORY: return inventory
+		ItemContainer.EQUIPMENT: return equipment
+	return []
 
 func _get_stack(container: ItemContainer, index: int) -> ItemStack:
 	var arr := _get_array(container)
@@ -64,7 +72,7 @@ func add_item_by_id(id: int, amount: int = 1) -> int:
 	if remaining < amount:
 		inventory_changed.emit()
 	if remaining > 0:
-		print("Inventory full — could not add %d of item %d" % [remaining, id])
+		pass
 
 	return remaining
 
@@ -141,6 +149,13 @@ func move_stack(from_container: ItemContainer, from_index: int, to_container: It
 		from_stack.amount = tmp_amount
 
 	inventory_changed.emit()
+	
+	# Calculate stats
+	for istack : ItemStack in equipment:
+		var item : ItemData = ItemDatabase.get_item_by_id(istack.get_item_id())
+
+		if item != null and item.stat_data != null:
+			stat_manager._add_mod(item.stat_data)
 
 func has_space_for(id: int, amount: int) -> bool:
 	var item_data := ItemDatabase.get_item_by_id(id)

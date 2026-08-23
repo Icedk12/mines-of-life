@@ -14,16 +14,22 @@
 
 [sub_resource type="Resource" id="Resource_5ttev"]
 script = ExtResource("4_iwh46")
+health_modifier = null
+health_offset = null
+speed_modifier = null
+speed_offset = null
 jump_modifier = 5.0
+jump_offset = null
+damage_modifier = null
+damage_offset = null
+mine_damage_modifier = null
+mine_damage_offset = null
 metadata/_custom_type_script = "uid://djcpbulvvrjuf"
 
 [sub_resource type="Resource" id="Resource_v05ge"]
 script = ExtResource("2_gp7j7")
-item_id = null
 item_name = "Stuffing"
-stack_size = null
 icon = ExtResource("3_gn7kn")
-block_id = null
 equipment_slot_mode = 1
 stat_data = SubResource("Resource_5ttev")
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
@@ -32,70 +38,56 @@ metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 script = ExtResource("2_gp7j7")
 item_id = 1
 item_name = "Leather Scrap"
-stack_size = null
 icon = ExtResource("4_3xla5")
 block_id = 1
-equipment_slot_mode = null
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
 [sub_resource type="Resource" id="Resource_1tuwj"]
 script = ExtResource("2_gp7j7")
 item_id = 2
 item_name = "Gunk"
-stack_size = null
 icon = ExtResource("5_qy7fj")
 block_id = 2
-equipment_slot_mode = null
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
 [sub_resource type="Resource" id="Resource_iwh46"]
 script = ExtResource("2_gp7j7")
 item_id = 3
 item_name = "Crafting Table"
-stack_size = null
 icon = ExtResource("6_wo6et")
 block_id = 3
-equipment_slot_mode = null
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
 [sub_resource type="Resource" id="Resource_7vfln"]
 script = ExtResource("2_gp7j7")
 item_id = 4
 item_name = "Chest"
-stack_size = null
 icon = ExtResource("7_jw16n")
 block_id = 4
-equipment_slot_mode = null
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
 [sub_resource type="Resource" id="Resource_ci6rp"]
 script = ExtResource("2_gp7j7")
 item_id = 5
 item_name = "Door"
-stack_size = null
 icon = ExtResource("8_4pnrd")
 block_id = 5
-equipment_slot_mode = null
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
 [sub_resource type="Resource" id="Resource_wo6et"]
 script = ExtResource("2_gp7j7")
 item_id = 6
 item_name = "Leather Scrap Block"
-stack_size = null
 icon = ExtResource("9_jw16n")
 block_id = 6
-equipment_slot_mode = null
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
 [sub_resource type="Resource" id="Resource_jw16n"]
 script = ExtResource("2_gp7j7")
 item_id = 7
 item_name = "Torch"
-stack_size = null
 icon = ExtResource("10_4pnrd")
 block_id = 7
-equipment_slot_mode = null
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
 [node name="ItemDatabase" type="Node" unique_id=1572723925]

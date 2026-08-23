@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://cqosbkjmnpojj"]
+
+[ext_resource type="Material" uid="uid://8xkndevfkt7s" path="res://assets/materials/UnshadedMaterial.tres" id="1_65rj3"]
+[ext_resource type="Script" uid="uid://1xfi08m6sb3x" path="res://scripts/ui/EquipmentSlot.gd" id="2_65rj3"]
+[ext_resource type="LabelSettings" uid="uid://yje3vadd7xff" path="res://assets/labels/PlayerGUILabelSettings.tres" id="3_mfoel"]
+[ext_resource type="Script" uid="uid://kaphneytvwo7" path="res://scripts/ui/IfStackReached.gd" id="4_vig3v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4y8sh"]
+
+[node name="EquipmentSlot" type="PanelContainer" unique_id=306371441 node_paths=PackedStringArray("icon_rect", "count_label")]
+material = ExtResource("1_65rj3")
+custom_minimum_size = Vector2(64, 64)
+offset_right = 120.0
+offset_bottom = 120.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_4y8sh")
+script = ExtResource("2_65rj3")
+icon_rect = NodePath("Icon")
+count_label = NodePath("Label")
+
+[node name="Icon" type="TextureRect" parent="." unique_id=445969179]
+material = ExtResource("1_65rj3")
+layout_mode = 2
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="." unique_id=643365224]
+material = ExtResource("1_65rj3")
+layout_mode = 2
+label_settings = ExtResource("3_mfoel")
+script = ExtResource("4_vig3v")

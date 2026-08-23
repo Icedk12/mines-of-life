@@ -11,6 +11,9 @@
 [ext_resource type="LabelSettings" uid="uid://2lchjb3vtapf" path="res://assets/labels/StartLabelSettings.tres" id="8_cgyhp"]
 [ext_resource type="PackedScene" uid="uid://b05mh5codd064" path="res://scenes/ui/CraftingSlot.tscn" id="9_81k2o"]
 [ext_resource type="Script" uid="uid://bspo3badeq4nj" path="res://scripts/ui/CraftingUI.gd" id="11_81k2o"]
+[ext_resource type="LabelSettings" uid="uid://kpj4f245y1v6" path="res://assets/labels/MenuLabelSettings.tres" id="12_osq45"]
+[ext_resource type="Texture2D" uid="uid://5ydraowuu1ga" path="res://assets/ui/EquipmentMenu.png" id="13_1afs3"]
+[ext_resource type="PackedScene" uid="uid://cqosbkjmnpojj" path="res://scenes/ui/EquipmentSlot.tscn" id="14_4y8sh"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rtmgd"]
 
@@ -41,13 +44,15 @@ text = "FPS: 60"
 label_settings = ExtResource("1_xn0hd")
 script = ExtResource("3_wkpe3")
 
-[node name="InventoryUI" type="Node" parent="." unique_id=407773419 node_paths=PackedStringArray("hotbar_grid", "inventory_grid", "selection_rect", "inventory_panel")]
+[node name="InventoryUI" type="Node" parent="." unique_id=407773419 node_paths=PackedStringArray("hotbar_grid", "inventory_grid", "selection_rect", "inventory_panel", "equipment_slots")]
 script = ExtResource("5_34not")
 hotbar_grid = NodePath("../Hotbar")
 inventory_grid = NodePath("../InventoryPanel/InventoryGrid")
 selection_rect = NodePath("../SelectionRect")
 tween_duration = 0.2
 inventory_panel = NodePath("../InventoryPanel")
+inventory_trans = 5
+equipment_slots = [NodePath("../Control/EquipmentBg/HelmetSlot"), NodePath("../Control/EquipmentBg/ArmourSlot"), NodePath("../Control/EquipmentBg/ToolSlot"), NodePath("../Control/EquipmentBg/WeaponSlot")]
 metadata/_custom_type_script = "uid://dg65yfjw86ln4"
 
 [node name="InventoryPanel" type="Panel" parent="." unique_id=1146373450]
@@ -196,3 +201,74 @@ script = ExtResource("11_81k2o")
 slot_scene = ExtResource("9_81k2o")
 grid = NodePath("../InventoryPanel/Recipes")
 metadata/_custom_type_script = "uid://bspo3badeq4nj"
+
+[node name="HoverLabel" type="Label" parent="." unique_id=1526722845]
+visible = false
+layout_mode = 0
+offset_left = 1011.0
+offset_top = 1122.0
+offset_right = 1052.0
+offset_bottom = 1145.0
+text = "..."
+label_settings = ExtResource("12_osq45")
+
+[node name="Control" type="Control" parent="." unique_id=1332188303]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="EquipmentBg" type="TextureRect" parent="Control" unique_id=1198853950]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = 390.0
+offset_right = 440.0
+offset_bottom = 1040.0
+grow_vertical = 0
+texture = ExtResource("13_1afs3")
+
+[node name="EQUIPMENT" type="Label" parent="Control/EquipmentBg" unique_id=1298757282]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -76.5
+offset_top = -20.0
+offset_right = 76.5
+offset_bottom = 15.833374
+grow_horizontal = 2
+text = "EQUIPMENT"
+label_settings = ExtResource("7_udjm8")
+
+[node name="HelmetSlot" parent="Control/EquipmentBg" unique_id=306371441 instance=ExtResource("14_4y8sh")]
+layout_mode = 0
+offset_left = 117.0
+offset_top = 194.0
+offset_right = 209.0
+offset_bottom = 286.0
+category = 1
+
+[node name="ArmourSlot" parent="Control/EquipmentBg" unique_id=1973776824 instance=ExtResource("14_4y8sh")]
+layout_mode = 0
+offset_left = 117.0
+offset_top = 300.0
+offset_right = 209.0
+offset_bottom = 392.0
+category = 2
+
+[node name="ToolSlot" parent="Control/EquipmentBg" unique_id=1097583096 instance=ExtResource("14_4y8sh")]
+layout_mode = 0
+offset_left = 334.0
+offset_top = 242.0
+offset_right = 426.0
+offset_bottom = 334.0
+category = 3
+
+[node name="WeaponSlot" parent="Control/EquipmentBg" unique_id=1672197048 instance=ExtResource("14_4y8sh")]
+layout_mode = 0
+offset_left = 334.0
+offset_top = 348.0
+offset_right = 426.0
+offset_bottom = 440.0
+category = 4

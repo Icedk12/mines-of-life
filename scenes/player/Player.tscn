@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://q1sxicnamwum" path="res://scripts/lights/Light.gd" id="7_76i7i"]
 [ext_resource type="Script" uid="uid://vfnsma812ipo" path="res://scripts/components/MovementComponent.gd" id="8_5stf6"]
 [ext_resource type="Script" uid="uid://bkn8koxdnb8w0" path="res://scripts/components/AudioSource.gd" id="9_x3qp0"]
-[ext_resource type="Texture2D" uid="uid://bvff41lpr285n" path="res://assets/above/pointlight-smooth.jpg" id="10_7oing"]
+[ext_resource type="Texture2D" uid="uid://c3bv873h87nh4" path="res://assets/above/pointlight-smooth.jpg" id="10_7oing"]
 [ext_resource type="AudioStream" uid="uid://ccyut302q2g4h" path="res://assets/sounds/step.wav" id="10_76i7i"]
 [ext_resource type="Texture2D" uid="uid://cw7lyqdtall7y" path="res://assets/level/Parallax.png" id="11_5stf6"]
 [ext_resource type="Script" uid="uid://calji8g712e2u" path="res://scripts/components/InputAxisComponent.gd" id="12_20koh"]
@@ -28,6 +28,7 @@
 [ext_resource type="Texture2D" uid="uid://8tvnxoau813y" path="res://assets/level/crack_02.png" id="20_p1lr0"]
 [ext_resource type="Texture2D" uid="uid://chusgxw2ycsud" path="res://assets/level/crack_03.png" id="21_ro0t8"]
 [ext_resource type="Texture2D" uid="uid://bjc706sf3r3j6" path="res://assets/level/crack_04.png" id="22_8nn5r"]
+[ext_resource type="Script" uid="uid://b7ydbemmw8r6h" path="res://scripts/components/StatManager.gd" id="29_1hh02"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yx65c"]
 size = Vector2(6, 7.5)
@@ -115,18 +116,20 @@ stream = SubResource("AudioStreamWAV_mndc6")
 attenuation = 0.32987723
 max_polyphony = 10
 
-[node name="JumpComponent" type="Node" parent="." unique_id=1399277520 node_paths=PackedStringArray("control_component", "sprite_modifier_component", "audio_source", "character")]
+[node name="JumpComponent" type="Node" parent="." unique_id=1399277520 node_paths=PackedStringArray("control_component", "sprite_modifier_component", "stat_manager", "audio_source", "character")]
 script = ExtResource("7_7oing")
 control_component = NodePath("../ControlComponent")
 sprite_modifier_component = NodePath("../SpriteModifierComponent")
+stat_manager = NodePath("../StatManager")
 jump_velocity = 170.0
 jump_sound = Array[AudioStream]([ExtResource("12_mndc6")])
 audio_source = NodePath("../AudioSourceComponent")
 character = NodePath("..")
 metadata/_custom_type_script = "uid://bg8ci2wt7hdkj"
 
-[node name="MovementComponent" type="Node" parent="." unique_id=1623111960 node_paths=PackedStringArray("control_component", "sprite_modifier_component", "input_component")]
+[node name="MovementComponent" type="Node" parent="." unique_id=1623111960 node_paths=PackedStringArray("stat_manager", "control_component", "sprite_modifier_component", "input_component")]
 script = ExtResource("8_5stf6")
+stat_manager = NodePath("../StatManager")
 control_component = NodePath("../ControlComponent")
 sprite_modifier_component = NodePath("../SpriteModifierComponent")
 input_component = NodePath("../InputAxisComponent")
@@ -139,8 +142,9 @@ metadata/_custom_type_script = "uid://vfnsma812ipo"
 script = ExtResource("12_20koh")
 metadata/_custom_type_script = "uid://calji8g712e2u"
 
-[node name="InventoryComponent" type="Node" parent="." unique_id=721310458]
+[node name="InventoryComponent" type="Node" parent="." unique_id=721310458 node_paths=PackedStringArray("stat_manager")]
 script = ExtResource("17_ejd4k")
+stat_manager = NodePath("../StatManager")
 hotbar_size = 7
 inventory_size = 20
 metadata/_custom_type_script = "uid://d31hwdoqfjbcb"
@@ -167,8 +171,9 @@ enabled = false
 zoom = Vector2(4, 4)
 script = ExtResource("14_kvwax")
 
-[node name="MineComponent" type="Node" parent="." unique_id=164825942 node_paths=PackedStringArray("inventory_component", "selection_component", "camera", "audio_source", "tile_damage_component", "cd_timer", "character")]
+[node name="MineComponent" type="Node" parent="." unique_id=164825942 node_paths=PackedStringArray("stat_manager", "inventory_component", "selection_component", "camera", "audio_source", "tile_damage_component", "cd_timer", "character")]
 script = ExtResource("14_ov1oi")
+stat_manager = NodePath("../StatManager")
 inventory_component = NodePath("../InventoryComponent")
 selection_component = NodePath("../SelectionBoxComponent")
 camera = NodePath("../Camera")
@@ -207,3 +212,7 @@ texture = ExtResource("16_8qjgm")
 script = ExtResource("17_mndc6")
 inventory_component = NodePath("../InventoryComponent")
 metadata/_custom_type_script = "uid://cwkc3kw1duqh2"
+
+[node name="StatManager" type="Node" parent="." unique_id=708208030]
+script = ExtResource("29_1hh02")
+metadata/_custom_type_script = "uid://b7ydbemmw8r6h"

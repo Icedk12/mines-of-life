@@ -2,6 +2,7 @@ class_name CraftingSlot extends PanelContainer
 
 @export var icon_rect : TextureRect
 @export var count_label : InventoryLabel
+@export var hover_label : Label
 
 var recipe : CraftingRecipe
 var crafting_component : CraftingComponent
@@ -9,9 +10,39 @@ var inventory_component : InventoryComponent
 
 var _pending_item_id : int = -1
 var _pending_amount : int = 0
+var is_hovered : bool
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
+
+func _process(_delta: float) -> void:
+	if is_hovered and hover_label and hover_label.visible:
+		hover_label.global_position = get_global_mouse_position()
+
+func _on_mouse_entered() -> void:
+	is_hovered = true
+	_update_hover_label()
+
+func _update_hover_label() -> void:
+	if not recipe or hover_label == null:
+		if hover_label:
+			hover_label.visible = false
+		return
+
+	var item := ItemDatabase.get_item_by_id(recipe.output_item_id)
+	if item:
+		hover_label.text = str(item.item_name + ": " + recipe.get_recipe_str())
+		hover_label.global_position = get_global_mouse_position()
+		hover_label.visible = true
+	else:
+		hover_label.visible = false
+
+func _on_mouse_exited() -> void:
+	is_hovered = false
+	if hover_label:
+		hover_label.visible = false
 
 func bind(_recipe: CraftingRecipe, _crafting_component: CraftingComponent, _inventory_component: InventoryComponent) -> void:
 	recipe = _recipe
@@ -50,6 +81,10 @@ func _try_craft_and_drag() -> void:
 		"item_id": _pending_item_id,
 		"amount": _pending_amount,
 	}
+	
+	if hover_label:
+		hover_label.visible = false
+		
 	force_drag(data, _make_preview(_pending_item_id, _pending_amount))
 
 ## Fires when the drag started above ends, whether it landed on a slot or not.

@@ -1,6 +1,7 @@
 class_name MovementComponent extends CharacterComponent
 
 @export_group("Components")
+@export var stat_manager : StatManager
 @export var control_component : ControlComponent
 @export var sprite_modifier_component : SpriteModifierComponent
 @export var input_component : InputComponent
@@ -18,7 +19,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	input_direction = input_component._get_input_direction()
-	var target_velocity_x : float = input_direction * walk_speed
+	var target_velocity_x : float = input_direction * (walk_speed + stat_manager.final_stats.speed_offset) * stat_manager.final_stats.speed_modifier
 	
 	# Fetch current X velocity from your character/control component
 	var current_velocity_x : float = character.velocity.x 
