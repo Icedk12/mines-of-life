@@ -99,6 +99,7 @@ metadata/_custom_type_script = "uid://cawa5dkvuk8it"
 script = ExtResource("6_pn6s4")
 control_component = NodePath("../ControlComponent")
 gravity_multiplier = 0.8
+terminal_velocity = 200.0
 metadata/_custom_type_script = "uid://d2t1hwt0q1jim"
 
 [node name="AudioSourceComponent" type="Node" parent="." unique_id=2044513012 node_paths=PackedStringArray("audio_player", "character")]

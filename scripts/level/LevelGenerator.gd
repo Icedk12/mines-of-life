@@ -69,12 +69,18 @@ func _generate_chunk_ores(tiles : Array[Vector2i]) -> void:
 		tilemap.set_cells_terrain_connect(vein, bd.terrain_set_id, bd.terrain_id)
 
 func generate_initial_world() -> void:
-	rng.seed = GameSettings.seed_
+	cave_noise.seed = GameSettings.seed_
 	is_initial_generation = true
 	initial_generation_complete = false
 	is_generating = true
 
-	var start_pos = player.global_position if player else Vector2.ZERO
+	loaded_chunks.clear()
+	modified_tiles.clear()
+	tile_damage.clear()
+	_gen_active = false
+	generation_queue.clear()
+
+	var start_pos = Vector2.ZERO
 	var center_tile = tilemap.local_to_map(start_pos)
 	var center_chunk_x = int(floor(float(center_tile.x) / GameSettings.chunk_size))
 	var center_chunk_y = int(floor(float(center_tile.y) / GameSettings.chunk_size))
@@ -265,6 +271,8 @@ func _finish_chunk_generation() -> void:
 		tilemap.set_cells_terrain_connect(_gen_tiles_to_place, terrain_set_id, terrain_id)
 		_generate_chunk_ores(_gen_tiles_to_place)
 
+	tilemap.spawn_chunk_lights(_gen_start_x / GameSettings.chunk_size, _gen_start_y / GameSettings.chunk_size)
+
 	_gen_active = false
 	_gen_tiles_to_place = []
 
@@ -280,7 +288,6 @@ func unload_chunk(chunk_x: int, chunk_y: int) -> void:
 	var start_y = chunk_y * GameSettings.chunk_size
 
 	tilemap.unload_chunk_lights(chunk_x, chunk_y)
-	tilemap.spawn_chunk_lights(chunk_x, chunk_y)
 
 	for x in range(start_x, start_x + GameSettings.chunk_size):
 		for y in range(start_y, start_y + GameSettings.chunk_size):

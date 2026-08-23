@@ -27,7 +27,6 @@ func _physics_process(delta: float) -> void:
 
 func _confirm_pressed() -> void:
 	GameSettings.render_distance = int($"../StartMenu/SimulationDistance".text)
-	GameSettings.seed_ = int($"../StartMenu/Seed".text)
 	GameSettings.chunk_size = int($"../StartMenu/ChunkSize".text)
 	main.player.sprite.self_modulate = $"../StartMenu/PlayerColour".color
 	main.player.light.set_mult(float($"../StartMenu/Darkness".text))
@@ -36,9 +35,13 @@ func _confirm_pressed() -> void:
 		main.player.mine_component.cd_timer.wait_time = 0.01
 		main.player.mine_component.trauma = 0.05
 	
-	# Nah seed 0 get out!!
-	if GameSettings.seed_ == 0:
+	if not $"../StartMenu/Seed".text.is_valid_int():
 		GameSettings.seed_ = randi()
+	else:
+		GameSettings.seed_ = int($"../StartMenu/Seed".text)
+		
+	print(int($"../StartMenu/Seed".text))
+	print(GameSettings.seed_)
 	
 	StartMenu.visible = false
 	$Label.text = "LOADING"
