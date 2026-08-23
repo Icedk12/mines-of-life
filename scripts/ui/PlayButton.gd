@@ -30,6 +30,7 @@ func _confirm_pressed() -> void:
 	GameSettings.seed_ = int($"../StartMenu/Seed".text)
 	GameSettings.chunk_size = int($"../StartMenu/ChunkSize".text)
 	main.player.sprite.self_modulate = $"../StartMenu/PlayerColour".color
+	main.player.light.set_mult(float($"../StartMenu/Darkness".text))
 	
 	# Nah seed 0 get out!!
 	if GameSettings.seed_ == 0:

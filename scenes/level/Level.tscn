@@ -19,6 +19,7 @@ light_scene = ExtResource("4_ti4pp")
 [node name="LevelGenerator" type="Node" parent="." unique_id=877058791 node_paths=PackedStringArray("tilemap")]
 script = ExtResource("2_cne4c")
 tilemap = NodePath("../Layer1")
+tiles_per_frame_budget = 96
 metadata/_custom_type_script = "uid://bmmky33tl7eb0"
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=696853006]

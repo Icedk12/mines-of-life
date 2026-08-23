@@ -1,5 +1,6 @@
 class_name Player extends CharacterBody2D
 
+@onready var light : PulsingLight = $SelfLight
 @onready var sprite : Sprite2D = $Sprite
 @onready var camera : ShakeableCamera2D = $Camera
 @export var control_component : ControlComponent

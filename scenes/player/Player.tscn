@@ -157,7 +157,6 @@ inventory_component = NodePath("../../InventoryComponent")
 
 [node name="Camera" type="Camera2D" parent="." unique_id=689899775]
 enabled = false
-zoom = Vector2(4, 4)
 script = ExtResource("14_kvwax")
 
 [node name="MineComponent" type="Node" parent="." unique_id=164825942 node_paths=PackedStringArray("inventory_component", "selection_component", "camera", "audio_source", "tile_damage_component", "cd_timer", "character")]

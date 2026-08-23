@@ -19,6 +19,7 @@ config/features=PackedStringArray("4.7", "Forward Plus")
 GameSettings="*uid://dlwy3dvio574"
 ItemDatabase="*uid://7cegwdgkngi2"
 BlockDatabase="*uid://i4ujihhonmig"
+GenerationSettings="*uid://kuqplefie8t4"
 
 [display]
 
