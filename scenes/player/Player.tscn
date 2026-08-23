@@ -111,6 +111,8 @@ metadata/_custom_type_script = "uid://bg8ci2wt7hdkj"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="AudioSourceComponent" unique_id=226303235]
 stream = SubResource("AudioStreamWAV_mndc6")
+attenuation = 0.32987723
+max_polyphony = 10
 
 [node name="JumpComponent" type="Node" parent="." unique_id=1399277520 node_paths=PackedStringArray("control_component", "sprite_modifier_component", "audio_source", "character")]
 script = ExtResource("7_7oing")
