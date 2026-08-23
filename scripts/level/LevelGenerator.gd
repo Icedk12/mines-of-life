@@ -300,14 +300,16 @@ func modify_tile(tile_pos: Vector2i, is_solid: bool, block_id: int = -1) -> int:
 			return -1
 		modified_tiles[tile_pos] = block_id
 		tilemap.set_cells_terrain_connect([tile_pos], block_data.terrain_set_id, block_data.terrain_id)
+		tilemap.spawn_light_at(tile_pos)
 		return block_id
 	else:
 		var td : TileData = tilemap.get_cell_tile_data(tile_pos)
 		var removed_id : int = td.get_custom_data("block_id") if td else -1
 		modified_tiles[tile_pos] = -1
 		tilemap.set_cells_terrain_connect([tile_pos], terrain_set_id, -1)
+		tilemap.remove_light_at(tile_pos)
 		return removed_id
-
+		
 func damage_tile(tile_pos: Vector2i, amount: int, tool_strength: int) -> Dictionary:
 	var td : TileData = tilemap.get_cell_tile_data(tile_pos)
 	if td == null:

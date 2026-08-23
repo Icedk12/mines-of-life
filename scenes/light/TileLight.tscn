@@ -1,6 +1,15 @@
 [gd_scene format=3 uid="uid://cqj3bvrl7lun5"]
 
-[ext_resource type="Texture2D" uid="uid://bvff41lpr285n" path="res://assets/above/pointlight-smooth.jpg" id="1_wfoms"]
+[sub_resource type="Gradient" id="Gradient_a88q1"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ptfgw"]
+gradient = SubResource("Gradient_a88q1")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.88461536, 0.13247864)
 
 [node name="TileLight" type="PointLight2D" unique_id=582318357]
-texture = ExtResource("1_wfoms")
+blend_mode = 2
+shadow_color = Color(0, 0, 0, 0.53333336)
+texture = SubResource("GradientTexture2D_ptfgw")

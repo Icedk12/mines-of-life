@@ -10,6 +10,37 @@ input_item_ids = Array[int]([0])
 input_amounts = Array[int]([4])
 metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
+[sub_resource type="Resource" id="Resource_wo6et"]
+script = ExtResource("2_ldqej")
+output_item_id = 4
+input_item_ids = Array[int]([0, 1])
+input_amounts = Array[int]([3, 1])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_ldqej"]
+script = ExtResource("2_ldqej")
+output_item_id = 5
+output_amount = 2
+input_item_ids = Array[int]([0, 1])
+input_amounts = Array[int]([6, 1])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_dfpmu"]
+script = ExtResource("2_ldqej")
+output_item_id = 6
+output_amount = 3
+input_item_ids = Array[int]([1])
+input_amounts = Array[int]([4])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_4pnrd"]
+script = ExtResource("2_ldqej")
+output_item_id = 7
+output_amount = 4
+input_item_ids = Array[int]([1, 2])
+input_amounts = Array[int]([1, 1])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
 [node name="RecipeDatabase" type="Node" unique_id=1958750374]
 script = ExtResource("1_wtpcr")
-recipes = Array[ExtResource("2_ldqej")]([SubResource("Resource_wtpcr")])
+recipes = Array[ExtResource("2_ldqej")]([SubResource("Resource_wtpcr"), SubResource("Resource_wo6et"), SubResource("Resource_ldqej"), SubResource("Resource_dfpmu"), SubResource("Resource_4pnrd")])
