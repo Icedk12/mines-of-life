@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://bphwnixx07n6y"]
-
-[ext_resource type="Script" uid="uid://bq6d1ho6ngehi" path="res://autoloads/RecipeDatabase.gd" id="1_8cm77"]
-
-[node name="Node" type="Node" unique_id=1958750374]
-script = ExtResource("1_8cm77")

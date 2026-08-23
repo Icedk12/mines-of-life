@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bphwnixx07n6y"]
+
+[ext_resource type="Script" uid="uid://bq6d1ho6ngehi" path="res://autoloads/RecipeDatabase.gd" id="1_wtpcr"]
+[ext_resource type="Script" uid="uid://3orf6a8h3jra" path="res://scripts/types/CraftingRecipe.gd" id="2_ldqej"]
+
+[sub_resource type="Resource" id="Resource_wtpcr"]
+script = ExtResource("2_ldqej")
+output_item_id = 3
+input_item_ids = Array[int]([0])
+input_amounts = Array[int]([4])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[node name="RecipeDatabase" type="Node" unique_id=1958750374]
+script = ExtResource("1_wtpcr")
+recipes = Array[ExtResource("2_ldqej")]([SubResource("Resource_wtpcr")])

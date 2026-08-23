@@ -1,7 +1,6 @@
 class_name CraftingComponent extends CharacterComponent
 
 @export var inventory_component : InventoryComponent
-@export var recipes : Array[CraftingRecipe] = []
 
 func can_craft(recipe: CraftingRecipe) -> bool:
 	for i in recipe.input_item_ids.size():

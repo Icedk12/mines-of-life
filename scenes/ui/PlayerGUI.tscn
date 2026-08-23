@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dvcwwtstrhn57" path="res://assets/player/SelectionBox12x12.png" id="6_rtmgd"]
 [ext_resource type="LabelSettings" uid="uid://yje3vadd7xff" path="res://assets/labels/PlayerGUILabelSettings.tres" id="7_udjm8"]
 [ext_resource type="LabelSettings" uid="uid://2lchjb3vtapf" path="res://assets/labels/StartLabelSettings.tres" id="8_cgyhp"]
+[ext_resource type="PackedScene" uid="uid://b05mh5codd064" path="res://scenes/ui/CraftingSlot.tscn" id="9_81k2o"]
 [ext_resource type="Script" uid="uid://bspo3badeq4nj" path="res://scripts/ui/CraftingUI.gd" id="11_81k2o"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rtmgd"]
@@ -50,6 +51,7 @@ inventory_panel = NodePath("../InventoryPanel")
 metadata/_custom_type_script = "uid://dg65yfjw86ln4"
 
 [node name="InventoryPanel" type="Panel" parent="." unique_id=1146373450]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -190,5 +192,6 @@ texture = ExtResource("6_rtmgd")
 
 [node name="CraftingUI" type="Node" parent="." unique_id=1438254013 node_paths=PackedStringArray("grid")]
 script = ExtResource("11_81k2o")
+slot_scene = ExtResource("9_81k2o")
 grid = NodePath("../InventoryPanel/Recipes")
 metadata/_custom_type_script = "uid://bspo3badeq4nj"

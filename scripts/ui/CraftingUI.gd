@@ -2,13 +2,19 @@ class_name CraftingUI extends Node
 
 @export var inventory_component : InventoryComponent
 @export var crafting_component : CraftingComponent
-@export var slot_scene : PackedScene = preload("res://scenes/ui/CraftingSlot.tscn")
+@export var slot_scene : PackedScene
 @export var grid : GridContainer
 
 var slots : Array[CraftingSlot] = []
 
 func set_up() -> void:
-	for recipe in crafting_component.recipes:
+	print("CraftingUI.set_up() called")
+	print("RecipeDatabase.recipes size: ", RecipeDatabase.recipes.size())
+	print("crafting_component: ", crafting_component)
+	print("inventory_component: ", inventory_component)
+	print("grid: ", grid)
+
+	for recipe in RecipeDatabase.recipes:
 		var slot := slot_scene.instantiate() as CraftingSlot
 		grid.add_child(slot)
 		slot.bind(recipe, crafting_component, inventory_component)

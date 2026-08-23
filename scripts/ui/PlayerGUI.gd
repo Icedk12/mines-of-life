@@ -8,7 +8,7 @@ class_name PlayerGUI extends Control
 func _ready() -> void:
 	inventory_ui.inventory_component = inventory_component
 	inventory_ui.set_up()
-	
-	crafting_ui.crafting_component = crafting_component
+
 	crafting_ui.inventory_component = inventory_component
+	crafting_ui.crafting_component = crafting_component
 	crafting_ui.set_up()
