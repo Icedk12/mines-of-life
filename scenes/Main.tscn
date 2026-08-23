@@ -69,6 +69,27 @@ _data = {
 &"fade_vignette": SubResource("Animation_mwfav")
 }
 
+[sub_resource type="Curve" id="Curve_fs0b5"]
+_limits = [0.0, 1.0, 0.0, 3.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1.5457317, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_36rkl"]
+texture_mode = 1
+curve = SubResource("Curve_fs0b5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ebg2g"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(14.3, 0, 0)
+emission_shape_scale = Vector3(200, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+spread = 113.914
+gravity = Vector3(0, -98, 0)
+scale_min = 8.0
+scale_max = 8.0
+alpha_curve = SubResource("CurveTexture_36rkl")
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfivy"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 border_color = Color(0.8, 0.8, 0.8, 0)
@@ -133,27 +154,6 @@ PopupMenu/styles/separator = SubResource("StyleBoxEmpty_v0vrg")
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cmqll"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8cp6k"]
-
-[sub_resource type="Curve" id="Curve_fs0b5"]
-_limits = [0.0, 1.0, 0.0, 3.0]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1.5457317, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_36rkl"]
-texture_mode = 1
-curve = SubResource("Curve_fs0b5")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ebg2g"]
-particle_flag_disable_z = true
-emission_shape_offset = Vector3(14.3, 0, 0)
-emission_shape_scale = Vector3(200, 1, 1)
-emission_shape = 3
-emission_box_extents = Vector3(1, 1, 1)
-spread = 113.914
-gravity = Vector3(0, -98, 0)
-scale_min = 8.0
-scale_max = 8.0
-alpha_curve = SubResource("CurveTexture_36rkl")
 
 [node name="Main" type="Node2D" unique_id=791347418 node_paths=PackedStringArray("player", "level")]
 script = ExtResource("1_0bbpv")
@@ -251,6 +251,15 @@ offset_bottom = 54.519997
 pivot_offset = Vector2(128.5, 54.5)
 texture = ExtResource("8_jlsqs")
 script = ExtResource("12_bjd11")
+
+[node name="UpwardsParticles" type="GPUParticles2D" parent="MainMenu/CanvasLayer/Control" unique_id=1433568083]
+modulate = Color(0.5014065, 0.50140655, 0.50140643, 0.36078432)
+position = Vector2(258.5, 326.25)
+scale = Vector2(1.2249552, 0.25)
+amount = 20
+texture = ExtResource("24_2ofn6")
+lifetime = 3.3099999999999996
+process_material = SubResource("ParticleProcessMaterial_ebg2g")
 
 [node name="StartMenu" type="Control" parent="MainMenu/CanvasLayer/Control" unique_id=1172606332]
 anchors_preset = 0
@@ -533,15 +542,6 @@ theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("18_bb450")
 theme_override_font_sizes/font_size = 14
 text = "LET'S START"
-
-[node name="UpwardsParticles" type="GPUParticles2D" parent="MainMenu/CanvasLayer" unique_id=1433568083]
-modulate = Color(0.5014065, 0.50140655, 0.50140643, 0.36078432)
-position = Vector2(902, 1075)
-scale = Vector2(4.899821, 1)
-amount = 20
-texture = ExtResource("24_2ofn6")
-lifetime = 3.3099999999999996
-process_material = SubResource("ParticleProcessMaterial_ebg2g")
 
 [connection signal="pressed" from="MainMenu/CanvasLayer/Control/PlayBtn" to="MainMenu/CanvasLayer/Control/PlayBtn" method="_on_pressed"]
 [connection signal="pressed" from="MainMenu/CanvasLayer/Control/StartMenu/StartButton" to="MainMenu/CanvasLayer/Control/PlayBtn" method="_confirm_pressed"]
