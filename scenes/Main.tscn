@@ -243,6 +243,7 @@ texture = ExtResource("8_jlsqs")
 script = ExtResource("12_bjd11")
 
 [node name="StartMenu" type="Control" parent="MainMenu/CanvasLayer/Control" unique_id=1172606332]
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
