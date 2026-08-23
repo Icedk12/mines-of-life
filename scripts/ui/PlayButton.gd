@@ -31,6 +31,10 @@ func _confirm_pressed() -> void:
 	GameSettings.chunk_size = int($"../StartMenu/ChunkSize".text)
 	main.player.sprite.self_modulate = $"../StartMenu/PlayerColour".color
 	main.player.light.set_mult(float($"../StartMenu/Darkness".text))
+	if $"../StartMenu/MiningEasy".selected == 0:
+		main.player.mine_component.hit_amount = 1000
+		main.player.mine_component.cd_timer.wait_time = 0.01
+		main.player.mine_component.trauma = 0.05
 	
 	# Nah seed 0 get out!!
 	if GameSettings.seed_ == 0:

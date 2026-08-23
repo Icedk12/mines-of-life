@@ -13,6 +13,7 @@ extends CharacterComponent
 @export var hit_amount : int = 1
 @export var tile_damage_component : TileDamageComponent
 @export var cd_timer : Timer
+@export var trauma : float = 0.15
 
 var level_generator : LevelGenerator
 var is_holding_left_click: bool = false
@@ -74,7 +75,7 @@ func mine() -> bool:
 		if audio_source:
 			audio_source.play_sound(result.block_data.hit_sounds)
 
-	camera.add_trauma(0.15)
+	camera.add_trauma(trauma)
 	camera.shake()
 	if cd_timer:
 		cd_timer.start()
