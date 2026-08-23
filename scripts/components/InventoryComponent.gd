@@ -14,6 +14,7 @@ func _ready() -> void:
 	add_item_by_id(3, 67)
 	add_item_by_id(4, 67)
 	add_item_by_id(5, 67)
+	add_item_by_id(6, 67)
 
 ## Checks if the inventory has enough of a specific item ID
 func has_item(id: int, amount: int = 1) -> bool:
