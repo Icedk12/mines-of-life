@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3bv873h87nh4"
-path="res://.godot/imported/pointlight-smooth.jpg-91d033a15f15499032d87313d4edbb28.ctex"
+uid="uid://d1ki5jldtq0cg"
+path="res://.godot/imported/Torch.png-d88a8fb6896978fd8088086c2c80de29.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/above/pointlight-smooth.jpg"
-dest_files=["res://.godot/imported/pointlight-smooth.jpg-91d033a15f15499032d87313d4edbb28.ctex"]
+source_file="res://assets/items/Torch.png"
+dest_files=["res://.godot/imported/Torch.png-d88a8fb6896978fd8088086c2c80de29.ctex"]
 
 [params]
 

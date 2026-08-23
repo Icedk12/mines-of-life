@@ -18,6 +18,9 @@ func _ready() -> void:
 	inventory.resize(inventory_size)
 	for i in inventory_size:
 		inventory[i] = ItemStack.new()
+	
+	for item in ItemDatabase.item:
+		add_item_by_id(item.item_id, 99)
 
 func _get_array(container: ItemContainer) -> Array[ItemStack]:
 	return hotbar if container == ItemContainer.HOTBAR else inventory

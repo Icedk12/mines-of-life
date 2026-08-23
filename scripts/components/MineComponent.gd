@@ -64,9 +64,27 @@ func mine() -> bool:
 
 	if result.get("broken", false):
 		if inventory_component and result.block_id != -1:
-			var mined_item := ItemDatabase.get_item_by_block_id(result.block_id)
-			if mined_item:
-				inventory_component.add_item_by_id(mined_item.item_id)
+			var block_data : BlockData = BlockDatabase.get_block_by_id(result.block_id)
+		
+			# No extra drops
+			if block_data.block_only:
+				var mined_item := ItemDatabase.get_item_by_block_id(result.block_id)
+				if mined_item:
+					inventory_component.add_item_by_id(mined_item.item_id, 1)
+			
+			# Extra drops
+			else:
+				for i in range(block_data.drop_ids.size()):
+					var item_id : int = block_data.drop_ids[i]
+					var amount : int = block_data.drop_amount[i] if i < block_data.drop_amount.size() else 1
+					var scarcity : int = block_data.drop_scarcity[i] if i < block_data.drop_scarcity.size() else 0
+					
+					if scarcity > 0 and randi_range(1, scarcity) != 1:
+						continue
+					
+					var drop_item := ItemDatabase.get_item_by_id(item_id)
+					if drop_item:
+						inventory_component.add_item_by_id(drop_item.item_id, amount)
 		if tile_damage_component:
 			tile_damage_component.clear()
 		if audio_source:

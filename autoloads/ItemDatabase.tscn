@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://b4l5dg3iyutjt" path="res://assets/items/CraftingTable.png" id="6_wo6et"]
 [ext_resource type="Texture2D" uid="uid://cauvexpcgagfj" path="res://assets/items/ChestClosed.png" id="7_jw16n"]
 [ext_resource type="Texture2D" uid="uid://d4fhssvpu1cb0" path="res://assets/items/Door.png" id="8_4pnrd"]
+[ext_resource type="Texture2D" uid="uid://fsh4ntab2kk6" path="res://assets/items/LeatherBlock.png" id="9_jw16n"]
+[ext_resource type="Texture2D" uid="uid://d1ki5jldtq0cg" path="res://assets/items/Torch.png" id="10_4pnrd"]
 
 [sub_resource type="Resource" id="Resource_v05ge"]
 script = ExtResource("2_gp7j7")
@@ -59,10 +61,18 @@ metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 script = ExtResource("2_gp7j7")
 item_id = 6
 item_name = "Leather Scrap Block"
-icon = ExtResource("4_3xla5")
+icon = ExtResource("9_jw16n")
 block_id = 6
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_jw16n"]
+script = ExtResource("2_gp7j7")
+item_id = 7
+item_name = "Torch"
+icon = ExtResource("10_4pnrd")
+block_id = 7
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
 [node name="ItemDatabase" type="Node" unique_id=1572723925]
 script = ExtResource("1_ptkgt")
-item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn"), SubResource("Resource_1tuwj"), SubResource("Resource_iwh46"), SubResource("Resource_7vfln"), SubResource("Resource_ci6rp"), SubResource("Resource_wo6et")])
+item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn"), SubResource("Resource_1tuwj"), SubResource("Resource_iwh46"), SubResource("Resource_7vfln"), SubResource("Resource_ci6rp"), SubResource("Resource_wo6et"), SubResource("Resource_jw16n")])

@@ -10,6 +10,12 @@ class_name BlockData extends Resource
 @export var wobble_amplitude : float = 2.0
 @export var wobble_duration : float = 0.06
 
-@export_group("Audio") ## sound played when hit/broken 67
+@export_group("Drops")
+@export var block_only : bool = true ## If true the block only drops the item with its block id
+@export var drop_ids : Array[int]
+@export var drop_amount : Array[int]
+@export var drop_scarcity : Array[int] ## Chance for each drop to not drop, if zero its guarentteed
+
+@export_group("Audio") ## sound played when hit/broken
 @export var hit_sounds : Array[AudioStream] = []
 @export var place_sounds : Array[AudioStream] = []
