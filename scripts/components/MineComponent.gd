@@ -15,15 +15,18 @@ extends CharacterComponent
 @export var cd_timer : Timer
 
 var level_generator : LevelGenerator
+var is_holding_left_click: bool = false
 
 func _process(_delta: float) -> void:
 	update_selection()
+	if is_holding_left_click:
+		mine()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
-			if mine():
-				get_viewport().set_input_as_handled()
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		is_holding_left_click = event.pressed
+		if is_holding_left_click:
+			get_viewport().set_input_as_handled()
 
 func update_selection() -> void:
 	if not level_generator and character and character.level:

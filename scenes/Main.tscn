@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://bftnar1uyjyp4" path="res://assets/ui/Chunk-Size.png" id="21_2ofn6"]
 [ext_resource type="Texture2D" uid="uid://dnribgdmwgxie" path="res://assets/ui/Darkness.png" id="22_xa025"]
 [ext_resource type="Texture2D" uid="uid://dvcwwtstrhn57" path="res://assets/player/SelectionBox12x12.png" id="23_ebg2g"]
+[ext_resource type="Texture2D" uid="uid://b2ibw5226ajqs" path="res://assets/above/MenuParticles.png" id="24_2ofn6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qmy6f"]
 shader = ExtResource("13_qmy6f")
@@ -132,6 +133,17 @@ PopupMenu/styles/separator = SubResource("StyleBoxEmpty_v0vrg")
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cmqll"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8cp6k"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ebg2g"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(14.3, 0, 0)
+emission_shape_scale = Vector3(200, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+spread = 113.914
+gravity = Vector3(0, -98, 0)
+scale_min = 8.0
+scale_max = 8.0
 
 [node name="Main" type="Node2D" unique_id=791347418 node_paths=PackedStringArray("player", "level")]
 script = ExtResource("1_0bbpv")
@@ -510,6 +522,15 @@ theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("18_bb450")
 theme_override_font_sizes/font_size = 14
 text = "LET'S START"
+
+[node name="UpwardsParticles" type="GPUParticles2D" parent="MainMenu/CanvasLayer" unique_id=1433568083]
+modulate = Color(0.5014065, 0.50140655, 0.50140643, 0.36078432)
+position = Vector2(902, 1075)
+scale = Vector2(4.899821, 1)
+amount = 20
+texture = ExtResource("24_2ofn6")
+lifetime = 3.3099999999999996
+process_material = SubResource("ParticleProcessMaterial_ebg2g")
 
 [connection signal="pressed" from="MainMenu/CanvasLayer/Control/PlayBtn" to="MainMenu/CanvasLayer/Control/PlayBtn" method="_on_pressed"]
 [connection signal="pressed" from="MainMenu/CanvasLayer/Control/StartMenu/StartButton" to="MainMenu/CanvasLayer/Control/PlayBtn" method="_confirm_pressed"]

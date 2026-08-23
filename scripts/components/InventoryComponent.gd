@@ -8,12 +8,12 @@ var selected_slot : int = 1
 var inventory: Dictionary[int, int] = {}
 
 func _ready() -> void:
-	add_item_by_id(0, 99)
-	add_item_by_id(1, 99)
-	add_item_by_id(2, 99)
-	add_item_by_id(3, 99)
-	add_item_by_id(4, 99)
-	add_item_by_id(5, 99)
+	add_item_by_id(0, 67)
+	add_item_by_id(1, 67)
+	add_item_by_id(2, 67)
+	add_item_by_id(3, 67)
+	add_item_by_id(4, 67)
+	add_item_by_id(5, 67)
 
 ## Checks if the inventory has enough of a specific item ID
 func has_item(id: int, amount: int = 1) -> bool:
