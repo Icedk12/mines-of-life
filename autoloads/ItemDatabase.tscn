@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://d1ki5jldtq0cg" path="res://assets/items/Torch.png" id="10_4pnrd"]
 [ext_resource type="Texture2D" uid="uid://bn7h0mbgekjb3" path="res://assets/items/LeatherHelmet.png" id="11_7vfln"]
 [ext_resource type="Texture2D" uid="uid://d06ndmidx8rmc" path="res://assets/items/LeatherArmour.png" id="13_ci6rp"]
+[ext_resource type="Texture2D" uid="uid://bnu42bkuq3vtg" path="res://assets/items/Furnace.png" id="14_q6xpq"]
 
 [sub_resource type="Resource" id="Resource_v05ge"]
 script = ExtResource("2_gp7j7")
@@ -127,6 +128,14 @@ equipment_slot_mode = 2
 stat_data = SubResource("Resource_nr6k2")
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
+[sub_resource type="Resource" id="Resource_310cl"]
+script = ExtResource("2_gp7j7")
+item_id = 10
+item_name = "Furnace"
+icon = ExtResource("14_q6xpq")
+block_id = 8
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
 [node name="ItemDatabase" type="Node" unique_id=1572723925]
 script = ExtResource("1_ptkgt")
-item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn"), SubResource("Resource_1tuwj"), SubResource("Resource_iwh46"), SubResource("Resource_7vfln"), SubResource("Resource_ci6rp"), SubResource("Resource_wo6et"), SubResource("Resource_jw16n"), SubResource("Resource_4pnrd"), SubResource("Resource_efpqa")])
+item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn"), SubResource("Resource_1tuwj"), SubResource("Resource_iwh46"), SubResource("Resource_7vfln"), SubResource("Resource_ci6rp"), SubResource("Resource_wo6et"), SubResource("Resource_jw16n"), SubResource("Resource_4pnrd"), SubResource("Resource_efpqa"), SubResource("Resource_310cl")])

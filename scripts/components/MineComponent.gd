@@ -59,7 +59,7 @@ func mine() -> bool:
 	if level_generator.tilemap.get_cell_source_id(tile_pos) == -1:
 		return false
 
-	var result = level_generator.damage_tile(tile_pos, (hit_amount + stat_manager.final_stats.mine_damage_offset) * stat_manager.final_stats.mine_damage_modifier, mine_strength)
+	var result = level_generator.damage_tile(tile_pos, (hit_amount + stat_manager.final_stats.mine_damage_offset) * stat_manager.final_stats.mine_damage_modifier, mine_strength + stat_manager.final_stats.mine_strength)
 	if result.is_empty() or result.get("blocked", false):
 		return false
 
