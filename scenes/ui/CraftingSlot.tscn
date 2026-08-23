@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://b05mh5codd064"]
+
+[ext_resource type="Material" uid="uid://8xkndevfkt7s" path="res://assets/materials/UnshadedMaterial.tres" id="1_tfc0l"]
+[ext_resource type="Script" uid="uid://c5fww4s7ch7v" path="res://scripts/ui/CraftingSlot.gd" id="2_tfc0l"]
+[ext_resource type="LabelSettings" uid="uid://yje3vadd7xff" path="res://assets/labels/PlayerGUILabelSettings.tres" id="3_jtexj"]
+[ext_resource type="Script" uid="uid://kaphneytvwo7" path="res://scripts/ui/IfStackReached.gd" id="4_eg2ni"]
+
+[node name="CraftingSlot" type="PanelContainer" unique_id=306371441]
+material = ExtResource("1_tfc0l")
+custom_minimum_size = Vector2(64, 64)
+offset_right = 120.0
+offset_bottom = 120.0
+script = ExtResource("2_tfc0l")
+
+[node name="Icon" type="TextureRect" parent="." unique_id=445969179]
+material = ExtResource("1_tfc0l")
+layout_mode = 2
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="." unique_id=643365224]
+material = ExtResource("1_tfc0l")
+layout_mode = 2
+label_settings = ExtResource("3_jtexj")
+script = ExtResource("4_eg2ni")

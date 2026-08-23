@@ -64,7 +64,9 @@ func mine() -> bool:
 
 	if result.get("broken", false):
 		if inventory_component and result.block_id != -1:
-			inventory_component.add_item_by_id(result.block_id)
+			var mined_item := ItemDatabase.get_item_by_block_id(result.block_id)
+			if mined_item:
+				inventory_component.add_item_by_id(mined_item.item_id)
 		if tile_damage_component:
 			tile_damage_component.clear()
 		if audio_source:
