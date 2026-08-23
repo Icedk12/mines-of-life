@@ -195,9 +195,6 @@ func update_chunks(world_position: Vector2) -> void:
 
 	generation_queue.append_array(new_chunks_to_queue)
 
-	# UNLOAD FARAWAY CHUNKS — mark them unloaded from tracking immediately
-	# (so they don't get re-queued for generation), but defer the actual
-	# erase/light work to the budgeted unload queue below.
 	var unload_limit = GameSettings.render_distance + unload_buffer
 	var chunks_to_remove := []
 
@@ -227,9 +224,6 @@ func _begin_chunk_generation(chunk_x: int, chunk_y: int) -> void:
 	_gen_y = 0
 	_gen_tiles_to_place.clear()
 
-## Scans up to `tiles_per_frame_budget` cells of the chunk currently being
-## generated, resuming from where it left off. When the whole chunk has
-## been scanned, places the base terrain and ores in single batched calls.
 func _step_chunk_generation() -> void:
 	var processed := 0
 	var chunk_size := GameSettings.chunk_size

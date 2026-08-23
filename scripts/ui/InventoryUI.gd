@@ -14,6 +14,7 @@ var hotbar_slots : Array[InventorySlot] = []
 var inventory_slots : Array[InventorySlot] = []
 var selected_hotbar_index : int = 0
 var active_tween : Tween
+var inventory_tween : Tween
 
 func set_up() -> void:
 	for i in inventory_component.hotbar.size():
@@ -43,7 +44,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			_change_selection(1)
 	elif event.is_action_pressed("toggle_inventory") and inventory_panel:
-		inventory_panel.visible = not inventory_panel.visible
+		if inventory_tween and inventory_tween.is_running():
+			inventory_tween.kill()
+
+		inventory_tween = create_tween().set_trans(Tween.TRANS_BOUNCE)
+
+		if not inventory_panel.visible:
+			inventory_panel.visible = true
+			inventory_tween.tween_property(inventory_panel, "position", Vector2(460.0, 566.0), 1.0)
+		else:
+			inventory_tween.tween_property(inventory_panel, "position", Vector2(460.0, 1122.0), 1.0)
+			inventory_tween.tween_callback(func(): inventory_panel.visible = false)
 
 func _change_selection(direction: int) -> void:
 	if inventory_component.hotbar.is_empty():

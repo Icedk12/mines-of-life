@@ -29,7 +29,7 @@ func _physics_process(delta: float) -> void:
 func _confirm_pressed() -> void:
 	var tween : Tween = create_tween().set_trans(Tween.TRANS_EXPO)
 	tween.tween_property($"../StartMenu", "position", Vector2(-6.25, 244.5), 0.8)
-	
+
 	
 	GameSettings.render_distance = int($"../StartMenu/SimulationDistance".text)
 	GameSettings.chunk_size = int($"../StartMenu/ChunkSize".text)

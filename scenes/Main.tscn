@@ -24,6 +24,10 @@
 [ext_resource type="Texture2D" uid="uid://dnribgdmwgxie" path="res://assets/ui/Darkness.png" id="22_xa025"]
 [ext_resource type="Texture2D" uid="uid://dvcwwtstrhn57" path="res://assets/player/SelectionBox12x12.png" id="23_ebg2g"]
 [ext_resource type="Texture2D" uid="uid://b2ibw5226ajqs" path="res://assets/above/MenuParticles.png" id="24_2ofn6"]
+[ext_resource type="Script" uid="uid://bgkkdjmqq8fr7" path="res://scripts/MusicPlayer.gd" id="25_xa025"]
+[ext_resource type="AudioStream" uid="uid://b1nxqi52jla6h" path="res://assets/sounds/music/Suspense.wav" id="26_ma7h6"]
+[ext_resource type="AudioStream" uid="uid://daeromqsworyc" path="res://assets/sounds/music/Exploration.wav" id="27_e2s0e"]
+[ext_resource type="AudioStream" uid="uid://dphnmkvlo70f2" path="res://assets/sounds/music/Hole in the Wall.wav" id="28_gsxep"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qmy6f"]
 shader = ExtResource("13_qmy6f")
@@ -160,7 +164,8 @@ script = ExtResource("1_0bbpv")
 player = NodePath("Player")
 level = NodePath("Level")
 
-[node name="Level" parent="." unique_id=131454242 node_paths=PackedStringArray("main_menu", "player") instance=ExtResource("2_0bbpv")]
+[node name="Level" parent="." unique_id=131454242 node_paths=PackedStringArray("music_player", "main_menu", "player") instance=ExtResource("2_0bbpv")]
+music_player = NodePath("../MusicPlayer")
 main_menu = NodePath("../MainMenu")
 player = NodePath("../Player")
 
@@ -542,6 +547,16 @@ theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("18_bb450")
 theme_override_font_sizes/font_size = 14
 text = "LET'S START"
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=778092633 node_paths=PackedStringArray("wait_timer")]
+script = ExtResource("25_xa025")
+playlist = Array[AudioStream]([ExtResource("4_wp0k4"), ExtResource("26_ma7h6"), ExtResource("27_e2s0e"), ExtResource("28_gsxep")])
+max_delay = 5.0
+wait_timer = NodePath("Timer")
+metadata/_custom_type_script = "uid://bgkkdjmqq8fr7"
+
+[node name="Timer" type="Timer" parent="MusicPlayer" unique_id=257314391]
+one_shot = true
 
 [connection signal="pressed" from="MainMenu/CanvasLayer/Control/PlayBtn" to="MainMenu/CanvasLayer/Control/PlayBtn" method="_on_pressed"]
 [connection signal="pressed" from="MainMenu/CanvasLayer/Control/StartMenu/StartButton" to="MainMenu/CanvasLayer/Control/PlayBtn" method="_confirm_pressed"]
