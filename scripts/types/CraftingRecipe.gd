@@ -1,5 +1,6 @@
 class_name CraftingRecipe extends Resource
 
+@export var crafting_requirement : CraftingRequirement.Block = CraftingRequirement.Block.NONE
 @export var output_item_id : int
 @export var output_amount : int = 1
 @export var input_item_ids : Array[int] = []

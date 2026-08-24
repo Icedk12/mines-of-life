@@ -26,6 +26,9 @@ func _update_stats() -> void:
 
 		final_stats.mine_damage_modifier += (stat_data.mine_damage_modifier - 1.0)
 		final_stats.mine_damage_offset += stat_data.mine_damage_offset
+		
+		final_stats.mine_strength += stat_data.mine_strength
+		final_stats.swing_speed = stat_data.swing_speed
 
 func _add_mod(data : StatData) -> void:
 	stat_mods.append(data)

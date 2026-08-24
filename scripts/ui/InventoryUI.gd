@@ -65,11 +65,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
 		if not inventory_panel.visible:
 			inventory_panel.visible = true
-			inventory_tween.tween_property(inventory_panel, "position", Vector2(460.0, 566.0), 1.0)
-			equipment_tween.tween_property($"../Control", "position", Vector2(0, 0), 1.0)
+			inventory_tween.tween_property(inventory_panel, "position", Vector2(460.0, 566.0), 0.5)
+			equipment_tween.tween_property($"../Control", "position", Vector2(0, 0), 0.5)
 		else:
-			inventory_tween.tween_property(inventory_panel, "position", Vector2(460.0, 1122.0), 1.0)
-			equipment_tween.tween_property($"../Control", "position", Vector2(0, 687.0), 1.0)
+			inventory_tween.tween_property(inventory_panel, "position", Vector2(460.0, 1122.0), 0.5)
+			equipment_tween.tween_property($"../Control", "position", Vector2(0, 687.0), 0.5)
 			inventory_tween.tween_callback(func(): inventory_panel.visible = false)
 
 func _change_selection(direction: int) -> void:
@@ -130,6 +130,7 @@ func _handle_split_drop(data: Dictionary, target_container: InventoryComponent.I
 		source_stack.clear()
 
 	inventory_component.inventory_changed.emit()
+	inventory_component.recalculate_equipment_stats()
 
 func _refresh() -> void:
 	for i in hotbar_slots.size():
@@ -175,5 +176,6 @@ func _handle_craft_drop(data: Dictionary, target_container: InventoryComponent.I
 		if leftover > 0:
 			inventory_component.add_item_by_id(data.item_id, leftover)
 		inventory_component.inventory_changed.emit()
+		inventory_component.recalculate_equipment_stats()
 	else:
 		inventory_component.add_item_by_id(data.item_id, data.amount)

@@ -20,11 +20,12 @@ func _ready() -> void:
 	inventory.resize(inventory_size)
 	for i in inventory_size:
 		inventory[i] = ItemStack.new()
-	
+
 	equipment.resize(EquipmentSlotMode.Mode.values().size())
 	for i in equipment.size():
 		equipment[i] = ItemStack.new()
-	
+
+	recalculate_equipment_stats()
 
 func _get_array(container: ItemContainer) -> Array[ItemStack]:
 	match container:
@@ -72,7 +73,7 @@ func add_item_by_id(id: int, amount: int = 1) -> int:
 	if remaining < amount:
 		inventory_changed.emit()
 	if remaining > 0:
-		pass
+		print("Inventory full — %d of item %d could not be added and was lost" % [remaining, id])
 
 	return remaining
 
@@ -106,12 +107,12 @@ func recalculate_equipment_stats() -> void:
 	for istack : ItemStack in equipment:
 		if istack.is_empty():
 			continue
-			
-		var item : ItemData = ItemDatabase.get_item_by_id(istack.get_item_id())
+
+		var item : ItemData = ItemDatabase.get_item_by_id(istack.item_id) # was istack.get_item_id() — that method never existed
 		if item != null and item.stat_data != null:
 			stat_manager._add_mod(item.stat_data)
 
-## Removes from wherever it can find it hotbar first, then inventory.
+## Removes from wherever it can find it — hotbar first, then inventory.
 func remove_item_by_id(id: int, amount: int = 1) -> bool:
 	if not has_item(id, amount):
 		return false
@@ -163,8 +164,6 @@ func move_stack(from_container: ItemContainer, from_index: int, to_container: It
 		from_stack.amount = tmp_amount
 
 	inventory_changed.emit()
-	
-	# Recalculate stats whenever equipment or inventory items move
 	recalculate_equipment_stats()
 
 func has_space_for(id: int, amount: int) -> bool:
