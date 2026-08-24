@@ -130,6 +130,7 @@ func _handle_split_drop(data: Dictionary, target_container: InventoryComponent.I
 		source_stack.clear()
 
 	inventory_component.inventory_changed.emit()
+	inventory_component.recalculate_equipment_stats()
 
 func _refresh() -> void:
 	for i in hotbar_slots.size():
@@ -175,5 +176,6 @@ func _handle_craft_drop(data: Dictionary, target_container: InventoryComponent.I
 		if leftover > 0:
 			inventory_component.add_item_by_id(data.item_id, leftover)
 		inventory_component.inventory_changed.emit()
+		inventory_component.recalculate_equipment_stats()
 	else:
 		inventory_component.add_item_by_id(data.item_id, data.amount)
