@@ -144,6 +144,7 @@ metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 script = ExtResource("4_iwh46")
 speed_modifier = 0.9
 mine_strength = 1
+swing_speed = 0.01
 metadata/_custom_type_script = "uid://djcpbulvvrjuf"
 
 [sub_resource type="Resource" id="Resource_ud80n"]

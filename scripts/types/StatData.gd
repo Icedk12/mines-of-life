@@ -16,3 +16,5 @@ class_name StatData extends Resource
 @export var mine_damage_offset : float = 0.0
 
 @export var mine_strength : int = 0
+
+@export var swing_speed : float = 0.3
