@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://mxko0o5tb26n" path="res://assets/items/LeatherPickaxe.png" id="15_nr6k2"]
 [ext_resource type="Texture2D" uid="uid://cdha3bu6qxi6h" path="res://assets/items/GunkPickaxe.png" id="16_efpqa"]
 [ext_resource type="Texture2D" uid="uid://b442budq1ioru" path="res://assets/items/GunkAxe.png" id="17_310cl"]
+[ext_resource type="Texture2D" uid="uid://dj2qdy3eraelu" path="res://assets/items/HermesCrown.png" id="18_j3fuy"]
 
 [sub_resource type="Resource" id="Resource_v05ge"]
 script = ExtResource("2_gp7j7")
@@ -67,7 +68,7 @@ metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 [sub_resource type="Resource" id="Resource_wo6et"]
 script = ExtResource("2_gp7j7")
 item_id = 6
-item_name = "Leather Scrap Block"
+item_name = "Leather Scrap Ore"
 icon = ExtResource("9_jw16n")
 block_id = 6
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
@@ -175,6 +176,23 @@ equipment_slot_mode = 4
 stat_data = SubResource("Resource_a8jyo")
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
+[sub_resource type="Resource" id="Resource_5d8hd"]
+script = ExtResource("4_iwh46")
+speed_modifier = 2.0
+jump_modifier = 1.5
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_j4i65"]
+script = ExtResource("2_gp7j7")
+item_id = 14
+item_name = "Hermes' Crown"
+stack_size = 1
+icon = ExtResource("18_j3fuy")
+block_id = -1
+equipment_slot_mode = 1
+stat_data = SubResource("Resource_5d8hd")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
 [node name="ItemDatabase" type="Node" unique_id=1572723925]
 script = ExtResource("1_ptkgt")
-item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn"), SubResource("Resource_1tuwj"), SubResource("Resource_iwh46"), SubResource("Resource_7vfln"), SubResource("Resource_ci6rp"), SubResource("Resource_wo6et"), SubResource("Resource_jw16n"), SubResource("Resource_4pnrd"), SubResource("Resource_efpqa"), SubResource("Resource_310cl"), SubResource("Resource_ldqej"), SubResource("Resource_ud80n"), SubResource("Resource_gutlp")])
+item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn"), SubResource("Resource_1tuwj"), SubResource("Resource_iwh46"), SubResource("Resource_7vfln"), SubResource("Resource_ci6rp"), SubResource("Resource_wo6et"), SubResource("Resource_jw16n"), SubResource("Resource_4pnrd"), SubResource("Resource_efpqa"), SubResource("Resource_310cl"), SubResource("Resource_ldqej"), SubResource("Resource_ud80n"), SubResource("Resource_gutlp"), SubResource("Resource_j4i65")])

@@ -80,10 +80,6 @@ func generate_initial_world() -> void:
 	_gen_active = false
 	generation_queue.clear()
 
-	if GameSettings.seed_ == 6741:
-		get_tree().quit()
-		return
-
 
 	var start_pos = Vector2.ZERO
 	var center_tile = tilemap.local_to_map(start_pos)

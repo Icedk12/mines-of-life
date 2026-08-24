@@ -5,20 +5,35 @@
 [ext_resource type="LabelSettings" uid="uid://deqse088eb6bt" path="res://assets/labels/FPSLabelSettings.tres" id="1_xn0hd"]
 [ext_resource type="Script" uid="uid://crlam6hyxcj0" path="res://scripts/ui/FPSLabel.gd" id="3_wkpe3"]
 [ext_resource type="Script" uid="uid://dg65yfjw86ln4" path="res://scripts/ui/InventoryUI.gd" id="5_34not"]
-[ext_resource type="Texture2D" uid="uid://2ihk48xothnx" path="res://assets/ui/9Slice.png" id="6_eom7o"]
+[ext_resource type="Texture2D" uid="uid://bdq1nt614x1e4" path="res://assets/ui/Backpack.png" id="6_4y8sh"]
 [ext_resource type="Texture2D" uid="uid://dvcwwtstrhn57" path="res://assets/player/SelectionBox12x12.png" id="6_rtmgd"]
 [ext_resource type="LabelSettings" uid="uid://yje3vadd7xff" path="res://assets/labels/PlayerGUILabelSettings.tres" id="7_udjm8"]
 [ext_resource type="LabelSettings" uid="uid://2lchjb3vtapf" path="res://assets/labels/StartLabelSettings.tres" id="8_cgyhp"]
 [ext_resource type="PackedScene" uid="uid://b05mh5codd064" path="res://scenes/ui/CraftingSlot.tscn" id="9_81k2o"]
 [ext_resource type="Script" uid="uid://bspo3badeq4nj" path="res://scripts/ui/CraftingUI.gd" id="11_81k2o"]
 [ext_resource type="LabelSettings" uid="uid://kpj4f245y1v6" path="res://assets/labels/MenuLabelSettings.tres" id="12_osq45"]
-[ext_resource type="Texture2D" uid="uid://5ydraowuu1ga" path="res://assets/ui/EquipmentMenu.png" id="13_1afs3"]
 [ext_resource type="PackedScene" uid="uid://cqosbkjmnpojj" path="res://scenes/ui/EquipmentSlot.tscn" id="14_4y8sh"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rtmgd"]
 
 [sub_resource type="Theme" id="Theme_rtmgd"]
 Panel/styles/panel = SubResource("StyleBoxEmpty_rtmgd")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yut7p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3r278"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xyrw1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_omutp"]
+content_margin_left = 6.0
+bg_color = Color(0.16924527, 0.16924533, 0.16924518, 1)
+
+[sub_resource type="Theme" id="Theme_4y8sh"]
+VScrollBar/styles/grabber = SubResource("StyleBoxEmpty_yut7p")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxEmpty_3r278")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxEmpty_xyrw1")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_omutp")
 
 [node name="PlayerGUI" type="Control" unique_id=1953480870 node_paths=PackedStringArray("inventory_ui", "crafting_ui")]
 material = ExtResource("1_o75iu")
@@ -52,8 +67,15 @@ selection_rect = NodePath("../SelectionRect")
 tween_duration = 0.2
 inventory_panel = NodePath("../InventoryPanel")
 inventory_trans = 5
-equipment_slots = [NodePath("../Control/EquipmentBg/HelmetSlot"), NodePath("../Control/EquipmentBg/ArmourSlot"), NodePath("../Control/EquipmentBg/ToolSlot"), NodePath("../Control/EquipmentBg/WeaponSlot")]
+equipment_slots = [NodePath("../InventoryPanel/HelmetSlot"), NodePath("../InventoryPanel/ArmourSlot"), NodePath("../InventoryPanel/ToolSlot"), NodePath("../InventoryPanel/WeaponSlot")]
 metadata/_custom_type_script = "uid://dg65yfjw86ln4"
+
+[node name="HotbarTemporary" type="Panel" parent="." unique_id=517985495]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 54.0
+offset_right = 485.0
+offset_bottom = 123.0
 
 [node name="InventoryPanel" type="Panel" parent="." unique_id=1146373450]
 visible = false
@@ -76,25 +98,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -42.0
+offset_right = 1.3175659
+offset_bottom = 140.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("6_eom7o")
-
-[node name="INVENTORY" type="Label" parent="InventoryPanel" unique_id=124462731]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -76.5
-offset_top = -285.0
-offset_right = 76.5
-offset_bottom = -249.16663
-grow_horizontal = 2
-grow_vertical = 2
-text = "INVENTORY"
-label_settings = ExtResource("7_udjm8")
+texture = ExtResource("6_4y8sh")
 
 [node name="STATS" type="Label" parent="InventoryPanel" unique_id=516839679]
 layout_mode = 1
@@ -103,10 +113,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -483.0
-offset_top = -241.00002
-offset_right = -341.0
-offset_bottom = -192.58334
+offset_left = -287.0
+offset_top = -254.00002
+offset_right = -145.0
+offset_bottom = -205.58334
 grow_horizontal = 2
 grow_vertical = 2
 text = "LEVEL: 1
@@ -122,10 +132,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -68.0
-offset_top = -55.00003
-offset_right = 68.0
-offset_bottom = -19.166718
+offset_left = 649.0
+offset_top = -243.00003
+offset_right = 785.0
+offset_bottom = -207.16672
 grow_horizontal = 2
 grow_vertical = 2
 text = "CRAFTING"
@@ -141,31 +151,63 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -338.0
-offset_top = -241.0
-offset_right = 338.0
-offset_bottom = -64.0
+offset_left = -297.0
+offset_top = -171.0
+offset_right = 415.0
+offset_bottom = 106.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
 columns = 10
 
-[node name="Recipes" type="GridContainer" parent="InventoryPanel" unique_id=666936972]
+[node name="ScrollContainer" type="ScrollContainer" parent="InventoryPanel" unique_id=760962511]
+layout_mode = 0
+offset_left = 1020.0
+offset_top = 50.0
+offset_right = 1423.0
+offset_bottom = 625.0
+theme = SubResource("Theme_4y8sh")
+horizontal_scroll_mode = 0
+
+[node name="Recipes" type="GridContainer" parent="InventoryPanel/ScrollContainer" unique_id=666936972]
 use_parent_material = true
 custom_minimum_size = Vector2(100, 100)
-custom_maximum_size = Vector2(-1, 300)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -484.0
-offset_top = -13.0
-offset_right = 484.0
-offset_bottom = 224.0
-grow_horizontal = 2
-grow_vertical = 2
-columns = 11
+custom_maximum_size = Vector2(-1, 1000)
+layout_mode = 2
+columns = 6
+
+[node name="HelmetSlot" parent="InventoryPanel" unique_id=707052919 instance=ExtResource("14_4y8sh")]
+layout_mode = 0
+offset_left = 634.0
+offset_top = 414.0
+offset_right = 698.0
+offset_bottom = 478.0
+category = 1
+
+[node name="ArmourSlot" parent="InventoryPanel" unique_id=1973776824 instance=ExtResource("14_4y8sh")]
+layout_mode = 0
+offset_left = 706.0
+offset_top = 414.0
+offset_right = 770.0
+offset_bottom = 478.0
+category = 2
+
+[node name="ToolSlot" parent="InventoryPanel" unique_id=1097583096 instance=ExtResource("14_4y8sh")]
+layout_mode = 0
+offset_left = 418.0
+offset_top = 415.0
+offset_right = 482.0
+offset_bottom = 479.0
+category = 3
+
+[node name="WeaponSlot" parent="InventoryPanel" unique_id=1672197048 instance=ExtResource("14_4y8sh")]
+layout_mode = 0
+offset_left = 346.0
+offset_top = 415.0
+offset_right = 410.0
+offset_bottom = 479.0
+category = 4
 
 [node name="Hotbar" type="GridContainer" parent="." unique_id=1340635200]
 use_parent_material = true
@@ -185,10 +227,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -956.0
-offset_top = -1052.0
-offset_right = -924.0
-offset_bottom = -1020.0
+offset_left = -952.0
+offset_top = -1024.0
+offset_right = -920.0
+offset_bottom = -992.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(2, 2)
@@ -199,77 +241,15 @@ texture = ExtResource("6_rtmgd")
 [node name="CraftingUI" type="Node" parent="." unique_id=1438254013 node_paths=PackedStringArray("grid")]
 script = ExtResource("11_81k2o")
 slot_scene = ExtResource("9_81k2o")
-grid = NodePath("../InventoryPanel/Recipes")
+grid = NodePath("../InventoryPanel/ScrollContainer/Recipes")
 metadata/_custom_type_script = "uid://bspo3badeq4nj"
 
-[node name="Control" type="Control" parent="." unique_id=1332188303]
-anchors_preset = 0
-offset_top = 687.0
-offset_right = 40.0
-offset_bottom = 727.0
-
-[node name="EquipmentBg" type="TextureRect" parent="Control" unique_id=1198853950]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = 390.0
-offset_right = 440.0
-offset_bottom = 1040.0
-grow_vertical = 0
-texture = ExtResource("13_1afs3")
-
-[node name="EQUIPMENT" type="Label" parent="Control/EquipmentBg" unique_id=1298757282]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -76.5
-offset_top = -20.0
-offset_right = 76.5
-offset_bottom = 15.833374
-grow_horizontal = 2
-text = "EQUIPMENT"
-label_settings = ExtResource("7_udjm8")
-
-[node name="HelmetSlot" parent="Control/EquipmentBg" unique_id=306371441 instance=ExtResource("14_4y8sh")]
-layout_mode = 0
-offset_left = 117.0
-offset_top = 194.0
-offset_right = 209.0
-offset_bottom = 286.0
-category = 1
-
-[node name="ArmourSlot" parent="Control/EquipmentBg" unique_id=1973776824 instance=ExtResource("14_4y8sh")]
-layout_mode = 0
-offset_left = 117.0
-offset_top = 300.0
-offset_right = 209.0
-offset_bottom = 392.0
-category = 2
-
-[node name="ToolSlot" parent="Control/EquipmentBg" unique_id=1097583096 instance=ExtResource("14_4y8sh")]
-layout_mode = 0
-offset_left = 334.0
-offset_top = 242.0
-offset_right = 426.0
-offset_bottom = 334.0
-category = 3
-
-[node name="WeaponSlot" parent="Control/EquipmentBg" unique_id=1672197048 instance=ExtResource("14_4y8sh")]
-layout_mode = 0
-offset_left = 334.0
-offset_top = 348.0
-offset_right = 426.0
-offset_bottom = 440.0
-category = 4
-
 [node name="HoverLabel" type="Label" parent="." unique_id=1526722845]
-visible = false
+custom_maximum_size = Vector2(300, -1)
 layout_mode = 0
 offset_left = 1011.0
 offset_top = 1122.0
-offset_right = 1052.0
-offset_bottom = 1145.0
-text = "..."
+offset_right = 1311.0
+offset_bottom = 1166.2084
 label_settings = ExtResource("12_osq45")
+autowrap_mode = 2

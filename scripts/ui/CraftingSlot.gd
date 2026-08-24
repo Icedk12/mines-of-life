@@ -19,7 +19,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if is_hovered and hover_label and hover_label.visible:
-		hover_label.global_position = get_global_mouse_position()
+		hover_label.global_position = get_global_mouse_position() - Vector2(hover_label.size.x - 150, 0)
 
 func _on_mouse_entered() -> void:
 	is_hovered = true
@@ -27,8 +27,6 @@ func _on_mouse_entered() -> void:
 
 func _update_hover_label() -> void:
 	if not recipe or hover_label == null:
-		if hover_label:
-			hover_label.visible = false
 		return
 
 	var item := ItemDatabase.get_item_by_id(recipe.output_item_id)
@@ -65,7 +63,7 @@ func refresh() -> void:
 
 	var craftable := crafting_component.can_craft(recipe)
 	modulate.a = 1.0 if craftable else 0.4
-	mouse_filter = Control.MOUSE_FILTER_STOP if craftable else Control.MOUSE_FILTER_IGNORE
+	mouse_filter = Control.MOUSE_FILTER_STOP #if craftable else Control.MOUSE_FILTER_IGNORE
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():

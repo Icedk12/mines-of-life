@@ -154,7 +154,7 @@ metadata/_custom_type_script = "uid://calji8g712e2u"
 script = ExtResource("17_ejd4k")
 stat_manager = NodePath("../StatManager")
 hotbar_size = 7
-inventory_size = 20
+inventory_size = 40
 metadata/_custom_type_script = "uid://d31hwdoqfjbcb"
 
 [node name="BuildComponent" type="Node" parent="." unique_id=125261280 node_paths=PackedStringArray("inventory_component", "player_gui", "selection_component", "camera", "audio_source", "character")]

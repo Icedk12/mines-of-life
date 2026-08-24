@@ -13,5 +13,5 @@ func get_recipe_str() -> String:
 		var amount : int = input_amounts[i]
 		var item : ItemData = ItemDatabase.get_item_by_id(item_id)
 		
-		ret += item.item_name + "[" + str(amount) + "],"
+		ret += "\n" +item.item_name + "[" + str(amount) + "] "
 	return ret
