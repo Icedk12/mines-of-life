@@ -202,16 +202,6 @@ slot_scene = ExtResource("9_81k2o")
 grid = NodePath("../InventoryPanel/Recipes")
 metadata/_custom_type_script = "uid://bspo3badeq4nj"
 
-[node name="HoverLabel" type="Label" parent="." unique_id=1526722845]
-visible = false
-layout_mode = 0
-offset_left = 1011.0
-offset_top = 1122.0
-offset_right = 1052.0
-offset_bottom = 1145.0
-text = "..."
-label_settings = ExtResource("12_osq45")
-
 [node name="Control" type="Control" parent="." unique_id=1332188303]
 anchors_preset = 0
 offset_top = 687.0
@@ -273,3 +263,13 @@ offset_top = 348.0
 offset_right = 426.0
 offset_bottom = 440.0
 category = 4
+
+[node name="HoverLabel" type="Label" parent="." unique_id=1526722845]
+visible = false
+layout_mode = 0
+offset_left = 1011.0
+offset_top = 1122.0
+offset_right = 1052.0
+offset_bottom = 1145.0
+text = "..."
+label_settings = ExtResource("12_osq45")
