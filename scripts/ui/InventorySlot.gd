@@ -22,6 +22,7 @@ func _on_mouse_entered() -> void:
 	_update_hover_label()
 
 func _on_mouse_exited() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	is_hovered = false
 	if hover_label:
 		hover_label.visible = false
@@ -66,6 +67,7 @@ func _update_hover_label() -> void:
 	if stack != null and not stack.is_empty():
 		var item := ItemDatabase.get_item_by_id(stack.item_id)
 		if item and hover_label:
+			Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 			hover_label.text = item.item_name
 			hover_label.global_position = get_global_mouse_position()
 			hover_label.visible = true
