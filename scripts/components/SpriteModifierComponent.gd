@@ -10,6 +10,10 @@ extends CharacterComponent
 @export var stretch_tween : TweenInfo
 @export var return_tween : TweenInfo ## How long it takes to return to normal value after tween
 
+@export_group("Mining Tweens")
+@export var mining_tween : TweenInfo
+@export var mining_angle_degrees : float = 40.0
+
 @export_group("Sin")
 @export var frequency : float = 25.0
 @export var amplitude : float = 1.0
@@ -94,3 +98,22 @@ func _verify_tween() -> void:
 		active_tween.kill()
 	
 	active_tween = create_tween()
+
+func _mining_tween(direction : Vector2 = Vector2.RIGHT) -> void:
+	if not sprite or not mining_tween or not return_tween: return
+	_verify_tween()
+	
+	var dir_x : float = sign(direction.x) if direction.x != 0 else 1.0
+	var target_rotation : float = deg_to_rad(mining_angle_degrees * dir_x)
+	
+	active_tween.set_parallel(true)
+	active_tween.tween_property(sprite, "rotation", target_rotation, mining_tween.duration)\
+		.set_trans(mining_tween.transition_type).set_ease(mining_tween.easing_style)
+	active_tween.tween_property(sprite, "scale", mining_tween.scale, mining_tween.duration)\
+		.set_trans(mining_tween.transition_type).set_ease(mining_tween.easing_style)
+	
+	active_tween.chain().set_parallel(true)
+	active_tween.tween_property(sprite, "scale", return_tween.scale, return_tween.duration)\
+		.set_trans(return_tween.transition_type).set_ease(return_tween.easing_style)
+	active_tween.tween_property(sprite, "rotation", 0.0, return_tween.duration)\
+		.set_trans(return_tween.transition_type).set_ease(return_tween.easing_style)

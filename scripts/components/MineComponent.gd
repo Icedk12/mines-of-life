@@ -4,6 +4,7 @@ extends CharacterComponent
 @export_group("Components")
 @export var stat_manager : StatManager
 @export var inventory_component : InventoryComponent
+@export var sprite_modifier : SpriteModifierComponent ##67
 @export var selection_component : SelectionBoxComponent
 @export var camera : ShakeableCamera2D
 @export var audio_source : AudioSourceComponent
@@ -95,6 +96,10 @@ func mine() -> bool:
 			tile_damage_component.play_hit(tile_pos, result.hits, result.max_hits, result.block_data)
 		if audio_source:
 			audio_source.play_sound(result.block_data.hit_sounds)
+	
+	var mine_direction : Vector2 = character.global_position.direction_to(mouse_pos)
+	if sprite_modifier:
+		sprite_modifier._mining_tween(mine_direction)
 
 	camera.add_trauma(trauma * stat_manager.final_stats.swing_speed)
 	camera.shake()

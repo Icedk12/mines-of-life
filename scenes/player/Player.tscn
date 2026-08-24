@@ -46,8 +46,11 @@ metadata/_custom_type_script = "uid://d164jamb4hq8l"
 
 [sub_resource type="Resource" id="Resource_7oing"]
 script = ExtResource("5_pn6s4")
-easing_style = 2
 duration = 0.1
+metadata/_custom_type_script = "uid://d164jamb4hq8l"
+
+[sub_resource type="Resource" id="Resource_1hh02"]
+script = ExtResource("5_pn6s4")
 metadata/_custom_type_script = "uid://d164jamb4hq8l"
 
 [sub_resource type="AudioStreamWAV" id="AudioStreamWAV_mndc6"]
@@ -71,21 +74,26 @@ texture = ExtResource("11_5stf6")
 [node name="Sprite" type="Sprite2D" parent="." unique_id=139533162]
 texture = ExtResource("3_4kuee")
 
+[node name="Sprite2D" type="Sprite2D" parent="Sprite" unique_id=564108891]
+offset = Vector2(3.77, -1.01)
+
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=2041257211]
 position = Vector2(0, 0.25)
 shape = SubResource("RectangleShape2D_yx65c")
 disabled = true
 
-[node name="SpriteModifierComponent" type="Node" parent="." unique_id=1970386051 node_paths=PackedStringArray("sprite", "audio_source")]
+[node name="SpriteModifierComponent" type="Node" parent="." unique_id=1970386051 node_paths=PackedStringArray("sprite", "audio_source", "character")]
 script = ExtResource("6_c3xxp")
 sprite = NodePath("../Sprite")
 audio_source = NodePath("../AudioSourceComponent")
 squash_tween = SubResource("Resource_v42im")
 stretch_tween = SubResource("Resource_pn6s4")
 return_tween = SubResource("Resource_7oing")
+mining_tween = SubResource("Resource_1hh02")
 frequency = 15.0
 rot_amplitude = 15.0
 rot_frequency = 20.0
+character = NodePath("..")
 metadata/_custom_type_script = "uid://b23pa557xdb"
 
 [node name="SelfLight" type="PointLight2D" parent="." unique_id=2081477168]
@@ -171,10 +179,11 @@ enabled = false
 zoom = Vector2(4, 4)
 script = ExtResource("14_kvwax")
 
-[node name="MineComponent" type="Node" parent="." unique_id=164825942 node_paths=PackedStringArray("stat_manager", "inventory_component", "selection_component", "camera", "audio_source", "tile_damage_component", "cd_timer", "character")]
+[node name="MineComponent" type="Node" parent="." unique_id=164825942 node_paths=PackedStringArray("stat_manager", "inventory_component", "sprite_modifier", "selection_component", "camera", "audio_source", "tile_damage_component", "cd_timer", "character")]
 script = ExtResource("14_ov1oi")
 stat_manager = NodePath("../StatManager")
 inventory_component = NodePath("../InventoryComponent")
+sprite_modifier = NodePath("../SpriteModifierComponent")
 selection_component = NodePath("../SelectionBoxComponent")
 camera = NodePath("../Camera")
 audio_source = NodePath("../AudioSourceComponent")
