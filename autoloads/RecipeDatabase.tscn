@@ -62,6 +62,38 @@ input_item_ids = Array[int]([0])
 input_amounts = Array[int]([8])
 metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
+[sub_resource type="Resource" id="Resource_mdjt3"]
+script = ExtResource("2_ldqej")
+crafting_requirement = 2
+output_item_id = 1
+input_item_ids = Array[int]([6])
+input_amounts = Array[int]([1])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_tor6a"]
+script = ExtResource("2_ldqej")
+crafting_requirement = 1
+output_item_id = 11
+input_item_ids = Array[int]([1, 0])
+input_amounts = Array[int]([3, 1])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_xulxr"]
+script = ExtResource("2_ldqej")
+crafting_requirement = 1
+output_item_id = 12
+input_item_ids = Array[int]([2, 0])
+input_amounts = Array[int]([3, 1])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_lujpk"]
+script = ExtResource("2_ldqej")
+crafting_requirement = 1
+output_item_id = 13
+input_item_ids = Array[int]([2, 0])
+input_amounts = Array[int]([4, 1])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
 [node name="RecipeDatabase" type="Node" unique_id=1958750374]
 script = ExtResource("1_wtpcr")
-recipes = Array[ExtResource("2_ldqej")]([SubResource("Resource_wtpcr"), SubResource("Resource_wo6et"), SubResource("Resource_ldqej"), SubResource("Resource_dfpmu"), SubResource("Resource_4pnrd"), SubResource("Resource_310cl"), SubResource("Resource_78d1o"), SubResource("Resource_kuyi6")])
+recipes = Array[ExtResource("2_ldqej")]([SubResource("Resource_wtpcr"), SubResource("Resource_wo6et"), SubResource("Resource_ldqej"), SubResource("Resource_dfpmu"), SubResource("Resource_4pnrd"), SubResource("Resource_310cl"), SubResource("Resource_78d1o"), SubResource("Resource_kuyi6"), SubResource("Resource_mdjt3"), SubResource("Resource_tor6a"), SubResource("Resource_xulxr"), SubResource("Resource_lujpk")])

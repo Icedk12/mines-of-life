@@ -16,21 +16,3 @@ class_name StatData extends Resource
 @export var mine_damage_offset : float = 0.0
 
 @export var mine_strength : int = 0
-
-func _init() -> void:
-	health_modifier = 1.0
-	health_offset = 0.0
-
-	speed_modifier = 1.0
-	speed_offset = 0.0
-
-	jump_modifier = 1.0
-	jump_offset = 0.0
-
-	damage_modifier = 1.0
-	damage_offset = 0.0
-
-	mine_damage_modifier  = 1.0
-	mine_damage_offset  = 0.0
-
-	mine_strength = 0
