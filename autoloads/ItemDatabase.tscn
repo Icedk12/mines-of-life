@@ -132,6 +132,7 @@ metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 script = ExtResource("2_gp7j7")
 item_id = 10
 item_name = "Furnace"
+stack_size = 98
 icon = ExtResource("14_q6xpq")
 block_id = 8
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
