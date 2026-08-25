@@ -18,6 +18,8 @@
 [ext_resource type="Texture2D" uid="uid://cdha3bu6qxi6h" path="res://assets/items/GunkPickaxe.png" id="16_efpqa"]
 [ext_resource type="Texture2D" uid="uid://b442budq1ioru" path="res://assets/items/GunkAxe.png" id="17_310cl"]
 [ext_resource type="Texture2D" uid="uid://dj2qdy3eraelu" path="res://assets/items/HermesCrown.png" id="18_j3fuy"]
+[ext_resource type="Texture2D" uid="uid://k0x3q371f7fj" path="res://assets/items/Penny.png" id="19_ud80n"]
+[ext_resource type="Texture2D" uid="uid://c8qdcji7juwgf" path="res://assets/items/StuffingBricks.png" id="20_asqo3"]
 
 [sub_resource type="Resource" id="Resource_v05ge"]
 script = ExtResource("2_gp7j7")
@@ -127,7 +129,7 @@ metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 [sub_resource type="Resource" id="Resource_j3fuy"]
 script = ExtResource("4_iwh46")
 jump_modifier = 1.1
-mine_strength = 100
+mine_strength = 1
 swing_speed = 0.25
 metadata/_custom_type_script = "uid://djcpbulvvrjuf"
 
@@ -145,7 +147,7 @@ metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 [sub_resource type="Resource" id="Resource_asqo3"]
 script = ExtResource("4_iwh46")
 speed_modifier = 0.9
-mine_strength = 1
+mine_strength = 2
 swing_speed = 0.2
 metadata/_custom_type_script = "uid://djcpbulvvrjuf"
 
@@ -193,6 +195,22 @@ equipment_slot_mode = 1
 stat_data = SubResource("Resource_5d8hd")
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
+[sub_resource type="Resource" id="Resource_c6kvi"]
+script = ExtResource("2_gp7j7")
+item_id = 15
+item_name = "Penny Ore"
+icon = ExtResource("19_ud80n")
+block_id = 9
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_ui66f"]
+script = ExtResource("2_gp7j7")
+item_id = 16
+item_name = "Stuffing Bricks"
+icon = ExtResource("20_asqo3")
+block_id = 10
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
 [node name="ItemDatabase" type="Node" unique_id=1572723925]
 script = ExtResource("1_ptkgt")
-item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn"), SubResource("Resource_1tuwj"), SubResource("Resource_iwh46"), SubResource("Resource_7vfln"), SubResource("Resource_ci6rp"), SubResource("Resource_wo6et"), SubResource("Resource_jw16n"), SubResource("Resource_4pnrd"), SubResource("Resource_efpqa"), SubResource("Resource_310cl"), SubResource("Resource_ldqej"), SubResource("Resource_ud80n"), SubResource("Resource_gutlp"), SubResource("Resource_j4i65")])
+item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn"), SubResource("Resource_1tuwj"), SubResource("Resource_iwh46"), SubResource("Resource_7vfln"), SubResource("Resource_ci6rp"), SubResource("Resource_wo6et"), SubResource("Resource_jw16n"), SubResource("Resource_4pnrd"), SubResource("Resource_efpqa"), SubResource("Resource_310cl"), SubResource("Resource_ldqej"), SubResource("Resource_ud80n"), SubResource("Resource_gutlp"), SubResource("Resource_j4i65"), SubResource("Resource_c6kvi"), SubResource("Resource_ui66f")])

@@ -53,8 +53,12 @@ func _generate_chunk_ores(tiles : Array[Vector2i]) -> void:
 	for ore_type : BlockSetting in GenerationSettings.ores:
 		if rng.randf() > ore_type.gen_chance:
 			continue
-
-		var vein := _grow_vein(rng.randi_range(ore_type.min_size, ore_type.max_size), available_set)
+		var vein : Array[Vector2i]
+		if ore_type.shape_type == BlockSetting.ShapeType.PENNY_BLOCK:
+			vein = _grow_penny_vein(ore_type.min_size, ore_type.max_size, available_set)
+		else:
+			vein = _grow_vein(rng.randi_range(ore_type.min_size, ore_type.max_size), available_set)
+		
 		if vein.is_empty():
 			continue
 
@@ -136,6 +140,27 @@ func _grow_vein(target_size: int, available_set: Dictionary) -> Array[Vector2i]:
 			frontier.erase(grow_from)
 
 	return vein
+
+func _grow_penny_vein(min_side : int, max_side : int, available_set : Dictionary) -> Array[Vector2i]:
+	if available_set.is_empty(): return []
+	
+	var side : int = clampi(rng.randi_range(min_side, max_side), min_side, max_side)
+	
+	var available_keys := available_set.keys()
+	var origin : Vector2i = available_keys[rng.randi() % available_keys.size()]
+	
+	var shape : Array[Vector2i] = []
+	for x in range(side):
+		for y in range(side):
+			var is_corner := (x == 0 or x == side - 1) and (y == 0 or y == side - 1)
+			if is_corner:
+				continue
+			
+			var pos := origin + Vector2i(x, y)
+			if available_set.has(pos):
+				shape.append(pos)
+	
+	return shape
 
 func _process(_delta: float) -> void:
 	if not is_generating:

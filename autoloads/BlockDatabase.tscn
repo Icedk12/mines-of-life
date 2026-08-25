@@ -88,6 +88,26 @@ terrain_id = 8
 hardness = 2
 metadata/_custom_type_script = "uid://h7cwu8wnif38"
 
+[sub_resource type="Resource" id="Resource_32fc5"]
+script = ExtResource("2_kxxcu")
+block_id = 9
+display_name = "Penny Ore"
+terrain_id = 9
+hardness = 8
+required_strength = 3
+hit_sounds = Array[AudioStream]([ExtResource("3_kxxcu")])
+place_sounds = Array[AudioStream]([ExtResource("3_kxxcu")])
+metadata/_custom_type_script = "uid://h7cwu8wnif38"
+
+[sub_resource type="Resource" id="Resource_yx65c"]
+script = ExtResource("2_kxxcu")
+block_id = 10
+display_name = "Stuffing Bricks"
+terrain_id = 10
+hit_sounds = Array[AudioStream]([ExtResource("3_ui66f")])
+place_sounds = Array[AudioStream]([ExtResource("3_ui66f")])
+metadata/_custom_type_script = "uid://h7cwu8wnif38"
+
 [node name="BlockDatabase" type="Node" unique_id=1572723925]
 script = ExtResource("1_v6wp7")
-blocks = Array[ExtResource("2_kxxcu")]([SubResource("Resource_6ojj1"), SubResource("Resource_8nn5r"), SubResource("Resource_ui66f"), SubResource("Resource_xqib3"), SubResource("Resource_32n22"), SubResource("Resource_p6eds"), SubResource("Resource_oofu8"), SubResource("Resource_iwh46"), SubResource("Resource_n0470")])
+blocks = Array[ExtResource("2_kxxcu")]([SubResource("Resource_6ojj1"), SubResource("Resource_8nn5r"), SubResource("Resource_ui66f"), SubResource("Resource_xqib3"), SubResource("Resource_32n22"), SubResource("Resource_p6eds"), SubResource("Resource_oofu8"), SubResource("Resource_iwh46"), SubResource("Resource_n0470"), SubResource("Resource_32fc5"), SubResource("Resource_yx65c")])

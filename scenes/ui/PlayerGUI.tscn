@@ -7,12 +7,15 @@
 [ext_resource type="Script" uid="uid://dg65yfjw86ln4" path="res://scripts/ui/InventoryUI.gd" id="5_34not"]
 [ext_resource type="Texture2D" uid="uid://bdq1nt614x1e4" path="res://assets/ui/Backpack.png" id="6_4y8sh"]
 [ext_resource type="Texture2D" uid="uid://dvcwwtstrhn57" path="res://assets/player/SelectionBox12x12.png" id="6_rtmgd"]
+[ext_resource type="Texture2D" uid="uid://tfjm17qm7qyy" path="res://assets/ui/HotBar.png" id="6_up3k2"]
 [ext_resource type="LabelSettings" uid="uid://yje3vadd7xff" path="res://assets/labels/PlayerGUILabelSettings.tres" id="7_udjm8"]
 [ext_resource type="LabelSettings" uid="uid://2lchjb3vtapf" path="res://assets/labels/StartLabelSettings.tres" id="8_cgyhp"]
 [ext_resource type="PackedScene" uid="uid://b05mh5codd064" path="res://scenes/ui/CraftingSlot.tscn" id="9_81k2o"]
 [ext_resource type="Script" uid="uid://bspo3badeq4nj" path="res://scripts/ui/CraftingUI.gd" id="11_81k2o"]
 [ext_resource type="LabelSettings" uid="uid://kpj4f245y1v6" path="res://assets/labels/MenuLabelSettings.tres" id="12_osq45"]
 [ext_resource type="PackedScene" uid="uid://cqosbkjmnpojj" path="res://scenes/ui/EquipmentSlot.tscn" id="14_4y8sh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uy2eo"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rtmgd"]
 
@@ -76,6 +79,16 @@ offset_left = 5.0
 offset_top = 54.0
 offset_right = 485.0
 offset_bottom = 123.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_uy2eo")
+
+[node name="TextureRect" type="TextureRect" parent="HotbarTemporary" unique_id=1321852212]
+layout_mode = 0
+offset_left = -4.0
+offset_top = -46.0
+offset_right = 578.0
+offset_bottom = 109.20001
+texture = ExtResource("6_up3k2")
+expand_mode = 5
 
 [node name="InventoryPanel" type="Panel" parent="." unique_id=1146373450]
 visible = false
@@ -214,10 +227,11 @@ use_parent_material = true
 custom_minimum_size = Vector2(100, 100)
 custom_maximum_size = Vector2(-1, 100)
 layout_mode = 0
-offset_left = 9.0
-offset_top = 55.5
-offset_right = 733.0
-offset_bottom = 155.5
+offset_left = 44.0
+offset_top = 55.0
+offset_right = 768.0
+offset_bottom = 155.0
+theme_override_constants/h_separation = 8
 columns = 7
 
 [node name="SelectionRect" type="TextureRect" parent="." unique_id=758682430]
@@ -227,10 +241,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -952.0
-offset_top = -1024.0
-offset_right = -920.0
-offset_bottom = -992.0
+offset_left = -916.0
+offset_top = -1025.0
+offset_right = -883.5
+offset_bottom = -992.5
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(2, 2)
