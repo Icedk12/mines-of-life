@@ -5,6 +5,8 @@
 [ext_resource type="LabelSettings" uid="uid://deqse088eb6bt" path="res://assets/labels/FPSLabelSettings.tres" id="1_xn0hd"]
 [ext_resource type="Script" uid="uid://crlam6hyxcj0" path="res://scripts/ui/FPSLabel.gd" id="3_wkpe3"]
 [ext_resource type="Script" uid="uid://dg65yfjw86ln4" path="res://scripts/ui/InventoryUI.gd" id="5_34not"]
+[ext_resource type="Script" uid="uid://v6k0bm4gxffr" path="res://scripts/ui/SeedLabel.gd" id="5_078xo"]
+[ext_resource type="Script" uid="uid://nb32mlq6yf0y" path="res://scripts/ui/CoordsPlayer.gd" id="6_3r278"]
 [ext_resource type="Texture2D" uid="uid://bdq1nt614x1e4" path="res://assets/ui/Backpack.png" id="6_4y8sh"]
 [ext_resource type="Texture2D" uid="uid://dvcwwtstrhn57" path="res://assets/player/SelectionBox12x12.png" id="6_rtmgd"]
 [ext_resource type="Texture2D" uid="uid://tfjm17qm7qyy" path="res://assets/ui/HotBar.png" id="6_up3k2"]
@@ -58,11 +60,33 @@ material = ExtResource("1_o75iu")
 layout_mode = 0
 offset_left = 7.0
 offset_top = 6.0
-offset_right = 386.0
-offset_bottom = 77.0
+offset_right = 110.0
+offset_bottom = 27.0
 text = "FPS: 60"
 label_settings = ExtResource("1_xn0hd")
 script = ExtResource("3_wkpe3")
+
+[node name="SEED_Label" type="Label" parent="." unique_id=1884305094]
+material = ExtResource("1_o75iu")
+layout_mode = 0
+offset_left = 6.0
+offset_top = 29.0
+offset_right = 109.0
+offset_bottom = 50.0
+text = "SEED: 0"
+label_settings = ExtResource("1_xn0hd")
+script = ExtResource("5_078xo")
+
+[node name="COORDS_Label" type="Label" parent="." unique_id=60457504]
+material = ExtResource("1_o75iu")
+layout_mode = 0
+offset_left = 7.0
+offset_top = 52.0
+offset_right = 187.0
+offset_bottom = 73.0
+text = "COORDINATES: (0,0)"
+label_settings = ExtResource("1_xn0hd")
+script = ExtResource("6_3r278")
 
 [node name="InventoryUI" type="Node" parent="." unique_id=407773419 node_paths=PackedStringArray("hotbar_grid", "inventory_grid", "selection_rect", "inventory_panel", "equipment_slots")]
 script = ExtResource("5_34not")
@@ -75,15 +99,15 @@ inventory_trans = 5
 equipment_slots = [NodePath("../InventoryPanel/HelmetSlot"), NodePath("../InventoryPanel/ArmourSlot"), NodePath("../InventoryPanel/ToolSlot"), NodePath("../InventoryPanel/WeaponSlot")]
 metadata/_custom_type_script = "uid://dg65yfjw86ln4"
 
-[node name="HotbarTemporary" type="Panel" parent="." unique_id=517985495]
+[node name="HotbarSprites" type="Panel" parent="." unique_id=517985495]
 layout_mode = 0
 offset_left = 5.0
-offset_top = 54.0
+offset_top = 97.0
 offset_right = 485.0
-offset_bottom = 123.0
+offset_bottom = 166.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_uy2eo")
 
-[node name="TextureRect" type="TextureRect" parent="HotbarTemporary" unique_id=1321852212]
+[node name="TextureRect" type="TextureRect" parent="HotbarSprites" unique_id=1321852212]
 layout_mode = 0
 offset_left = -4.0
 offset_top = -46.0
@@ -230,9 +254,9 @@ custom_minimum_size = Vector2(100, 100)
 custom_maximum_size = Vector2(-1, 100)
 layout_mode = 0
 offset_left = 44.0
-offset_top = 55.0
+offset_top = 98.0
 offset_right = 768.0
-offset_bottom = 155.0
+offset_bottom = 198.0
 theme_override_constants/h_separation = 8
 columns = 7
 
@@ -244,9 +268,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -916.0
-offset_top = -1025.0
+offset_top = -982.0
 offset_right = -883.5
-offset_bottom = -992.5
+offset_bottom = -949.5
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(2, 2)

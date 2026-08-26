@@ -75,11 +75,6 @@ func add_item_by_id(id: int, amount: int = 1) -> int:
 
 	if remaining < amount:
 		inventory_changed.emit()
-		var item : ItemData = ItemDatabase.get_item_by_id(id)
-		if item.equipment_slot_mode == EquipmentSlotMode.Mode.HELMET:
-			helmet_sprite.texture = item.icon
-		elif item.equipment_slot_mode == EquipmentSlotMode.Mode.TOOL:
-			tool_sprite.texture = item.icon
 	if remaining > 0:
 		print("Inventory full — %d of item %d could not be added and was lost" % [remaining, id])
 
@@ -112,17 +107,25 @@ func recalculate_equipment_stats() -> void:
 
 	stat_manager.clear_mods()
 
+	if helmet_sprite:
+		helmet_sprite.texture = null
+	if tool_sprite:
+		tool_sprite.texture = null
+
 	for istack : ItemStack in equipment:
 		if istack.is_empty():
 			continue
 
 		var item : ItemData = ItemDatabase.get_item_by_id(istack.item_id)
-		
-		if item.equipment_slot_mode == EquipmentSlotMode.Mode.HELMET:
+		if item == null:
+			continue
+
+		if item.equipment_slot_mode == EquipmentSlotMode.Mode.HELMET and helmet_sprite:
 			helmet_sprite.texture = item.icon
-		elif item.equipment_slot_mode == EquipmentSlotMode.Mode.TOOL:
+		elif item.equipment_slot_mode == EquipmentSlotMode.Mode.TOOL and tool_sprite:
 			tool_sprite.texture = item.icon
-		if item != null and item.stat_data != null:
+
+		if item.stat_data != null:
 			stat_manager._add_mod(item.stat_data)
 
 ## Removes from wherever it can find it — hotbar first, then inventory.
@@ -135,12 +138,6 @@ func remove_item_by_id(id: int, amount: int = 1) -> bool:
 	remaining = _remove_from_array(inventory, id, remaining)
 
 	inventory_changed.emit()
-	
-	var item : ItemData = ItemDatabase.get_item_by_id(id)
-	if item.equipment_slot_mode == EquipmentSlotMode.Mode.HELMET:
-		helmet_sprite.texture = item.icon
-	elif item.equipment_slot_mode == EquipmentSlotMode.Mode.TOOL:
-		tool_sprite.texture = item.icon
 	return remaining <= 0
 
 func _remove_from_array(arr: Array[ItemStack], id: int, remaining: int) -> int:

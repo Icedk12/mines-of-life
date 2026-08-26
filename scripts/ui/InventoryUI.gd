@@ -146,6 +146,7 @@ func _refresh() -> void:
 		inventory_slots[i].set_stack(inventory_component._get_stack(InventoryComponent.ItemContainer.INVENTORY, i))
 	for slot in equipment_slots:
 		slot.set_stack(inventory_component._get_stack(InventoryComponent.ItemContainer.EQUIPMENT, slot.category))
+		
 	_on_selection_changed()
 	
 func _move_selection_rect(snap: bool = false) -> void:

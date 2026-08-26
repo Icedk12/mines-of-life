@@ -4,6 +4,7 @@ class_name PlayerGUI extends Control
 @export var crafting_ui : CraftingUI
 @export var inventory_component : InventoryComponent
 @export var crafting_component : CraftingComponent
+@export var player : Player
 
 func _ready() -> void:
 	inventory_ui.inventory_component = inventory_component

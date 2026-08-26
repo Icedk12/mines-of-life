@@ -178,9 +178,10 @@ metadata/_custom_type_script = "uid://hho3xa5gaxdb"
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=1527233409]
 visible = false
 
-[node name="PlayerGUI" parent="UILayer" unique_id=1953480870 node_paths=PackedStringArray("inventory_component", "crafting_component") instance=ExtResource("17_2xrq6")]
+[node name="PlayerGUI" parent="UILayer" unique_id=1953480870 node_paths=PackedStringArray("inventory_component", "crafting_component", "player") instance=ExtResource("17_2xrq6")]
 inventory_component = NodePath("../../InventoryComponent")
 crafting_component = NodePath("../../CraftingComponent")
+player = NodePath("../..")
 
 [node name="Camera" type="Camera2D" parent="." unique_id=689899775]
 enabled = false
