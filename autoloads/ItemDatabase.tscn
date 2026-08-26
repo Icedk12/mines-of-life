@@ -20,6 +20,11 @@
 [ext_resource type="Texture2D" uid="uid://dj2qdy3eraelu" path="res://assets/items/HermesCrown.png" id="18_j3fuy"]
 [ext_resource type="Texture2D" uid="uid://k0x3q371f7fj" path="res://assets/items/Penny.png" id="19_ud80n"]
 [ext_resource type="Texture2D" uid="uid://c8qdcji7juwgf" path="res://assets/items/StuffingBricks.png" id="20_asqo3"]
+[ext_resource type="Texture2D" uid="uid://bytyraqq5wuae" path="res://assets/items/GunkHelmet.png" id="21_a8jyo"]
+[ext_resource type="Texture2D" uid="uid://cpcfiof0wvvyu" path="res://assets/items/GunkArmour.png" id="22_j4i65"]
+[ext_resource type="Texture2D" uid="uid://i4bsooc2jb7r" path="res://assets/items/PennyPickaxe.png" id="23_5d8hd"]
+[ext_resource type="Texture2D" uid="uid://8qnqvos1eary" path="res://assets/items/PennyHelmet.png" id="24_q4hdy"]
+[ext_resource type="Texture2D" uid="uid://bn4bmrvb32o6m" path="res://assets/items/PennyArmour.png" id="25_q4hdy"]
 
 [sub_resource type="Resource" id="Resource_v05ge"]
 script = ExtResource("2_gp7j7")
@@ -211,6 +216,102 @@ icon = ExtResource("20_asqo3")
 block_id = 10
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
+[sub_resource type="Resource" id="Resource_fvdbb"]
+script = ExtResource("4_iwh46")
+health_offset = 2.0
+speed_modifier = 0.95
+jump_modifier = 0.95
+damage_modifier = 1.5
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_6fy5s"]
+script = ExtResource("2_gp7j7")
+item_id = 17
+item_name = "Gunk Helmet"
+stack_size = 1
+icon = ExtResource("21_a8jyo")
+block_id = -1
+equipment_slot_mode = 1
+stat_data = SubResource("Resource_fvdbb")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_5hatu"]
+script = ExtResource("4_iwh46")
+health_offset = 3.0
+damage_offset = 1.0
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_mnwqx"]
+script = ExtResource("2_gp7j7")
+item_id = 18
+item_name = "Gunk Armour"
+stack_size = 1
+icon = ExtResource("22_j4i65")
+block_id = -1
+equipment_slot_mode = 2
+stat_data = SubResource("Resource_5hatu")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_dfpmu"]
+script = ExtResource("4_iwh46")
+speed_modifier = 1.1
+mine_strength = 3
+swing_speed = 0.18
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_5tp5t"]
+script = ExtResource("2_gp7j7")
+item_id = 19
+item_name = "Penny Pickaxe"
+stack_size = 1
+icon = ExtResource("23_5d8hd")
+block_id = -1
+equipment_slot_mode = 3
+stat_data = SubResource("Resource_dfpmu")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_kuyi6"]
+script = ExtResource("4_iwh46")
+speed_modifier = 1.2
+speed_offset = 0.67
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_78d1o"]
+script = ExtResource("2_gp7j7")
+item_id = 20
+item_name = "Penny Helmet"
+stack_size = 1
+icon = ExtResource("24_q4hdy")
+block_id = -1
+equipment_slot_mode = 1
+stat_data = SubResource("Resource_kuyi6")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_q4hdy"]
+script = ExtResource("4_iwh46")
+speed_offset = 0.1
+jump_modifier = 0.8
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_xx0cy"]
+script = ExtResource("2_gp7j7")
+item_id = 21
+item_name = "Penny Armour"
+stack_size = 1
+icon = ExtResource("25_q4hdy")
+block_id = -1
+equipment_slot_mode = 2
+stat_data = SubResource("Resource_q4hdy")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_n0470"]
+script = ExtResource("2_gp7j7")
+item_id = 22
+item_name = "Bedrock"
+icon = ExtResource("14_q6xpq")
+block_id = 11
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
 [node name="ItemDatabase" type="Node" unique_id=1572723925]
 script = ExtResource("1_ptkgt")
-item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn"), SubResource("Resource_1tuwj"), SubResource("Resource_iwh46"), SubResource("Resource_7vfln"), SubResource("Resource_ci6rp"), SubResource("Resource_wo6et"), SubResource("Resource_jw16n"), SubResource("Resource_4pnrd"), SubResource("Resource_efpqa"), SubResource("Resource_310cl"), SubResource("Resource_ldqej"), SubResource("Resource_ud80n"), SubResource("Resource_gutlp"), SubResource("Resource_j4i65"), SubResource("Resource_c6kvi"), SubResource("Resource_ui66f")])
+item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn"), SubResource("Resource_1tuwj"), SubResource("Resource_iwh46"), SubResource("Resource_7vfln"), SubResource("Resource_ci6rp"), SubResource("Resource_wo6et"), SubResource("Resource_jw16n"), SubResource("Resource_4pnrd"), SubResource("Resource_efpqa"), SubResource("Resource_310cl"), SubResource("Resource_ldqej"), SubResource("Resource_ud80n"), SubResource("Resource_gutlp"), SubResource("Resource_j4i65"), SubResource("Resource_c6kvi"), SubResource("Resource_ui66f"), SubResource("Resource_6fy5s"), SubResource("Resource_mnwqx"), SubResource("Resource_5tp5t"), SubResource("Resource_78d1o"), SubResource("Resource_xx0cy"), SubResource("Resource_n0470")])

@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://crls58a2voc6m"]
+
+[ext_resource type="Script" uid="uid://b24g885fk7e4m" path="res://scripts/ui/CutsceneManager.gd" id="1_556qu"]
+[ext_resource type="Script" uid="uid://cybuen7tbc70s" path="res://scripts/types/Cutscene.gd" id="2_xh13b"]
+
+[node name="CutsceneManager" type="Node" unique_id=177604128]
+script = ExtResource("1_556qu")
+cutscenes = Array[ExtResource("2_xh13b")]([null])
+
+[node name="Timer" type="Timer" parent="." unique_id=1795370374]
+one_shot = true

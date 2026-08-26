@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://dgr1punqwv1w"]
+
+[ext_resource type="Script" uid="uid://cybuen7tbc70s" path="res://scripts/types/Cutscene.gd" id="1_8wuh6"]
+[ext_resource type="Script" uid="uid://b13sc1200k75w" path="res://scripts/types/KeyframeMarker.gd" id="2_j2aof"]
+[ext_resource type="Script" uid="uid://d164jamb4hq8l" path="res://scripts/types/TweenInfo.gd" id="3_fqeff"]
+[ext_resource type="Script" uid="uid://ecu82cmo2ow5" path="res://scripts/types/CameraKeyframe.gd" id="3_sfudp"]
+
+[sub_resource type="Resource" id="Resource_sfudp"]
+script = ExtResource("3_fqeff")
+metadata/_custom_type_script = "uid://d164jamb4hq8l"
+
+[sub_resource type="Resource" id="Resource_fqeff"]
+script = ExtResource("3_fqeff")
+metadata/_custom_type_script = "uid://d164jamb4hq8l"
+
+[sub_resource type="Resource" id="Resource_p7jo3"]
+script = ExtResource("3_fqeff")
+metadata/_custom_type_script = "uid://d164jamb4hq8l"
+
+[sub_resource type="Resource" id="Resource_j2aof"]
+script = ExtResource("3_sfudp")
+zoom = 2.0
+still_time = 1.0
+pos_tween = SubResource("Resource_sfudp")
+rot_tween = SubResource("Resource_fqeff")
+zoom_tween = SubResource("Resource_p7jo3")
+metadata/_custom_type_script = "uid://ecu82cmo2ow5"
+
+[sub_resource type="Resource" id="Resource_td4oo"]
+script = ExtResource("3_fqeff")
+metadata/_custom_type_script = "uid://d164jamb4hq8l"
+
+[sub_resource type="Resource" id="Resource_ee3pl"]
+script = ExtResource("3_fqeff")
+metadata/_custom_type_script = "uid://d164jamb4hq8l"
+
+[sub_resource type="Resource" id="Resource_dunaf"]
+script = ExtResource("3_fqeff")
+metadata/_custom_type_script = "uid://d164jamb4hq8l"
+
+[sub_resource type="Resource" id="Resource_impyw"]
+script = ExtResource("3_sfudp")
+zoom = 2.0
+still_time = 1.0
+pos_tween = SubResource("Resource_td4oo")
+rot_tween = SubResource("Resource_ee3pl")
+zoom_tween = SubResource("Resource_dunaf")
+metadata/_custom_type_script = "uid://ecu82cmo2ow5"
+
+[node name="Intro" type="Node" unique_id=1480877104]
+script = ExtResource("1_8wuh6")
+
+[node name="1" type="Marker2D" parent="." unique_id=1378926649]
+rotation = 6.2831855
+script = ExtResource("2_j2aof")
+keyframe_settings = SubResource("Resource_j2aof")
+metadata/_custom_type_script = "uid://b13sc1200k75w"
+
+[node name="2" type="Marker2D" parent="." unique_id=1860805607]
+position = Vector2(528, 240)
+rotation = 6.2831855
+script = ExtResource("2_j2aof")
+keyframe_settings = SubResource("Resource_impyw")
+metadata/_custom_type_script = "uid://b13sc1200k75w"

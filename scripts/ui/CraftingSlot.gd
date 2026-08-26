@@ -31,7 +31,7 @@ func _update_hover_label() -> void:
 
 	var item := ItemDatabase.get_item_by_id(recipe.output_item_id)
 	if item:
-		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+		#Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 		hover_label.text = str(item.item_name + ": " + recipe.get_recipe_str())
 		hover_label.global_position = get_global_mouse_position()
 		hover_label.visible = true
@@ -42,7 +42,7 @@ func _on_mouse_exited() -> void:
 	is_hovered = false
 	if hover_label:
 		hover_label.visible = false
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func bind(_recipe: CraftingRecipe, _crafting_component: CraftingComponent, _inventory_component: InventoryComponent) -> void:
 	recipe = _recipe

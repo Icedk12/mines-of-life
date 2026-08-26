@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dw8qkxkdhxep7" path="res://scenes/player/Player.tscn" id="2_rvslj"]
 [ext_resource type="Material" uid="uid://8xkndevfkt7s" path="res://assets/materials/UnshadedMaterial.tres" id="4_vcsgt"]
 [ext_resource type="AudioStream" uid="uid://16yktjp50fwn" path="res://assets/sounds/music/CavesOfCould.wav" id="4_wp0k4"]
+[ext_resource type="Script" uid="uid://bxtr2t12gu527" path="res://scripts/ui/CanvasLayerHider.gd" id="5_dg70y"]
 [ext_resource type="Texture2D" uid="uid://brnvqkom0svjv" path="res://assets/ui/main_bg.png" id="5_lhr70"]
 [ext_resource type="Texture2D" uid="uid://bikasj8gy6jmy" path="res://assets/ui/main_play.png" id="6_c01mt"]
 [ext_resource type="Texture2D" uid="uid://c53bxv8h1qlg1" path="res://assets/ui/main_play-press.png" id="7_nxtc6"]
@@ -24,10 +25,11 @@
 [ext_resource type="Texture2D" uid="uid://dnribgdmwgxie" path="res://assets/ui/Darkness.png" id="22_xa025"]
 [ext_resource type="Texture2D" uid="uid://dvcwwtstrhn57" path="res://assets/player/SelectionBox12x12.png" id="23_ebg2g"]
 [ext_resource type="Texture2D" uid="uid://b2ibw5226ajqs" path="res://assets/above/MenuParticles.png" id="24_2ofn6"]
-[ext_resource type="Script" uid="uid://bgkkdjmqq8fr7" path="res://scripts/MusicPlayer.gd" id="25_xa025"]
+[ext_resource type="Script" uid="uid://bgkkdjmqq8fr7" path="res://scripts/ui/MusicPlayer.gd" id="25_xa025"]
 [ext_resource type="AudioStream" uid="uid://b1nxqi52jla6h" path="res://assets/sounds/music/Suspense.wav" id="26_ma7h6"]
 [ext_resource type="AudioStream" uid="uid://daeromqsworyc" path="res://assets/sounds/music/Exploration.wav" id="27_e2s0e"]
 [ext_resource type="AudioStream" uid="uid://dphnmkvlo70f2" path="res://assets/sounds/music/Hole in the Wall.wav" id="28_gsxep"]
+[ext_resource type="Script" uid="uid://b24g885fk7e4m" path="res://scripts/ui/CutsceneManager.gd" id="29_e2s0e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qmy6f"]
 shader = ExtResource("13_qmy6f")
@@ -176,6 +178,7 @@ level = NodePath("../Level")
 [node name="MainMenu" type="Node2D" parent="." unique_id=815849707]
 
 [node name="CameraMainMenu" type="Camera2D" parent="MainMenu" unique_id=2085208049]
+ignore_rotation = false
 zoom = Vector2(4, 4)
 
 [node name="MainMenuTheme" type="AudioStreamPlayer2D" parent="MainMenu" unique_id=843395466]
@@ -184,6 +187,7 @@ stream = ExtResource("4_wp0k4")
 autoplay = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="MainMenu" unique_id=30027952]
+script = ExtResource("5_dg70y")
 
 [node name="Control" type="Control" parent="MainMenu/CanvasLayer" unique_id=152853203]
 layout_mode = 3
@@ -550,7 +554,7 @@ text = "LET'S START"
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=778092633 node_paths=PackedStringArray("wait_timer")]
 script = ExtResource("25_xa025")
-playlist = Array[AudioStream]([ExtResource("4_wp0k4"), ExtResource("26_ma7h6"), ExtResource("27_e2s0e"), ExtResource("28_gsxep")])
+playlist = Array[AudioStream]([ExtResource("26_ma7h6"), ExtResource("27_e2s0e"), ExtResource("28_gsxep")])
 max_delay = 5.0
 wait_timer = NodePath("Timer")
 metadata/_custom_type_script = "uid://bgkkdjmqq8fr7"
@@ -558,5 +562,15 @@ metadata/_custom_type_script = "uid://bgkkdjmqq8fr7"
 [node name="Timer" type="Timer" parent="MusicPlayer" unique_id=257314391]
 one_shot = true
 
+[node name="CutsceneManager" type="Node" parent="." unique_id=1348951401 node_paths=PackedStringArray("camera")]
+script = ExtResource("29_e2s0e")
+camera = NodePath("../MainMenu/CameraMainMenu")
+metadata/_custom_type_script = "uid://b24g885fk7e4m"
+
+[node name="Timer" type="Timer" parent="CutsceneManager" unique_id=1469941348]
+one_shot = true
+
 [connection signal="pressed" from="MainMenu/CanvasLayer/Control/PlayBtn" to="MainMenu/CanvasLayer/Control/PlayBtn" method="_on_pressed"]
 [connection signal="pressed" from="MainMenu/CanvasLayer/Control/StartMenu/StartButton" to="MainMenu/CanvasLayer/Control/PlayBtn" method="_confirm_pressed"]
+[connection signal="cutscene_ended" from="CutsceneManager" to="MainMenu/CanvasLayer" method="_cutscene_ended"]
+[connection signal="cutscene_started" from="CutsceneManager" to="MainMenu/CanvasLayer" method="_cutscene_started"]
