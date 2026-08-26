@@ -20,6 +20,9 @@ extends CharacterComponent
 @export var rot_amplitude : float = 5.0
 @export var rot_frequency : float = 25.0
 
+@onready var helmet_sprite : Sprite2D = $"../Sprite/EquipmentSprites/Helmet"
+@onready var tool_sprite : Sprite2D = $"../Sprite/EquipmentSprites/Tool"
+
 var active_tween : Tween ## Track active tween to prevent spamming
 var _sin_time : float = 0.0
 var _played_step_this_cycle : bool = false
@@ -117,3 +120,11 @@ func _mining_tween(direction : Vector2 = Vector2.RIGHT) -> void:
 		.set_trans(return_tween.transition_type).set_ease(return_tween.easing_style)
 	active_tween.tween_property(sprite, "rotation", 0.0, return_tween.duration)\
 		.set_trans(return_tween.transition_type).set_ease(return_tween.easing_style)
+
+func sprite_flip_h(val : bool) -> void:
+	tool_sprite.flip_h = val
+	sprite.flip_h = val
+	if val == true:
+		tool_sprite.offset.x = -10
+	else:
+		tool_sprite.offset.x = 0

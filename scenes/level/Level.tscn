@@ -58,7 +58,7 @@ metadata/_custom_type_script = "uid://71hg30844ma2"
 [sub_resource type="Resource" id="Resource_83ryt"]
 script = ExtResource("6_e4y3p")
 scene = ExtResource("13_8wbt5")
-spawn_chance = 0.01
+spawn_chance = 0.009
 metadata/_custom_type_script = "uid://71hg30844ma2"
 
 [sub_resource type="Resource" id="Resource_c630t"]
@@ -106,7 +106,7 @@ light_scene = ExtResource("4_ti4pp")
 [node name="LevelGenerator" type="Node" parent="." unique_id=877058791 node_paths=PackedStringArray("tilemap")]
 script = ExtResource("2_cne4c")
 tilemap = NodePath("../Layer1")
-tile_generate_chance = 0.1
+tile_generate_chance = 0.35
 tiles_per_frame_budget = 70
 lights_per_frame_budget = 32
 unload_tiles_per_frame_budget = 70

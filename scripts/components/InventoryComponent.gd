@@ -8,6 +8,9 @@ enum ItemContainer { HOTBAR, INVENTORY, EQUIPMENT }
 @export var hotbar_size : int = 9
 @export var inventory_size : int = 27
 
+@onready var helmet_sprite : Sprite2D = $"../Sprite/EquipmentSprites/Helmet"
+@onready var tool_sprite : Sprite2D = $"../Sprite/EquipmentSprites/Tool"
+
 var hotbar : Array[ItemStack] = []
 var inventory : Array[ItemStack] = []
 var equipment : Array[ItemStack] = []
@@ -72,6 +75,11 @@ func add_item_by_id(id: int, amount: int = 1) -> int:
 
 	if remaining < amount:
 		inventory_changed.emit()
+		var item : ItemData = ItemDatabase.get_item_by_id(id)
+		if item.equipment_slot_mode == EquipmentSlotMode.Mode.HELMET:
+			helmet_sprite.texture = item.icon
+		elif item.equipment_slot_mode == EquipmentSlotMode.Mode.TOOL:
+			tool_sprite.texture = item.icon
 	if remaining > 0:
 		print("Inventory full — %d of item %d could not be added and was lost" % [remaining, id])
 
@@ -108,7 +116,12 @@ func recalculate_equipment_stats() -> void:
 		if istack.is_empty():
 			continue
 
-		var item : ItemData = ItemDatabase.get_item_by_id(istack.item_id) # was istack.get_item_id() — that method never existed
+		var item : ItemData = ItemDatabase.get_item_by_id(istack.item_id)
+		
+		if item.equipment_slot_mode == EquipmentSlotMode.Mode.HELMET:
+			helmet_sprite.texture = item.icon
+		elif item.equipment_slot_mode == EquipmentSlotMode.Mode.TOOL:
+			tool_sprite.texture = item.icon
 		if item != null and item.stat_data != null:
 			stat_manager._add_mod(item.stat_data)
 
@@ -122,6 +135,12 @@ func remove_item_by_id(id: int, amount: int = 1) -> bool:
 	remaining = _remove_from_array(inventory, id, remaining)
 
 	inventory_changed.emit()
+	
+	var item : ItemData = ItemDatabase.get_item_by_id(id)
+	if item.equipment_slot_mode == EquipmentSlotMode.Mode.HELMET:
+		helmet_sprite.texture = item.icon
+	elif item.equipment_slot_mode == EquipmentSlotMode.Mode.TOOL:
+		tool_sprite.texture = item.icon
 	return remaining <= 0
 
 func _remove_from_array(arr: Array[ItemStack], id: int, remaining: int) -> int:

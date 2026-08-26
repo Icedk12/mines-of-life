@@ -74,10 +74,18 @@ texture = ExtResource("11_5stf6")
 [node name="Sprite" type="Sprite2D" parent="." unique_id=139533162]
 texture = ExtResource("3_4kuee")
 
-[node name="Sprite2D" type="Sprite2D" parent="Sprite" unique_id=564108891]
-offset = Vector2(3.77, -1.01)
+[node name="EquipmentSprites" type="Node2D" parent="Sprite" unique_id=81725055]
+
+[node name="Tool" type="Sprite2D" parent="Sprite/EquipmentSprites" unique_id=1495336920]
+position = Vector2(4, -0.49999988)
+scale = Vector2(0.875, 0.87500006)
+
+[node name="Helmet" type="Sprite2D" parent="Sprite/EquipmentSprites" unique_id=802399321]
+position = Vector2(0, -4)
+scale = Vector2(0.875, 0.75)
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=2041257211]
+visible = false
 position = Vector2(0, 0.25)
 shape = SubResource("RectangleShape2D_yx65c")
 disabled = true
