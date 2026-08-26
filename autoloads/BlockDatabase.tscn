@@ -128,6 +128,15 @@ hardness = 10
 required_strength = 4
 metadata/_custom_type_script = "uid://h7cwu8wnif38"
 
+[sub_resource type="Resource" id="Resource_qm8gl"]
+script = ExtResource("2_kxxcu")
+block_id = 13
+display_name = "Diamond"
+terrain_id = 13
+hardness = 16
+required_strength = 5
+metadata/_custom_type_script = "uid://h7cwu8wnif38"
+
 [node name="BlockDatabase" type="Node" unique_id=1572723925]
 script = ExtResource("1_v6wp7")
-blocks = Array[ExtResource("2_kxxcu")]([SubResource("Resource_6ojj1"), SubResource("Resource_8nn5r"), SubResource("Resource_ui66f"), SubResource("Resource_xqib3"), SubResource("Resource_32n22"), SubResource("Resource_p6eds"), SubResource("Resource_oofu8"), SubResource("Resource_iwh46"), SubResource("Resource_n0470"), SubResource("Resource_32fc5"), SubResource("Resource_yx65c"), SubResource("Resource_ou2gv"), SubResource("Resource_bordp")])
+blocks = Array[ExtResource("2_kxxcu")]([SubResource("Resource_6ojj1"), SubResource("Resource_8nn5r"), SubResource("Resource_ui66f"), SubResource("Resource_xqib3"), SubResource("Resource_32n22"), SubResource("Resource_p6eds"), SubResource("Resource_oofu8"), SubResource("Resource_iwh46"), SubResource("Resource_n0470"), SubResource("Resource_32fc5"), SubResource("Resource_yx65c"), SubResource("Resource_ou2gv"), SubResource("Resource_bordp"), SubResource("Resource_qm8gl")])

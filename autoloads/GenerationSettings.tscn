@@ -31,6 +31,14 @@ min_size = 3
 shape_type = 1
 metadata/_custom_type_script = "uid://dtax1vhaxc7ds"
 
+[sub_resource type="Resource" id="Resource_dji7e"]
+script = ExtResource("2_d37y8")
+block_id = 13
+terrain_id = 13
+gen_chance = 0.001
+max_size = 3
+metadata/_custom_type_script = "uid://dtax1vhaxc7ds"
+
 [node name="GenerationSettings" type="Node" unique_id=1719683742]
 script = ExtResource("1_cofjk")
-ores = Array[ExtResource("2_d37y8")]([SubResource("Resource_d37y8"), SubResource("Resource_1r33u"), SubResource("Resource_ud80n")])
+ores = Array[ExtResource("2_d37y8")]([SubResource("Resource_d37y8"), SubResource("Resource_1r33u"), SubResource("Resource_ud80n"), SubResource("Resource_dji7e")])
