@@ -27,6 +27,7 @@ var _gen_phase : GenPhase = GenPhase.TILES
 
 var _interior_atlas_cache : Dictionary = {}
 var _gen_modified_by_terrain : Dictionary = {}
+var _gen_chunk_key : Vector2i
 
 var _gen_paint_by_terrain : Dictionary = {}
 var _gen_available_set : Dictionary = {}
@@ -43,6 +44,7 @@ var last_player_chunk := Vector2i(999999, 999999)
 
 var modified_tiles := {}
 var _placed_structures : Array = []
+var generated_chunks : Dictionary = {} 
 
 var is_generating : bool = false
 var is_initial_generation : bool = true
@@ -210,6 +212,7 @@ func generate_initial_world() -> void:
 
 	loaded_chunks.clear()
 	modified_tiles.clear()
+	generated_chunks.clear()
 	tile_damage.clear()
 	_gen_active = false
 	generation_queue.clear()
@@ -377,7 +380,9 @@ func update_chunks(world_position: Vector2) -> void:
 	)
 
 func _begin_chunk_generation(chunk_x: int, chunk_y: int) -> void:
-	_generate_chunk_structures(chunk_x, chunk_y)
+	_gen_chunk_key = Vector2i(chunk_x, chunk_y)
+	if not generated_chunks.has(_gen_chunk_key):
+		_generate_chunk_structures(chunk_x, chunk_y)
 
 	_gen_active = true
 	_gen_phase = GenPhase.TILES
@@ -568,6 +573,10 @@ func _begin_ore_phase() -> void:
 	_gen_phase = GenPhase.ORES
 
 func _step_ore_generation() -> void:
+	if generated_chunks.has(_gen_chunk_key):
+		_finish_generation_paint()
+		return
+
 	var ores := GenerationSettings.ores
 	var processed := 0
 
@@ -601,9 +610,10 @@ func _step_ore_generation() -> void:
 
 		for pos in vein:
 			modified_tiles[pos] = ore_type.block_id
-			_gen_available_set.erase(pos) # claim it — won't be painted as base terrain
+			_gen_available_set.erase(pos)
 			_gen_paint_by_terrain[key].append(pos)
 
+	generated_chunks[_gen_chunk_key] = true # first-time roll complete — locked in permanently
 	_finish_generation_paint()
 
 ## Paint all terrain at once

@@ -16,6 +16,8 @@
 [ext_resource type="PackedScene" uid="uid://cj3rw2j8amd2m" path="res://scenes/level/structures/Struct_SmallRuins2.tscn" id="14_p0gqr"]
 [ext_resource type="PackedScene" uid="uid://bc3iy11fycqq" path="res://scenes/level/structures/Struct_Dih.tscn" id="15_8wbt5"]
 [ext_resource type="PackedScene" uid="uid://csfkk8prwx2hb" path="res://scenes/level/structures/Struct_Maze2.tscn" id="16_p0gqr"]
+[ext_resource type="PackedScene" uid="uid://cgnfsm5qs58rd" path="res://scenes/level/structures/Struct_GoldRing.tscn" id="17_7jckg"]
+[ext_resource type="PackedScene" uid="uid://d6dmrmokxowe" path="res://scenes/level/structures/Struct_GoldRing2.tscn" id="18_y8nfn"]
 
 [sub_resource type="Resource" id="Resource_ti4pp"]
 script = ExtResource("6_e4y3p")
@@ -77,6 +79,20 @@ scene = ExtResource("16_p0gqr")
 spawn_chance = 0.008
 metadata/_custom_type_script = "uid://71hg30844ma2"
 
+[sub_resource type="Resource" id="Resource_y8nfn"]
+script = ExtResource("6_e4y3p")
+scene = ExtResource("17_7jckg")
+spawn_chance = 0.035
+min_spacing = 100
+metadata/_custom_type_script = "uid://71hg30844ma2"
+
+[sub_resource type="Resource" id="Resource_76sct"]
+script = ExtResource("6_e4y3p")
+scene = ExtResource("18_y8nfn")
+spawn_chance = 0.005
+min_spacing = 50
+metadata/_custom_type_script = "uid://71hg30844ma2"
+
 [node name="Level" type="Node2D" unique_id=131454242 node_paths=PackedStringArray("level_generator", "_layer1")]
 script = ExtResource("1_l1x8v")
 level_generator = NodePath("LevelGenerator")
@@ -94,7 +110,7 @@ tile_generate_chance = 0.15
 tiles_per_frame_budget = 70
 lights_per_frame_budget = 32
 unload_tiles_per_frame_budget = 70
-structures = Array[ExtResource("6_e4y3p")]([SubResource("Resource_ti4pp"), SubResource("Resource_e4y3p"), SubResource("Resource_gsxep"), SubResource("Resource_744pl"), SubResource("Resource_1nmnl"), SubResource("Resource_xqw53"), SubResource("Resource_83ryt"), SubResource("Resource_c630t"), SubResource("Resource_urj03"), SubResource("Resource_jhn0l")])
+structures = Array[ExtResource("6_e4y3p")]([SubResource("Resource_ti4pp"), SubResource("Resource_e4y3p"), SubResource("Resource_gsxep"), SubResource("Resource_744pl"), SubResource("Resource_1nmnl"), SubResource("Resource_xqw53"), SubResource("Resource_83ryt"), SubResource("Resource_c630t"), SubResource("Resource_urj03"), SubResource("Resource_jhn0l"), SubResource("Resource_y8nfn"), SubResource("Resource_76sct")])
 metadata/_custom_type_script = "uid://bmmky33tl7eb0"
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=696853006]

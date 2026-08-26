@@ -5,6 +5,7 @@
 
 [sub_resource type="Resource" id="Resource_wtpcr"]
 script = ExtResource("2_ldqej")
+label = "Crafting Table"
 output_item_id = 3
 input_item_ids = Array[int]([0])
 input_amounts = Array[int]([4])
@@ -12,6 +13,7 @@ metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [sub_resource type="Resource" id="Resource_wo6et"]
 script = ExtResource("2_ldqej")
+label = "Chest"
 output_item_id = 4
 input_item_ids = Array[int]([0, 1])
 input_amounts = Array[int]([3, 1])
@@ -19,6 +21,7 @@ metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [sub_resource type="Resource" id="Resource_ldqej"]
 script = ExtResource("2_ldqej")
+label = "Door"
 output_item_id = 5
 output_amount = 2
 input_item_ids = Array[int]([0, 1])
@@ -27,6 +30,7 @@ metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [sub_resource type="Resource" id="Resource_4pnrd"]
 script = ExtResource("2_ldqej")
+label = "Torch"
 output_item_id = 7
 output_amount = 4
 input_item_ids = Array[int]([1, 2])
@@ -35,6 +39,8 @@ metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [sub_resource type="Resource" id="Resource_310cl"]
 script = ExtResource("2_ldqej")
+label = "Leather Helmet"
+crafting_requirement = 1
 output_item_id = 8
 input_item_ids = Array[int]([1])
 input_amounts = Array[int]([5])
@@ -42,6 +48,8 @@ metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [sub_resource type="Resource" id="Resource_78d1o"]
 script = ExtResource("2_ldqej")
+label = "Leather Armour"
+crafting_requirement = 1
 output_item_id = 9
 input_item_ids = Array[int]([1])
 input_amounts = Array[int]([8])
@@ -49,6 +57,7 @@ metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [sub_resource type="Resource" id="Resource_kuyi6"]
 script = ExtResource("2_ldqej")
+label = "Furnace"
 crafting_requirement = 1
 output_item_id = 10
 input_item_ids = Array[int]([0])
@@ -57,6 +66,7 @@ metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [sub_resource type="Resource" id="Resource_mdjt3"]
 script = ExtResource("2_ldqej")
+label = "Leather Scrap"
 crafting_requirement = 2
 output_item_id = 1
 input_item_ids = Array[int]([6])
@@ -65,6 +75,7 @@ metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [sub_resource type="Resource" id="Resource_tor6a"]
 script = ExtResource("2_ldqej")
+label = "Leather Pickaxe"
 crafting_requirement = 1
 output_item_id = 11
 input_item_ids = Array[int]([1, 0])
@@ -73,6 +84,7 @@ metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [sub_resource type="Resource" id="Resource_xulxr"]
 script = ExtResource("2_ldqej")
+label = "Gunk Pickaxe"
 crafting_requirement = 1
 output_item_id = 12
 input_item_ids = Array[int]([2, 0])
@@ -81,6 +93,7 @@ metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [sub_resource type="Resource" id="Resource_lujpk"]
 script = ExtResource("2_ldqej")
+label = "Gunk Battleaxe"
 crafting_requirement = 1
 output_item_id = 13
 input_item_ids = Array[int]([2, 0])
@@ -89,14 +102,16 @@ metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [sub_resource type="Resource" id="Resource_j3fuy"]
 script = ExtResource("2_ldqej")
+label = "Hermes' Crown"
 crafting_requirement = 1
 output_item_id = 14
-input_item_ids = Array[int]([1, 2])
-input_amounts = Array[int]([99, 99])
+input_item_ids = Array[int]([25, 24])
+input_amounts = Array[int]([50, 50])
 metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [sub_resource type="Resource" id="Resource_gutlp"]
 script = ExtResource("2_ldqej")
+label = "Stuffing Bricks"
 crafting_requirement = 2
 output_item_id = 16
 output_amount = 2
@@ -106,6 +121,7 @@ metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [sub_resource type="Resource" id="Resource_n0470"]
 script = ExtResource("2_ldqej")
+label = "Gunk Helmet"
 crafting_requirement = 1
 output_item_id = 17
 input_item_ids = Array[int]([2])
@@ -114,6 +130,7 @@ metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [sub_resource type="Resource" id="Resource_yx65c"]
 script = ExtResource("2_ldqej")
+label = "Gunk Armour"
 crafting_requirement = 1
 output_item_id = 18
 input_item_ids = Array[int]([2])
@@ -122,28 +139,51 @@ metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [sub_resource type="Resource" id="Resource_u4baj"]
 script = ExtResource("2_ldqej")
+label = "Penny Pickaxe"
 crafting_requirement = 1
 output_item_id = 19
-input_item_ids = Array[int]([15, 0])
+input_item_ids = Array[int]([24, 0])
 input_amounts = Array[int]([3, 1])
 metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [sub_resource type="Resource" id="Resource_805j6"]
 script = ExtResource("2_ldqej")
+label = "Penny Helmet"
 crafting_requirement = 1
 output_item_id = 20
-input_item_ids = Array[int]([15])
+input_item_ids = Array[int]([24])
 input_amounts = Array[int]([5])
 metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [sub_resource type="Resource" id="Resource_dfpmu"]
 script = ExtResource("2_ldqej")
+label = "Penny Armour"
 crafting_requirement = 1
 output_item_id = 21
-input_item_ids = Array[int]([15])
+input_item_ids = Array[int]([24])
 input_amounts = Array[int]([8])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_mbtbv"]
+script = ExtResource("2_ldqej")
+label = "Melted Penny"
+crafting_requirement = 2
+output_item_id = 24
+output_amount = 2
+input_item_ids = Array[int]([15, 2])
+input_amounts = Array[int]([2, 1])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_y1ru1"]
+script = ExtResource("2_ldqej")
+label = "Refined Gold"
+crafting_requirement = 2
+output_item_id = 25
+output_amount = 2
+input_item_ids = Array[int]([23, 2])
+input_amounts = Array[int]([2, 1])
 metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [node name="RecipeDatabase" type="Node" unique_id=1958750374]
 script = ExtResource("1_wtpcr")
-recipes = Array[ExtResource("2_ldqej")]([SubResource("Resource_wtpcr"), SubResource("Resource_wo6et"), SubResource("Resource_ldqej"), SubResource("Resource_4pnrd"), SubResource("Resource_310cl"), SubResource("Resource_78d1o"), SubResource("Resource_kuyi6"), SubResource("Resource_mdjt3"), SubResource("Resource_tor6a"), SubResource("Resource_xulxr"), SubResource("Resource_lujpk"), SubResource("Resource_j3fuy"), SubResource("Resource_gutlp"), SubResource("Resource_n0470"), SubResource("Resource_yx65c"), SubResource("Resource_u4baj"), SubResource("Resource_805j6"), SubResource("Resource_dfpmu")])
+recipes = Array[ExtResource("2_ldqej")]([SubResource("Resource_wtpcr"), SubResource("Resource_wo6et"), SubResource("Resource_ldqej"), SubResource("Resource_4pnrd"), SubResource("Resource_310cl"), SubResource("Resource_78d1o"), SubResource("Resource_kuyi6"), SubResource("Resource_mdjt3"), SubResource("Resource_tor6a"), SubResource("Resource_xulxr"), SubResource("Resource_lujpk"), SubResource("Resource_j3fuy"), SubResource("Resource_gutlp"), SubResource("Resource_n0470"), SubResource("Resource_yx65c"), SubResource("Resource_u4baj"), SubResource("Resource_805j6"), SubResource("Resource_dfpmu"), SubResource("Resource_mbtbv"), SubResource("Resource_y1ru1")])

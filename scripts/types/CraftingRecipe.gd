@@ -1,5 +1,6 @@
 class_name CraftingRecipe extends Resource
 
+@export var label : String ## Just for ease of use, optional but claryifing!
 @export var crafting_requirement : CraftingRequirement.Block = CraftingRequirement.Block.NONE
 @export var output_item_id : int
 @export var output_amount : int = 1
