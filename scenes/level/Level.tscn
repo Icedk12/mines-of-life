@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://bmmky33tl7eb0" path="res://scripts/level/LevelGenerator.gd" id="2_cne4c"]
 [ext_resource type="Script" uid="uid://c1mnta77cea82" path="res://scripts/level/LevelMap.gd" id="3_5l2jw"]
 [ext_resource type="PackedScene" uid="uid://cqj3bvrl7lun5" path="res://scenes/light/TileLight.tscn" id="4_ti4pp"]
+[ext_resource type="Script" uid="uid://2p2s4h0oubsl" path="res://scripts/level/EnemySpawning.gd" id="5_76sct"]
 [ext_resource type="Script" uid="uid://71hg30844ma2" path="res://scripts/types/Structure.gd" id="6_e4y3p"]
 [ext_resource type="PackedScene" uid="uid://dlb2r30dsafii" path="res://scenes/level/structures/Struct_PennyForge.tscn" id="6_reyld"]
 [ext_resource type="PackedScene" uid="uid://b06vvdvipp1ds" path="res://scenes/level/structures/Struct_Template.tscn" id="8_4nqmc"]
@@ -18,6 +19,11 @@
 [ext_resource type="PackedScene" uid="uid://csfkk8prwx2hb" path="res://scenes/level/structures/Struct_Maze2.tscn" id="16_p0gqr"]
 [ext_resource type="PackedScene" uid="uid://cgnfsm5qs58rd" path="res://scenes/level/structures/Struct_GoldRing.tscn" id="17_7jckg"]
 [ext_resource type="PackedScene" uid="uid://d6dmrmokxowe" path="res://scenes/level/structures/Struct_GoldRing2.tscn" id="18_y8nfn"]
+[ext_resource type="PackedScene" uid="uid://cguh31gdgg45w" path="res://enemy_scenes/Enemy_Dustpiece.tscn" id="20_0iep6"]
+[ext_resource type="PackedScene" uid="uid://d237ssrsdh7n0" path="res://enemy_scenes/Enemy_Ringo.tscn" id="21_3tf8s"]
+[ext_resource type="PackedScene" uid="uid://soc8s8mwupai" path="res://enemy_scenes/Enemy_Duster.tscn" id="22_hu4bk"]
+[ext_resource type="PackedScene" uid="uid://pkd53abgkjlr" path="res://enemy_scenes/Enemy_Gunkel.tscn" id="23_sxvdn"]
+[ext_resource type="PackedScene" uid="uid://do4g85chskfhn" path="res://enemy_scenes/Enemy_Redback.tscn" id="24_qlgth"]
 
 [sub_resource type="Resource" id="Resource_ti4pp"]
 script = ExtResource("6_e4y3p")
@@ -93,10 +99,11 @@ spawn_chance = 0.005
 min_spacing = 50
 metadata/_custom_type_script = "uid://71hg30844ma2"
 
-[node name="Level" type="Node2D" unique_id=131454242 node_paths=PackedStringArray("level_generator", "_layer1")]
+[node name="Level" type="Node2D" unique_id=131454242 node_paths=PackedStringArray("level_generator", "_layer1", "enemy_spawner")]
 script = ExtResource("1_l1x8v")
 level_generator = NodePath("LevelGenerator")
 _layer1 = NodePath("Layer1")
+enemy_spawner = NodePath("EnemySpawner")
 
 [node name="Layer1" type="TileMapLayer" parent="." unique_id=1300922217]
 tile_set = ExtResource("1_751o5")
@@ -115,5 +122,18 @@ metadata/_custom_type_script = "uid://bmmky33tl7eb0"
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=696853006]
 color = Color(0, 0, 0, 1)
+
+[node name="EnemySpawner" type="Node" parent="." unique_id=1956834756 node_paths=PackedStringArray("level_generator")]
+script = ExtResource("5_76sct")
+level_generator = NodePath("../LevelGenerator")
+enemy_scenes = Array[PackedScene]([ExtResource("20_0iep6"), ExtResource("21_3tf8s"), ExtResource("22_hu4bk"), ExtResource("23_sxvdn"), ExtResource("24_qlgth")])
+spawn_interval = 0.1
+spawn_attempts_per_cycle = 5
+min_spawn_distance = 150.0
+max_spawn_distance = 500.0
+max_alive_enemies = 30
+metadata/_custom_type_script = "uid://2p2s4h0oubsl"
+
+[node name="Timer" type="Timer" parent="EnemySpawner" unique_id=405293199]
 
 [connection signal="initial_generation_finished" from="LevelGenerator" to="." method="finished_generation_inital"]

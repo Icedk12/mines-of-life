@@ -1,6 +1,6 @@
 class_name CharacterComponent extends Component
 
-@export var character : Player ## [OPTIONAL]
+@export var character : CharacterBody2D ## [OPTIONAL]
 
 func _ready() -> void:
 	if character == null:
