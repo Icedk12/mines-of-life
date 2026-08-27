@@ -21,6 +21,7 @@ ItemDatabase="*uid://7cegwdgkngi2"
 BlockDatabase="*uid://i4ujihhonmig"
 GenerationSettings="*uid://kuqplefie8t4"
 RecipeDatabase="*uid://bphwnixx07n6y"
+Utils="*uid://blbv15foetnl3"
 
 [display]
 
@@ -34,6 +35,11 @@ mouse_cursor/custom_image="uid://c66isq1evv4gh"
 [dotnet]
 
 project/assembly_name="Mines of Life"
+
+[global_group]
+
+player=""
+enemy=""
 
 [input]
 

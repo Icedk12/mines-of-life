@@ -1,15 +1,17 @@
 class_name Player extends CharacterBody2D
 
-
 @onready var light : PulsingLight = $SelfLight
 @onready var sprite : Sprite2D = $Sprite
 @onready var camera : ShakeableCamera2D = $Camera
 
+@export var health_component : HealthComponent
 @export var mine_component : MineComponent
 @export var control_component : ControlComponent
 @export var sprite_modifier_component : SpriteModifierComponent
 @export var level : Level
 var state : State = State.MAIN_MENU
+
+var knockback: Vector2 = Vector2.ZERO
 
 enum State {
 	MAIN_MENU,
@@ -40,3 +42,7 @@ func _physics_process(delta: float) -> void:
 			sprite_modifier_component._squash()
 
 	sprite_modifier_component._sprite_rotation(delta, velocity.length() > 0.1)
+
+func apply_knockback(direction: Vector2, force: float) -> void:
+	if control_component:
+		control_component.apply_knockback(direction, force)

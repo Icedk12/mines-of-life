@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://soc8s8mwupai"]
+
+[ext_resource type="Script" uid="uid://cpwuytnqsb3el" path="res://scripts/player/Enemy.gd" id="1_y32fn"]
+[ext_resource type="Script" uid="uid://bwrxmli0ytcnx" path="res://scripts/components/HealthComponent.gd" id="2_8mung"]
+[ext_resource type="AudioStream" uid="uid://gcflgcm0rdqc" path="res://assets/sounds/punch.mp3" id="3_vhjhn"]
+[ext_resource type="AudioStream" uid="uid://clmywct42c2fw" path="res://assets/sounds/EnemyDeath.wav" id="4_f6ogp"]
+[ext_resource type="Texture2D" uid="uid://mkhodev01i7q" path="res://assets/enemies/Duster.png" id="5_y32fn"]
+[ext_resource type="Script" uid="uid://bkn8koxdnb8w0" path="res://scripts/components/AudioSource.gd" id="6_wkffn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ed2m"]
+size = Vector2(7.6908693, 7.106438)
+
+[node name="Enemy" type="CharacterBody2D" unique_id=1603327297 node_paths=PackedStringArray("health_component") groups=["enemy"]]
+collision_layer = 4
+script = ExtResource("1_y32fn")
+attack_knockback_force = 150.0
+movement_mode = 1
+health_component = NodePath("HealthComponent")
+move_speed = 100.0
+
+[node name="HealthComponent" type="Node" parent="." unique_id=422898822 node_paths=PackedStringArray("audio_source") groups=["enemy"]]
+script = ExtResource("2_8mung")
+max_health = 3.0
+audio_source = NodePath("../AudioSourceComponent")
+damage_sounds = Array[AudioStream]([ExtResource("3_vhjhn")])
+death_sounds = Array[AudioStream]([ExtResource("4_f6ogp")])
+metadata/_custom_type_script = "uid://bwrxmli0ytcnx"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=810813100 groups=["enemy"]]
+position = Vector2(0, -0.43147254)
+scale = Vector2(1.0401945, 0.96573627)
+shape = SubResource("RectangleShape2D_3ed2m")
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=2115411176 groups=["enemy"]]
+texture = ExtResource("5_y32fn")
+
+[node name="AudioSourceComponent" type="Node" parent="." unique_id=1932332966 node_paths=PackedStringArray("audio_player")]
+script = ExtResource("6_wkffn")
+audio_player = NodePath("AudioStreamPlayer2D")
+metadata/_custom_type_script = "uid://bkn8koxdnb8w0"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="AudioSourceComponent" unique_id=971496366]

@@ -17,6 +17,11 @@ extends CharacterComponent
 @export var cd_timer : Timer
 @export var trauma : float = 0.45
 
+@export_group("Combat")
+@export var attack_damage : float = 1.0
+@export var attack_knockback_force : float = 120.0
+@export var enemy_collision_mask : int = 2 ## Physics layer of enemies
+
 var level_generator : LevelGenerator
 var is_holding_left_click: bool = false
 
@@ -56,6 +61,11 @@ func mine() -> bool:
 	if character.global_position.distance_to(mouse_pos) > max_mining_distance:
 		return false
 
+	# get enemy at cursor if there is one also line 67 rofl (no longer applicable) (nvm im the goat)
+	var enemy := _get_enemy_at(mouse_pos)
+	if enemy:
+		return _attack_enemy(enemy)
+
 	var tile_pos = level_generator.tilemap.local_to_map(mouse_pos)
 	if level_generator.tilemap.get_cell_source_id(tile_pos) == -1:
 		return false
@@ -64,6 +74,7 @@ func mine() -> bool:
 	if result.is_empty() or result.get("blocked", false):
 		return false
 
+	# Mining
 	if result.get("broken", false):
 		if inventory_component and result.block_id != -1:
 			var block_data : BlockData = BlockDatabase.get_block_by_id(result.block_id)
@@ -107,4 +118,37 @@ func mine() -> bool:
 	if cd_timer:
 		cd_timer.start()
 
+	return true
+
+## Gets enemies at a position
+func _get_enemy_at(world_pos: Vector2) -> Node:
+	var space_state := character.get_world_2d().direct_space_state
+	var params := PhysicsPointQueryParameters2D.new()
+	params.position = world_pos
+	params.collision_mask = enemy_collision_mask
+	params.collide_with_bodies = true
+	params.collide_with_areas = false
+
+	for result in space_state.intersect_point(params, 8):
+		if result.collider.is_in_group("enemies"):
+			return result.collider
+	return null
+
+func _attack_enemy(enemy: Node) -> bool:
+	if enemy.has_method("get_health_component"):
+		var hc : HealthComponent = enemy.get_health_component()
+		if hc:
+			hc.take_damage(
+				(attack_damage + stat_manager.final_stats.damage_offset) * stat_manager.final_stats.damage_modifier,
+				enemy.global_position.direction_to(enemy.global_position + (enemy.global_position - character.global_position)),
+				attack_knockback_force
+			)
+
+	if sprite_modifier:
+		sprite_modifier._mining_tween(character.global_position.direction_to(enemy.global_position))
+
+	camera.add_trauma(trauma * stat_manager.final_stats.swing_speed)
+	camera.shake()
+	cd_timer.wait_time = stat_manager.final_stats.swing_speed
+	cd_timer.start()
 	return true
