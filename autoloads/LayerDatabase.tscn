@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://o8in0rnv0cqq"]
+
+[ext_resource type="Script" uid="uid://dh3e2l61tpc8e" path="res://autoloads/scripts/LayerDatabase.gd" id="1_15d2x"]
+[ext_resource type="Script" uid="uid://dfh7h1yrac1vi" path="res://scripts/types/LayerData.gd" id="2_w3pmp"]
+[ext_resource type="Resource" uid="uid://bev74dwwd24s3" path="res://assets/layers/layer_/Couch.tres" id="3_rml81"]
+[ext_resource type="Resource" uid="uid://cspxbv4rjlbo" path="res://assets/layers/layer_/Depths.tres" id="4_ixpdr"]
+
+[node name="LayerDatabase" type="Node" unique_id=1891730791]
+script = ExtResource("1_15d2x")
+layers = Array[ExtResource("2_w3pmp")]([ExtResource("3_rml81"), ExtResource("4_ixpdr")])
+metadata/_custom_type_script = "uid://dh3e2l61tpc8e"
