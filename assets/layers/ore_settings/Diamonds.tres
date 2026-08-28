@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BlockSetting" format=3 uid="uid://6djyxu6g7x1k"]
+
+[ext_resource type="Script" uid="uid://dtax1vhaxc7ds" path="res://scripts/types/GenerationSetting.gd" id="1_bsmcf"]
+
+[resource]
+script = ExtResource("1_bsmcf")
+block_id = 13
+terrain_id = 13
+gen_chance = 0.008
+min_size = 3
+metadata/_custom_type_script = "uid://dtax1vhaxc7ds"

@@ -2,9 +2,13 @@ class_name Enemy extends CharacterBody2D
 
 enum MovementMode { GROUND, FLYING }
 
+@export_group("Components")
+@export var sprite_modifier_component : SpriteModifierComponent
+@export var health_component : HealthComponent
+
+@export_group("Character")
 @export var attack_knockback_force : float = 90.0
 @export var movement_mode : MovementMode = MovementMode.GROUND
-@export var health_component : HealthComponent
 @export var move_speed : float = 40.0
 @export var contact_damage : float = 1.0
 @export var attack_range : float = 12.0
@@ -18,6 +22,11 @@ enum MovementMode { GROUND, FLYING }
 @export_group("Pathfinding")
 @export var repath_interval : float = 0.4
 @export var path_search_padding_tiles : int = 6 ## extra tiles around the enemy/player bounding box
+
+@export_group("Visuals")
+@export var death_particles : GPUParticles2D
+
+var is_alive : bool = true
 
 var player : Player
 var level_generator : LevelGenerator
@@ -47,7 +56,10 @@ func _physics_process(delta: float) -> void:
 
 	if movement_mode == MovementMode.GROUND:
 		_apply_gravity(delta)
-		
+	
+	if not is_alive: 
+		_apply_gravity(delta)
+	
 	if _knockback_timer > 0.0:
 		_knockback_timer -= delta
 		velocity.x = _knockback_velocity.x
@@ -71,6 +83,8 @@ func _physics_process(delta: float) -> void:
 		_repath_timer = repath_interval
 		_recalculate_path()
 
+	sprite_modifier_component._sprite_sin_offset(delta, true)
+
 	_follow_path(delta)
 	move_and_slide()
 
@@ -81,22 +95,30 @@ func _apply_gravity(delta: float) -> void:
 		velocity.y = 0.0
 
 func _attack_player() -> void:
+	if not is_alive: return
 	_attack_timer = attack_cooldown
+	var attack_dir : Vector2 = global_position.direction_to(player.global_position)
+	if sprite_modifier_component:
+		sprite_modifier_component._squash()
 	if player.health_component:
-		player.health_component.take_damage(
-			contact_damage,
-			global_position.direction_to(player.global_position),
-			attack_knockback_force
-		)
+		player.health_component.take_damage(contact_damage, attack_dir, attack_knockback_force)
 
 func get_health_component() -> HealthComponent:
 	return health_component
 
 func _on_died() -> void:
-	print("Enemy died")
+	# Hide body
+	sprite_modifier_component.sprite.hide()
+	sprite_modifier_component._flatten()
+	
+	is_alive = false
+	death_particles.emitting = true
+
+	await death_particles.finished
 	queue_free()
 
 func _recalculate_path() -> void:
+	if not is_alive: return
 	var tilemap := level_generator.tilemap
 	var start_tile := tilemap.local_to_map(tilemap.to_local(global_position))
 	var goal_tile := tilemap.local_to_map(tilemap.to_local(player.global_position))
@@ -110,6 +132,7 @@ func _recalculate_path() -> void:
 	_path_index = 0
 
 func _follow_path(delta: float) -> void:
+	if not is_alive: return
 	if _path.is_empty() or _path_index >= _path.size():
 		velocity.x = 0.0
 		return

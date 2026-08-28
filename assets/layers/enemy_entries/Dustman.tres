@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemySpawnEntry" format=3 uid="uid://d0j0j3l77cfjp"]
+
+[ext_resource type="PackedScene" uid="uid://bg8dbvk44p64r" path="res://enemy_scenes/Enemy_Dustman.tscn" id="1_0qgay"]
+[ext_resource type="Script" uid="uid://bqbwgkiq558fa" path="res://scripts/types/EnemySpawnEntry.gd" id="2_440y6"]
+
+[resource]
+script = ExtResource("2_440y6")
+enemy_scene = ExtResource("1_0qgay")
+weight = 2.0
+metadata/_custom_type_script = "uid://bqbwgkiq558fa"

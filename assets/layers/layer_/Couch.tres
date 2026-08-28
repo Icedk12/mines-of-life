@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="LayerData" format=3 uid="uid://bev74dwwd24s3"]
+
+[ext_resource type="Script" uid="uid://bqbwgkiq558fa" path="res://scripts/types/EnemySpawnEntry.gd" id="1_d7n8a"]
+[ext_resource type="Resource" uid="uid://bmi7v3kinv4u7" path="res://assets/layers/enemy_entries/Duster.tres" id="2_rptlg"]
+[ext_resource type="Resource" uid="uid://d0j0j3l77cfjp" path="res://assets/layers/enemy_entries/Dustman.tres" id="3_00dy7"]
+[ext_resource type="Script" uid="uid://dtax1vhaxc7ds" path="res://scripts/types/GenerationSetting.gd" id="4_6v4h6"]
+[ext_resource type="Resource" uid="uid://byhqsosqg7fok" path="res://assets/layers/ore_settings/LeatherOre.tres" id="5_fkhqa"]
+[ext_resource type="Resource" uid="uid://xv02ydgnasc0" path="res://assets/layers/ore_settings/GunkOre.tres" id="6_67o2r"]
+[ext_resource type="Resource" uid="uid://dnprbl42hwubd" path="res://assets/layers/ore_settings/PennyOre.tres" id="7_83axg"]
+[ext_resource type="Script" uid="uid://dfh7h1yrac1vi" path="res://scripts/types/LayerData.gd" id="8_xm0rs"]
+[ext_resource type="Script" uid="uid://71hg30844ma2" path="res://scripts/types/Structure.gd" id="9_172wr"]
+
+[resource]
+script = ExtResource("8_xm0rs")
+display_name = "Couch"
+y_top = -100
+y_bottom = 300
+noise_frequency = 0.01
+ores = Array[ExtResource("4_6v4h6")]([ExtResource("5_fkhqa"), ExtResource("6_67o2r"), ExtResource("7_83axg")])
+enemy_pool = Array[ExtResource("1_d7n8a")]([ExtResource("2_rptlg"), ExtResource("3_00dy7")])
+max_enemies_per_chunk = 1
+metadata/_custom_type_script = "uid://dfh7h1yrac1vi"

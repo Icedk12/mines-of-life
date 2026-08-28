@@ -1,50 +1,69 @@
 class_name LevelGenerator extends Node
 
+#--------------------------------------------------------#
+# SIGNALS
+#--------------------------------------------------------#
+
 signal initial_generation_finished
 
+#--------------------------------------------------------#
+# @EXPORT
+#--------------------------------------------------------#
+
+@export_group("General")
 @export var tilemap : LevelMap
-@export var terrain_set_id : int = 0
-@export var terrain_id : int = 0
-@export var tile_generate_chance : float = 0.25 ## For perlin noise, less = more air and bigger caves
+
+@export_group("Fallback Generation Settings")
+@export var fallback_terrain_set_id : int = 0
+@export var fallback_terrain_id : int = 0
+@export var fallback_tile_generate_chance : float = 0.25
+@export var fallback_noise_frequency : float = 0.03
+@export var unload_buffer : int = 2
 
 @export_group("Performance")
-@export var tiles_per_frame_budget : int = 128
-@export var ores_per_frame_budget : int = 4   ## how many ore TYPES to roll per frame
-@export var lights_per_frame_budget : int = 128
-@export var unload_chunks_per_frame : int = 1
-@export var unload_buffer : int = 2
-@export var unload_tiles_per_frame_budget : int = 128
+@export var tiles_per_frame_budget : int = 128  ## Max tile cells scanned per frame while generating a chunk. Lower = smoother framerate, higher = faster loading.
+@export var unload_chunks_per_frame : int = 1   ## Max full chunk unloads processed per frame.
 
 @export_group("Structures")
-@export var structures : Array[StructureDefinition] ## Each has its own scene + individual spawn_chance.
+@export var structures : Array[StructureDefinition] ## Spawn in any layers
+
+@export_group("Enemies")
+@export var entities_parent : Node2D ## Spawn in any layers
+
+#--------------------------------------------------------#
+# @ONREADY
+#--------------------------------------------------------#
 
 @onready var player = get_parent().get_parent().player as Player
 
+#--------------------------------------------------------#
+# GENERAL VARIABLES
+#--------------------------------------------------------#
+
+var loaded_enemies : int = 0
+var last_player_chunk := Vector2i(999999, 999999) ## The most recent chunk the player was in
+
+#--------------------------------------------------------#
+# ARRAYS/DICTIONARIES
+#--------------------------------------------------------#
+
+# TILES
 var tile_damage : Dictionary[Vector2i, int] = {}
-
-enum GenPhase { TILES, ORES, LIGHTS }
-var _gen_phase : GenPhase = GenPhase.TILES
-
-var _interior_atlas_cache : Dictionary = {}
-var _gen_modified_by_terrain : Dictionary = {}
-var _gen_chunk_key : Vector2i
-
-var _gen_paint_by_terrain : Dictionary = {}
-var _gen_available_set : Dictionary = {}
-var _gen_ore_index : int = 0
-
-# structure cache
-var _structure_cache : Dictionary = {}
-
-var cave_noise : FastNoiseLite = FastNoiseLite.new()
-var loaded_chunks := {}
 var generation_queue : Array[Vector2i] = []
 var unload_queue : Array[Vector2i] = []
-var last_player_chunk := Vector2i(999999, 999999)
+var _gen_modified_tiles_to_place : Dictionary = {}
+var _gen_tiles_to_erase : Array[Vector2i] = []
 
+# CHUNKS
 var modified_tiles := {}
-var _placed_structures : Array = []
-var generated_chunks : Dictionary = {} 
+var loaded_chunks := {}
+
+# ENEMIES
+var _chunk_enemies : Dictionary[Vector2i, Array] = {}
+
+#--------------------------------------------------------#
+# GENERATION STATUS
+#--------------------------------------------------------#
 
 var is_generating : bool = false
 var is_initial_generation : bool = true
@@ -55,259 +74,32 @@ var _gen_start_x : int = 0
 var _gen_start_y : int = 0
 var _gen_x : int = 0
 var _gen_y : int = 0
-var _gen_tiles_to_place : Array[Vector2i] = []
+var _gen_tiles_to_place : Array[Vector2i] = []  ## solid tiles queued to be stamped as terrain this chunk
+var _gen_open_tiles : Array[Vector2i] = []      ## carved-out/air tiles this chunk: candidate enemy spawn points
+var _gen_layer : LayerData                      ## layer resolved for the chunk currently being generated
 
-var _unload_active : bool = false
-var _unload_chunk_key : Vector2i
-var _unload_x : int = 0
-var _unload_y : int = 0
+#--------------------------------------------------------#
+# FALLBACK GENERATION + RNG
+#--------------------------------------------------------#
 
 var rng := RandomNumberGenerator.new()
+var _layer_noise_cache : Dictionary[int, FastNoiseLite] = {} ## keyed by LayerType.Layer (int)
+var _fallback_noise : FastNoiseLite = FastNoiseLite.new()
+
+#--------------------------------------------------------#
+# INBUILT GODOT FUNCTIONS
+#--------------------------------------------------------#
 
 func _ready() -> void:
-	cave_noise.frequency = 0.03
-	cave_noise.fractal_type = FastNoiseLite.FRACTAL_FBM
-	
-	_get_settings()
-	
-	for def : StructureDefinition in structures:
-		if def and def.scene:
-			_cache_structure(def.scene)
-
-func _get_settings() -> void:
-	if GameSettings:
-		tiles_per_frame_budget = GameSettings.tiles_per_frame_budget
-		ores_per_frame_budget = GameSettings.ores_per_frame_budget
-		lights_per_frame_budget = GameSettings.lights_per_frame_budget
-		unload_chunks_per_frame = GameSettings.unload_chunks_per_frame
-		unload_buffer = GameSettings.unload_buffer
-		unload_tiles_per_frame_budget = GameSettings.unload_tiles_per_frame_budget
-
-func _get_structure_layer(scene: PackedScene) -> TileMapLayer:
-	var instance := scene.instantiate()
-	if instance is TileMapLayer:
-		return instance
-
-	var found := _find_tilemap_layer(instance)
-	if found == null:
-		instance.queue_free()
-	return found
-
-func _find_tilemap_layer(node: Node) -> TileMapLayer:
-	if node is TileMapLayer:
-		return node
-	for child in node.get_children():
-		var result := _find_tilemap_layer(child)
-		if result:
-			return result
-	return null
-
-func _generate_chunk_structures(chunk_x: int, chunk_y: int) -> void:
-	if structures.is_empty():
-		return
-
-	for def : StructureDefinition in structures:
-		if def == null or def.scene == null:
-			continue
-		if rng.randf() > def.spawn_chance:
-			continue
-
-		_place_structure(def, chunk_x, chunk_y)
-
-func _place_structure(def: StructureDefinition, chunk_x: int, chunk_y: int) -> void:
-	var scene := def.scene
-	if not _structure_cache.has(scene):
-		_cache_structure(scene)
-	
-	var data = _structure_cache[scene]
-	if data == null:
-		return
-
-	var min_cell : Vector2i = data.min_cell
-	var size : Vector2i = data.size
-
-	var chunk_size := GameSettings.chunk_size
-	var start_x := chunk_x * chunk_size
-	var start_y := chunk_y * chunk_size
-
-	var max_x = max(chunk_size - size.x, 0)
-	var max_y = max(chunk_size - size.y, 0)
-	
-	for attempt in def.placement_attempts:
-		var origin := Vector2i(
-			start_x + rng.randi_range(0, max_x),
-			start_y + rng.randi_range(0, max_y)
-		) - min_cell
-
-		var candidate_rect := Rect2i(origin, size)
-
-		if _is_valid_placement(candidate_rect, def):
-			_stamp_structure(data.cells, origin)
-			_placed_structures.append({"rect": candidate_rect, "def": def})
-			return
-
-func _is_valid_placement(candidate_rect: Rect2i, def: StructureDefinition) -> bool:
-	for placed in _placed_structures:
-		
-		var placed_rect : Rect2i = placed.rect
-		if candidate_rect.intersects(placed_rect):
-			return false
-		
-		if placed.def == def and def.min_spacing > 0:
-			if placed_rect.grow(def.min_spacing).intersects(candidate_rect):
-				return false
-	return true
-
-func _stamp_structure(cells: Array, origin: Vector2i) -> void:
-	for entry in cells:
-		var tile_pos : Vector2i = origin + entry.pos
-		var block_id : int = entry.block_id
-
-		if block_id == -67:
-			modify_tile(tile_pos, false)
-			continue
-
-		var block_data := BlockDatabase.get_block_by_id(block_id)
-		if block_data == null:
-			continue
-
-		modified_tiles[tile_pos] = block_id
-
-func _generate_chunk_ores(tiles : Array[Vector2i]) -> void:
-	if tiles.is_empty():
-		return
-
-	var available_set : Dictionary = {}
-	for t in tiles:
-		available_set[t] = true
-
-	for ore_type : BlockSetting in GenerationSettings.ores:
-		if rng.randf() > ore_type.gen_chance:
-			continue
-		var vein : Array[Vector2i]
-		if ore_type.shape_type == BlockSetting.ShapeType.PENNY_BLOCK:
-			vein = _grow_penny_vein(ore_type.min_size, ore_type.max_size, available_set)
-		else:
-			vein = _grow_vein(rng.randi_range(ore_type.min_size, ore_type.max_size), available_set)
-		
-		if vein.is_empty():
-			continue
-
-		var bd := BlockDatabase.get_block_by_id(ore_type.block_id)
-		if bd == null:
-			continue
-
-		for pos in vein:
-			modified_tiles[pos] = ore_type.block_id
-			available_set.erase(pos)
-
-		tilemap.set_cells_terrain_connect(vein, bd.terrain_set_id, bd.terrain_id)
-
-func generate_initial_world() -> void:
-	cave_noise.seed = GameSettings.seed_
-	rng.seed = GameSettings.seed_ # Seed structure/ore RNG so results are consistent per-seed
-	is_initial_generation = true
-	initial_generation_complete = false
-	is_generating = true
-
-	loaded_chunks.clear()
-	modified_tiles.clear()
-	generated_chunks.clear()
-	tile_damage.clear()
-	_gen_active = false
-	generation_queue.clear()
-
-
-	var start_pos = Vector2.ZERO
-	var center_tile = tilemap.local_to_map(start_pos)
-	var center_chunk_x = int(floor(float(center_tile.x) / GameSettings.chunk_size))
-	var center_chunk_y = int(floor(float(center_tile.y) / GameSettings.chunk_size))
-
-	last_player_chunk = Vector2i(center_chunk_x, center_chunk_y)
-
-	generation_queue.clear()
-
-	var initial_chunks: Array[Vector2i] = []
-	for x in range(center_chunk_x - GameSettings.render_distance, center_chunk_x + GameSettings.render_distance + 1):
-		for y in range(center_chunk_y - GameSettings.render_distance, center_chunk_y + GameSettings.render_distance + 1):
-			initial_chunks.append(Vector2i(x, y))
-
-	initial_chunks.sort_custom(func(a, b):
-		var dist_a = a.distance_squared_to(Vector2i(center_chunk_x, center_chunk_y))
-		var dist_b = b.distance_squared_to(Vector2i(center_chunk_x, center_chunk_y))
-		return dist_a < dist_b
-	)
-
-	generation_queue.append_array(initial_chunks)
-
-func _grow_vein(target_size: int, available_set: Dictionary) -> Array[Vector2i]:
-	if available_set.is_empty() or target_size <= 0:
-		return []
-
-	var available_keys := available_set.keys()
-	var start : Vector2i = available_keys[rng.randi() % available_keys.size()]
-
-	var vein : Array[Vector2i] = [start]
-	var vein_set : Dictionary = {start: true}
-	var frontier : Array[Vector2i] = [start]
-
-	var dirs := [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
-
-	while vein.size() < target_size and not frontier.is_empty():
-		var grow_from : Vector2i = frontier[rng.randi() % frontier.size()]
-
-		var shuffled_dirs := dirs.duplicate()
-		shuffled_dirs.shuffle()
-
-		var grew := false
-		for dir in shuffled_dirs:
-			var candidate = grow_from + dir
-			if available_set.has(candidate) and not vein_set.has(candidate):
-				vein.append(candidate)
-				vein_set[candidate] = true
-				frontier.append(candidate)
-				grew = true
-				break
-
-		if not grew:
-			frontier.erase(grow_from)
-
-	return vein
-
-func _grow_penny_vein(min_side : int, max_side : int, available_set : Dictionary) -> Array[Vector2i]:
-	if available_set.is_empty(): return []
-	
-	var side : int = clampi(rng.randi_range(min_side, max_side), min_side, max_side)
-	
-	var available_keys := available_set.keys()
-	var origin : Vector2i = available_keys[rng.randi() % available_keys.size()]
-	
-	var shape : Array[Vector2i] = []
-	for x in range(side):
-		for y in range(side):
-			var is_corner := (x == 0 or x == side - 1) and (y == 0 or y == side - 1)
-			if is_corner:
-				continue
-			
-			var pos := origin + Vector2i(x, y)
-			if available_set.has(pos):
-				shape.append(pos)
-	
-	return shape
+	_fallback_noise.frequency = fallback_noise_frequency
+	_fallback_noise.fractal_type = FastNoiseLite.FRACTAL_FBM
 
 func _process(_delta: float) -> void:
 	if not is_generating:
 		return
 
 	if _gen_active:
-		_get_settings()
-		match _gen_phase:
-			GenPhase.TILES:
-				_step_chunk_generation()
-			GenPhase.ORES:
-				_step_ore_generation()
-			GenPhase.LIGHTS:
-				_step_light_phase()
+		_step_chunk_generation()
 	elif generation_queue.size() > 0:
 		var next_chunk = generation_queue.pop_front()
 		if not loaded_chunks.has(next_chunk):
@@ -334,8 +126,17 @@ func _process(_delta: float) -> void:
 		last_player_chunk = current_chunk
 		update_chunks(player.global_position)
 
+#--------------------------------------------------------#
+# SIGNAL FUNCTIONS
+#--------------------------------------------------------#
+
+## Propagate the signal outwards to 
 func _on_initial_generation_finished() -> void:
 	initial_generation_finished.emit()
+
+#--------------------------------------------------------#
+# LOOPING FUNCTIONS
+#--------------------------------------------------------#
 
 func update_chunks(world_position: Vector2) -> void:
 	var center_tile = tilemap.local_to_map(world_position)
@@ -379,28 +180,72 @@ func update_chunks(world_position: Vector2) -> void:
 		return dist_x <= unload_limit and dist_y <= unload_limit
 	)
 
+#--------------------------------------------------------#
+# CHUNK GENERATION FUNCTIONS
+#--------------------------------------------------------#
+
+## Generates the world for the first time and applies seed.
+func generate_initial_world() -> void:
+	rng.seed = GameSettings.seed_ # Seed structure/ore/enemy RNG so results are consistent per-seed
+	is_initial_generation = true
+	initial_generation_complete = false
+	is_generating = true
+
+	loaded_chunks.clear()
+	modified_tiles.clear()
+	tile_damage.clear()
+	_gen_active = false
+	_layer_noise_cache.clear()
+	generation_queue.clear()
+
+	var start_pos = Vector2.ZERO
+	var center_tile = tilemap.local_to_map(start_pos)
+	var center_chunk_x = int(floor(float(center_tile.x) / GameSettings.chunk_size))
+	var center_chunk_y = int(floor(float(center_tile.y) / GameSettings.chunk_size))
+
+	last_player_chunk = Vector2i(center_chunk_x, center_chunk_y)
+
+	generation_queue.clear()
+
+	var initial_chunks: Array[Vector2i] = []
+	for x in range(center_chunk_x - GameSettings.render_distance, center_chunk_x + GameSettings.render_distance + 1):
+		for y in range(center_chunk_y - GameSettings.render_distance, center_chunk_y + GameSettings.render_distance + 1):
+			initial_chunks.append(Vector2i(x, y))
+
+	initial_chunks.sort_custom(func(a, b):
+		var dist_a = a.distance_squared_to(Vector2i(center_chunk_x, center_chunk_y))
+		var dist_b = b.distance_squared_to(Vector2i(center_chunk_x, center_chunk_y))
+		return dist_a < dist_b
+	)
+
+	generation_queue.append_array(initial_chunks)
+
+## Starts the generation process for a specific chunk.
 func _begin_chunk_generation(chunk_x: int, chunk_y: int) -> void:
-	_gen_chunk_key = Vector2i(chunk_x, chunk_y)
-	if not generated_chunks.has(_gen_chunk_key):
-		_generate_chunk_structures(chunk_x, chunk_y)
+	_gen_layer = _get_layer_for_chunk(chunk_x, chunk_y)
+
+	_generate_chunk_structures(chunk_x, chunk_y, _gen_layer)
 
 	_gen_active = true
-	_gen_phase = GenPhase.TILES
 	_gen_start_x = chunk_x * GameSettings.chunk_size
 	_gen_start_y = chunk_y * GameSettings.chunk_size
 	_gen_x = 0
 	_gen_y = 0
 	_gen_tiles_to_place.clear()
-	_gen_paint_by_terrain.clear()
+	_gen_open_tiles.clear()
+	_gen_modified_tiles_to_place.clear()
+	_gen_tiles_to_erase.clear()
 
 func _step_chunk_generation() -> void:
 	var processed := 0
-	var chunk_size := GameSettings.chunk_size
+	var chunk_size = GameSettings.chunk_size
+	var noise := _get_noise_for_layer(_gen_layer)
+	var generate_chance := _gen_layer.tile_generate_chance if _gen_layer else fallback_tile_generate_chance
 
 	while _gen_y < chunk_size:
 		while _gen_x < chunk_size:
 			if processed >= tiles_per_frame_budget:
-				return
+				return # pick up here next frame
 
 			var x := _gen_start_x + _gen_x
 			var y := _gen_start_y + _gen_y
@@ -412,15 +257,16 @@ func _step_chunk_generation() -> void:
 					var bd := BlockDatabase.get_block_by_id(stored_id)
 					if bd:
 						var key := Vector2i(bd.terrain_set_id, bd.terrain_id)
-						if not _gen_paint_by_terrain.has(key):
-							_gen_paint_by_terrain[key] = [] as Array[Vector2i]
-						_gen_paint_by_terrain[key].append(tile_pos)
+						if not _gen_modified_tiles_to_place.has(key):
+							_gen_modified_tiles_to_place[key] = []
+						_gen_modified_tiles_to_place[key].append(tile_pos)
 				else:
-					tilemap.erase_cell(tile_pos)
+					_gen_tiles_to_erase.append(tile_pos)
 			else:
-				var cave_val = cave_noise.get_noise_2d(x, y)
-				if cave_val > tile_generate_chance:
-					tilemap.erase_cell(tile_pos)
+				var cave_val = noise.get_noise_2d(x, y)
+				if cave_val > generate_chance:
+					_gen_tiles_to_erase.append(tile_pos)
+					_gen_open_tiles.append(tile_pos)
 				else:
 					_gen_tiles_to_place.append(tile_pos)
 
@@ -430,46 +276,204 @@ func _step_chunk_generation() -> void:
 		_gen_x = 0
 		_gen_y += 1
 
-	_finish_tile_scan()
-
-func _finish_tile_scan() -> void:
-	_gen_available_set.clear()
-	for t in _gen_tiles_to_place:
-		_gen_available_set[t] = true
-	_gen_ore_index = 0
-	_gen_phase = GenPhase.ORES
+	_finish_chunk_generation()
 
 func _finish_chunk_generation() -> void:
+	if _gen_tiles_to_erase.size() > 0:
+		for t in _gen_tiles_to_erase:
+			tilemap.erase_cell(t) 
+
+	# Place terrain
+	if _gen_tiles_to_place.size() > 0:
+		var terrain_set := _gen_layer.terrain_set_id if _gen_layer else fallback_terrain_set_id
+		var terrain := _gen_layer.terrain_id if _gen_layer else fallback_terrain_id
+		tilemap.set_cells_terrain_connect(_gen_tiles_to_place, terrain_set, terrain)
+		
+	# Place modified blocks
+	for key in _gen_modified_tiles_to_place.keys():
+		tilemap.set_cells_terrain_connect(_gen_modified_tiles_to_place[key], key.x, key.y)
+
+	# ores and enemies
+	_generate_chunk_ores(_gen_tiles_to_place, _gen_layer)
+	
+	var chunk_key := Vector2i(_gen_start_x / GameSettings.chunk_size, _gen_start_y / GameSettings.chunk_size)
+	_generate_chunk_enemies(chunk_key, _gen_layer, _gen_open_tiles)
+ 
+	tilemap.spawn_chunk_lights(_gen_start_x / GameSettings.chunk_size, _gen_start_y / GameSettings.chunk_size)
+ 
 	_gen_active = false
 	_gen_tiles_to_place = []
-	_gen_paint_by_terrain.clear()
+	_gen_open_tiles = []
+	_gen_modified_tiles_to_place.clear()
+	_gen_tiles_to_erase.clear()
+
+#--------------------------------------------------------#
+# ENEMY/ORE FUNCTIONS
+#--------------------------------------------------------#
+
+## Generates all the ores of a specific chunk.
+func _generate_chunk_ores(tiles : Array[Vector2i], layer : LayerData) -> void:
+	if tiles.is_empty():
+		return
+
+	var available_set : Dictionary = {}
+	for t in tiles:
+		available_set[t] = true
+
+	var ore_list : Array[BlockSetting] = []
+	if layer:
+		ore_list.append_array(layer.ores)
+
+	for ore_type : BlockSetting in ore_list:
+		if rng.randf() > ore_type.gen_chance:
+			continue
+		var vein : Array[Vector2i]
+		if ore_type.shape_type == BlockSetting.ShapeType.PENNY_BLOCK:
+			vein = _grow_penny_vein(ore_type.min_size, ore_type.max_size, available_set)
+		else:
+			vein = _grow_vein(rng.randi_range(ore_type.min_size, ore_type.max_size), available_set)
+
+		if vein.is_empty():
+			continue
+
+		var bd := BlockDatabase.get_block_by_id(ore_type.block_id)
+		if bd == null:
+			continue
+
+		for pos in vein:
+			modified_tiles[pos] = ore_type.block_id
+			available_set.erase(pos)
+
+		tilemap.set_cells_terrain_connect(vein, bd.terrain_set_id, bd.terrain_id)
+
+## Rolls the layer's enemy pool once per chunk and spawns any resulting groups
+func _generate_chunk_enemies(chunk_key : Vector2i, layer : LayerData, open_tiles : Array[Vector2i]) -> void:
+	if layer == null or entities_parent == null or open_tiles.is_empty():
+		return
+	if layer.enemy_pool.is_empty():
+		return
+	if rng.randf() > layer.spawn_chance_per_chunk:
+		return
+ 
+	var spawned := 0
+	var attempts := 0
+	var max_attempts := layer.max_enemies_per_chunk * 8
+ 
+	while spawned < layer.max_enemies_per_chunk and attempts < max_attempts:
+		attempts += 1
+		var entry := layer.pick_random_enemy()
+		if entry == null or entry.enemy_scene == null:
+			continue
+ 
+		var tile_pos : Vector2i = open_tiles[rng.randi() % open_tiles.size()]
+		var group_size := rng.randi_range(entry.min_group_size, entry.max_group_size)
+ 
+		for i in group_size:
+			var enemy := entry.enemy_scene.instantiate() as Node2D
+			if enemy == null:
+				continue
+			entities_parent.add_child(enemy)
+			enemy.global_position = tilemap.to_global(tilemap.map_to_local(tile_pos))
+			
+			# setup enemy
+			if enemy.has_method("setup"):
+				enemy.setup(player, self) 
+
+			# that is a nice pattern of _chunk enemies. like stairs
+			if not _chunk_enemies.has(chunk_key):
+				_chunk_enemies[chunk_key] = []
+			_chunk_enemies[chunk_key].append(enemy)
+			enemy.tree_exited.connect(_on_tracked_enemy_freed.bind(chunk_key, enemy), CONNECT_ONE_SHOT)
+ 
+		spawned += 1
+
+func _on_tracked_enemy_freed(chunk_key : Vector2i, enemy : Node2D) -> void:
+	if _chunk_enemies.has(chunk_key):
+		_chunk_enemies[chunk_key].erase(enemy)
+		if _chunk_enemies[chunk_key].is_empty():
+			_chunk_enemies.erase(chunk_key)
+
+## Grows and ore vein until it is at a desired size
+func _grow_vein(target_size: int, available_set: Dictionary) -> Array[Vector2i]:
+	if available_set.is_empty() or target_size <= 0:
+		return []
+
+	var available_keys := available_set.keys()
+	var start : Vector2i = available_keys[rng.randi() % available_keys.size()]
+
+	var vein : Array[Vector2i] = [start]
+	var vein_set : Dictionary = {start: true}
+	var frontier : Array[Vector2i] = [start]
+
+	var dirs := [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
+
+	while vein.size() < target_size and not frontier.is_empty():
+		var grow_from : Vector2i = frontier[rng.randi() % frontier.size()]
+
+		var shuffled_dirs := dirs.duplicate()
+		shuffled_dirs.shuffle()
+
+		var grew := false
+		for dir in shuffled_dirs:
+			var candidate = grow_from + dir
+			if available_set.has(candidate) and not vein_set.has(candidate):
+				vein.append(candidate)
+				vein_set[candidate] = true
+				frontier.append(candidate)
+				grew = true
+				break
+
+		if not grew:
+			frontier.erase(grow_from)
+
+	return vein
+
+## Grows a circular vein of ore
+func _grow_penny_vein(min_side : int, max_side : int, available_set : Dictionary) -> Array[Vector2i]:
+	if available_set.is_empty(): return []
+
+	var side : int = clampi(rng.randi_range(min_side, max_side), min_side, max_side)
+
+	var available_keys := available_set.keys()
+	var origin : Vector2i = available_keys[rng.randi() % available_keys.size()]
+
+	var shape : Array[Vector2i] = []
+	for x in range(side):
+		for y in range(side):
+			var is_corner := (x == 0 or x == side - 1) and (y == 0 or y == side - 1)
+			if is_corner:
+				continue
+
+			var pos := origin + Vector2i(x, y)
+			if available_set.has(pos):
+				shape.append(pos)
+
+	return shape
+
+#--------------------------------------------------------#
+# UNLOADING CHUNKS FUNCTIONS
+#--------------------------------------------------------#
 
 func _step_unload_queue() -> void:
-	if not _unload_active:
-		if unload_queue.is_empty():
-			return
-		_unload_chunk_key = unload_queue.pop_front()
-		tilemap.unload_chunk_lights(_unload_chunk_key.x, _unload_chunk_key.y)
-		_unload_active = true
-		_unload_x = 0
-		_unload_y = 0
+	var ops := 0
+	while ops < unload_chunks_per_frame and unload_queue.size() > 0:
+		var chunk_key : Vector2i = unload_queue.pop_front()
+		unload_chunk(chunk_key.x, chunk_key.y)
+		ops += 1
 
-	var start_x := _unload_chunk_key.x * GameSettings.chunk_size
-	var start_y := _unload_chunk_key.y * GameSettings.chunk_size
-	var processed := 0
-	var chunk_size := GameSettings.chunk_size
+func unload_chunk(chunk_x: int, chunk_y: int) -> void:
+	var start_x = chunk_x * GameSettings.chunk_size
+	var start_y = chunk_y * GameSettings.chunk_size
 
-	while _unload_y < chunk_size:
-		while _unload_x < chunk_size:
-			if processed >= unload_tiles_per_frame_budget:
-				return
-			tilemap.erase_cell(Vector2i(start_x + _unload_x, start_y + _unload_y))
-			processed += 1
-			_unload_x += 1
-		_unload_x = 0
-		_unload_y += 1
+	tilemap.unload_chunk_lights(chunk_x, chunk_y)
 
-	_unload_active = false
+	for x in range(start_x, start_x + GameSettings.chunk_size):
+		for y in range(start_y, start_y + GameSettings.chunk_size):
+			tilemap.erase_cell(Vector2i(x, y))
+
+#--------------------------------------------------------#
+# PLAYER DEPENDENT FUNCTIONS
+#--------------------------------------------------------#
 
 func modify_tile(tile_pos: Vector2i, is_solid: bool, block_id: int = -1) -> int:
 	if is_solid:
@@ -484,10 +488,12 @@ func modify_tile(tile_pos: Vector2i, is_solid: bool, block_id: int = -1) -> int:
 		var td : TileData = tilemap.get_cell_tile_data(tile_pos)
 		var removed_id : int = td.get_custom_data("block_id") if td else -1
 		modified_tiles[tile_pos] = -1
-		tilemap.set_cells_terrain_connect([tile_pos], terrain_set_id, -1)
+		var pos_layer = LayerDatabase.get_layer_for_tile(tile_pos)
+		var terrain_set = pos_layer.terrain_set_id if pos_layer else fallback_terrain_set_id
+		tilemap.set_cells_terrain_connect([tile_pos], terrain_set, -1)
 		tilemap.remove_light_at(tile_pos)
 		return removed_id
-		
+
 func damage_tile(tile_pos: Vector2i, amount: int, tool_strength: int) -> Dictionary:
 	var td : TileData = tilemap.get_cell_tile_data(tile_pos)
 	if td == null:
@@ -510,35 +516,72 @@ func damage_tile(tile_pos: Vector2i, amount: int, tool_strength: int) -> Diction
 		"block_data": block_data,
 	}
 
-func _cache_structure(scene: PackedScene) -> void:
-	if _structure_cache.has(scene):
+#--------------------------------------------------------#
+# STRUCTURE FUNCTIONS
+#--------------------------------------------------------#
+
+func _generate_chunk_structures(chunk_x: int, chunk_y: int, layer : LayerData) -> void:
+	var combined : Array[StructureDefinition] = structures.duplicate()
+	if layer:
+		combined.append_array(layer.structures)
+
+	if combined.is_empty():
 		return
 
-	var layer := _get_structure_layer(scene)
-	if layer == null:
-		_structure_cache[scene] = null
+	for def : StructureDefinition in combined:
+		if def == null or def.scene == null:
+			continue
+		if rng.randf() > def.spawn_chance:
+			continue
+
+		_place_structure(def.scene, chunk_x, chunk_y)
+
+func _place_structure(scene: PackedScene, chunk_x: int, chunk_y: int) -> void:
+	var source_layer := _get_structure_layer(scene)
+	if source_layer == null:
 		return
 
-	var used_cells := layer.get_used_cells()
+	var used_cells := source_layer.get_used_cells()
 	if used_cells.is_empty():
-		layer.queue_free()
-		_structure_cache[scene] = null
+		source_layer.queue_free()
 		return
 
-	var tile_set := layer.tile_set
-	var cells : Array = []
 	var min_cell := used_cells[0]
 	var max_cell := used_cells[0]
+	for c in used_cells:
+		min_cell = Vector2i(min(min_cell.x, c.x), min(min_cell.y, c.y))
+		max_cell = Vector2i(max(max_cell.x, c.x), max(max_cell.y, c.y))
+	var size := (max_cell - min_cell) + Vector2i.ONE
 
-	for cell in used_cells:
-		min_cell = Vector2i(min(min_cell.x, cell.x), min(min_cell.y, cell.y))
-		max_cell = Vector2i(max(max_cell.x, cell.x), max(max_cell.y, cell.y))
+	var chunk_size = GameSettings.chunk_size
+	var start_x = chunk_x * chunk_size
+	var start_y = chunk_y * chunk_size
 
-		var source_id := layer.get_cell_source_id(cell)
-		var atlas_coords := layer.get_cell_atlas_coords(cell)
-		var alt_id := layer.get_cell_alternative_tile(cell)
+	var max_x = max(chunk_size - size.x, 0)
+	var max_y = max(chunk_size - size.y, 0)
 
-		var source := tile_set.get_source(source_id) if tile_set else null
+	var origin := Vector2i(
+		start_x + rng.randi_range(0, max_x),
+		start_y + rng.randi_range(0, max_y)
+	) - min_cell
+
+	_stamp_structure(source_layer, origin)
+	source_layer.queue_free()
+
+func _stamp_structure(source_layer: TileMapLayer, origin: Vector2i) -> void:
+	var tile_set := tilemap.tile_set
+	if tile_set == null:
+		return
+
+	var by_terrain : Dictionary = {}
+
+	for cell in source_layer.get_used_cells():
+		var tile_pos : Vector2i = origin + cell
+		var source_id : int = source_layer.get_cell_source_id(cell)
+		var atlas_coords : Vector2i = source_layer.get_cell_atlas_coords(cell)
+		var alt_id : int = source_layer.get_cell_alternative_tile(cell)
+
+		var source := tile_set.get_source(source_id)
 		if source == null or not (source is TileSetAtlasSource):
 			continue
 
@@ -546,145 +589,64 @@ func _cache_structure(scene: PackedScene) -> void:
 		if td == null:
 			continue
 
-		cells.append({"pos": cell, "block_id": td.get_custom_data("block_id")})
-
-	layer.queue_free()
-
-	_structure_cache[scene] = {
-		"cells": cells,
-		"min_cell": min_cell,
-		"size": (max_cell - min_cell) + Vector2i.ONE,
-	}
-
-func _begin_light_phase() -> void:
-	_gen_phase = GenPhase.LIGHTS
-	if tilemap.begin_chunk_lights(_gen_start_x / GameSettings.chunk_size, _gen_start_y / GameSettings.chunk_size):
-		_finish_chunk_generation()
-
-func _step_light_phase() -> void:
-	if tilemap.step_chunk_lights(lights_per_frame_budget):
-		_finish_chunk_generation()
-
-func _begin_ore_phase() -> void:
-	_gen_available_set.clear()
-	for t in _gen_tiles_to_place:
-		_gen_available_set[t] = true
-	_gen_ore_index = 0
-	_gen_phase = GenPhase.ORES
-
-func _step_ore_generation() -> void:
-	if generated_chunks.has(_gen_chunk_key):
-		_finish_generation_paint()
-		return
-
-	var ores := GenerationSettings.ores
-	var processed := 0
-
-	while _gen_ore_index < ores.size():
-		if processed >= ores_per_frame_budget:
-			return
-
-		var ore_type : BlockSetting = ores[_gen_ore_index]
-		_gen_ore_index += 1
-		processed += 1
-
-		if rng.randf() > ore_type.gen_chance:
+		var block_id : int = td.get_custom_data("block_id")
+		if block_id == -67:
+			modify_tile(tile_pos, false)
+		var block_data := BlockDatabase.get_block_by_id(block_id)
+		if block_data == null:
 			continue
 
-		var vein : Array[Vector2i]
-		if ore_type.shape_type == BlockSetting.ShapeType.PENNY_BLOCK:
-			vein = _grow_penny_vein(ore_type.min_size, ore_type.max_size, _gen_available_set)
-		else:
-			vein = _grow_vein(rng.randi_range(ore_type.min_size, ore_type.max_size), _gen_available_set)
+		modified_tiles[tile_pos] = block_id
 
-		if vein.is_empty():
-			continue
+		var key := Vector2i(block_data.terrain_set_id, block_data.terrain_id)
+		if not by_terrain.has(key):
+			by_terrain[key] = []
+		by_terrain[key].append(tile_pos)
 
-		var bd := BlockDatabase.get_block_by_id(ore_type.block_id)
-		if bd == null:
-			continue
+	for key : Vector2i in by_terrain.keys():
+		tilemap.set_cells_terrain_connect(by_terrain[key], key.x, key.y)
 
-		var key := Vector2i(bd.terrain_set_id, bd.terrain_id)
-		if not _gen_paint_by_terrain.has(key):
-			_gen_paint_by_terrain[key] = [] as Array[Vector2i]
+#--------------------------------------------------------#
+# HELPER FUNCTIONS
+#--------------------------------------------------------#
 
-		for pos in vein:
-			modified_tiles[pos] = ore_type.block_id
-			_gen_available_set.erase(pos)
-			_gen_paint_by_terrain[key].append(pos)
+## Finds the TileMapLayer of a specific node. Used mainly in helper functions.
+func _find_tilemap_layer(node: Node) -> TileMapLayer:
+	if node is TileMapLayer:
+		return node
+	for child in node.get_children():
+		var result := _find_tilemap_layer(child)
+		if result:
+			return result
+	return null
 
-	generated_chunks[_gen_chunk_key] = true # first-time roll complete — locked in permanently
-	_finish_generation_paint()
+## Returns the TileMapLayer of a packedScene following my structure template.
+func _get_structure_layer(scene: PackedScene) -> TileMapLayer:
+	var instance := scene.instantiate()
+	if instance is TileMapLayer:
+		return instance
 
-## Paint all terrain at once
-func _finish_generation_paint() -> void:
-	if not _gen_available_set.is_empty():
-		var interior_cells : Array[Vector2i] = []
-		var edge_cells : Array[Vector2i] = []
-		var chunk_size := GameSettings.chunk_size
+	var found := _find_tilemap_layer(instance)
+	if found == null:
+		instance.queue_free()
+	return found
 
-		for pos in _gen_available_set.keys():
-			var local_x = pos.x - _gen_start_x
-			var local_y = pos.y - _gen_start_y
-			var on_chunk_border = local_x == 0 or local_y == 0 or local_x == chunk_size - 1 or local_y == chunk_size - 1
+## Gets which layer a chunk belongs to, using the chunk's center.
+func _get_layer_for_chunk(chunk_x: int, chunk_y: int) -> LayerData:
+	var center_tile_y = chunk_y * GameSettings.chunk_size + (GameSettings.chunk_size / 2)
+	return LayerDatabase.get_layer_for_position(Vector2(chunk_x * GameSettings.chunk_size, center_tile_y))
 
-			if not on_chunk_border and _is_interior_cell(pos):
-				interior_cells.append(pos)
-			else:
-				edge_cells.append(pos)
+## Returns the noise generator for a layer, creating + seeding it on first use.
+func _get_noise_for_layer(layer: LayerData) -> FastNoiseLite:
+	if layer == null:
+		return _fallback_noise
 
-		if not interior_cells.is_empty():
-			var baked := _bake_interior_tile(terrain_set_id, terrain_id)
-			for pos in interior_cells:
-				tilemap.set_cell(pos, baked.source_id, baked.atlas_coords, baked.alt_id)
+	if _layer_noise_cache.has(layer.layer_id):
+		return _layer_noise_cache[layer.layer_id]
 
-		if not edge_cells.is_empty():
-			tilemap.set_cells_terrain_connect(edge_cells, terrain_set_id, terrain_id)
-
-	for key : Vector2i in _gen_paint_by_terrain.keys():
-		tilemap.set_cells_terrain_connect(_gen_paint_by_terrain[key], key.x, key.y)
-
-	_gen_paint_by_terrain.clear()
-	_gen_available_set.clear()
-
-	_begin_light_phase()
-
-func _bake_interior_tile(terrain_set: int, terrain: int) -> Dictionary:
-	var key := Vector2i(terrain_set, terrain)
-	if _interior_atlas_cache.has(key):
-		return _interior_atlas_cache[key]
-
-	var scratch := TileMapLayer.new()
-	scratch.tile_set = tilemap.tile_set
-	add_child(scratch)
-
-	var block : Array[Vector2i] = []
-	for x in range(5):
-		for y in range(5):
-			block.append(Vector2i(x, y))
-	scratch.set_cells_terrain_connect(block, terrain_set, terrain)
-
-	var center := Vector2i(2, 2) # dead center of a solid 5x5 block = guaranteed fully-interior variant
-	var result := {
-		"source_id": scratch.get_cell_source_id(center),
-		"atlas_coords": scratch.get_cell_atlas_coords(center),
-		"alt_id": scratch.get_cell_alternative_tile(center),
-	}
-
-	scratch.queue_free()
-	_interior_atlas_cache[key] = result
-	return result
-
-func _is_plain_cave_fill(pos: Vector2i) -> bool:
-	if modified_tiles.has(pos):
-		return false # ore/structure/dug-out here — not uniform base terrain, don't treat as interior filler
-	return cave_noise.get_noise_2d(pos.x, pos.y) <= tile_generate_chance
-
-func _is_interior_cell(pos: Vector2i) -> bool:
-	for dx in [-1, 0, 1]:
-		for dy in [-1, 0, 1]:
-			if dx == 0 and dy == 0:
-				continue
-			if not _is_plain_cave_fill(pos + Vector2i(dx, dy)):
-				return false
-	return true
+	var noise := FastNoiseLite.new()
+	noise.seed = GameSettings.seed_
+	noise.frequency = layer.noise_frequency
+	noise.fractal_type = layer.noise_fractal_type
+	_layer_noise_cache[layer.layer_id] = noise
+	return noise

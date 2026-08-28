@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="TweenInfo" format=3 uid="uid://dv3vrykt2w7dn"]
+
+[ext_resource type="Script" uid="uid://d164jamb4hq8l" path="res://scripts/types/TweenInfo.gd" id="1_3nwtq"]
+
+[resource]
+script = ExtResource("1_3nwtq")
+duration = 0.5
+scale = Vector2(1, 0.5)
+metadata/_custom_type_script = "uid://d164jamb4hq8l"

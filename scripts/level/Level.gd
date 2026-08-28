@@ -5,10 +5,6 @@ class_name Level extends Node2D
 @export var player : Player
 @export var level_generator : LevelGenerator
 @export var _layer1 : TileMapLayer
-@export var enemy_spawner : EnemySpawner
-
-func _ready() -> void:
-	enemy_spawner.player = player
 
 func finished_generation_inital() -> void:
 	music_player._play_next_track()

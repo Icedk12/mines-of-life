@@ -1,0 +1,66 @@
+[gd_resource type="Resource" script_class="LayerData" format=3 uid="uid://cspxbv4rjlbo"]
+
+[ext_resource type="Script" uid="uid://bqbwgkiq558fa" path="res://scripts/types/EnemySpawnEntry.gd" id="1_rd83f"]
+[ext_resource type="Resource" uid="uid://bmi7v3kinv4u7" path="res://assets/layers/enemy_entries/Duster.tres" id="2_gj2mk"]
+[ext_resource type="Resource" uid="uid://d0j0j3l77cfjp" path="res://assets/layers/enemy_entries/Dustman.tres" id="3_nyhy4"]
+[ext_resource type="Script" uid="uid://dtax1vhaxc7ds" path="res://scripts/types/GenerationSetting.gd" id="4_wgbhs"]
+[ext_resource type="Script" uid="uid://dfh7h1yrac1vi" path="res://scripts/types/LayerData.gd" id="8_p3b3j"]
+[ext_resource type="Script" uid="uid://71hg30844ma2" path="res://scripts/types/Structure.gd" id="9_ugb68"]
+
+[sub_resource type="Resource" id="Resource_wb1o8"]
+script = ExtResource("4_wgbhs")
+block_id = 6
+terrain_id = 6
+gen_chance = 0.07
+max_size = 24
+min_size = 12
+metadata/_custom_type_script = "uid://dtax1vhaxc7ds"
+
+[sub_resource type="Resource" id="Resource_qgtjv"]
+script = ExtResource("4_wgbhs")
+block_id = 2
+terrain_id = 2
+gen_chance = 0.1
+max_size = 12
+min_size = 6
+metadata/_custom_type_script = "uid://dtax1vhaxc7ds"
+
+[sub_resource type="Resource" id="Resource_r7kj2"]
+script = ExtResource("4_wgbhs")
+block_id = 9
+terrain_id = 9
+gen_chance = 0.05
+max_size = 5
+shape_type = 1
+metadata/_custom_type_script = "uid://dtax1vhaxc7ds"
+
+[sub_resource type="Resource" id="Resource_rd83f"]
+script = ExtResource("4_wgbhs")
+block_id = 12
+terrain_id = 12
+gen_chance = 0.08
+max_size = 4
+min_size = 10
+metadata/_custom_type_script = "uid://dtax1vhaxc7ds"
+
+[sub_resource type="Resource" id="Resource_gj2mk"]
+script = ExtResource("4_wgbhs")
+block_id = 13
+terrain_id = 13
+gen_chance = 0.05
+max_size = 2
+min_size = 5
+metadata/_custom_type_script = "uid://dtax1vhaxc7ds"
+
+[resource]
+script = ExtResource("8_p3b3j")
+layer_id = 1
+display_name = "Depths"
+y_top = 301
+y_bottom = 1000
+terrain_id = 14
+tile_generate_chance = 0.3
+noise_frequency = 0.05
+ores = Array[ExtResource("4_wgbhs")]([SubResource("Resource_wb1o8"), SubResource("Resource_qgtjv"), SubResource("Resource_r7kj2"), SubResource("Resource_rd83f"), SubResource("Resource_gj2mk")])
+enemy_pool = Array[ExtResource("1_rd83f")]([ExtResource("2_gj2mk"), ExtResource("3_nyhy4")])
+metadata/_custom_type_script = "uid://dfh7h1yrac1vi"

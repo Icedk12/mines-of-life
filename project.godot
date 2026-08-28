@@ -19,9 +19,9 @@ config/features=PackedStringArray("4.7", "Forward Plus")
 GameSettings="*uid://dlwy3dvio574"
 ItemDatabase="*uid://7cegwdgkngi2"
 BlockDatabase="*uid://i4ujihhonmig"
-GenerationSettings="*uid://kuqplefie8t4"
 RecipeDatabase="*uid://bphwnixx07n6y"
 Utils="*uid://blbv15foetnl3"
+LayerDatabase="*uid://o8in0rnv0cqq"
 
 [display]
 

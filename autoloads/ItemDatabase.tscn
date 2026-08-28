@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://7cegwdgkngi2"]
 
-[ext_resource type="Script" uid="uid://ujhpyj1ftlg4" path="res://autoloads/ItemDatabase.gd" id="1_ptkgt"]
+[ext_resource type="Script" uid="uid://ujhpyj1ftlg4" path="res://autoloads/scripts/ItemDatabase.gd" id="1_ptkgt"]
 [ext_resource type="Script" uid="uid://cjhkyagc4mdgn" path="res://scripts/types/Item.gd" id="2_gp7j7"]
 [ext_resource type="Texture2D" uid="uid://dv011w32v3pq5" path="res://assets/items/Stuffing.png" id="3_gn7kn"]
 [ext_resource type="Texture2D" uid="uid://2y75d66onj5x" path="res://assets/items/LeatherScrap.png" id="4_3xla5"]
@@ -29,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://dc6aju31510nm" path="res://assets/items/RefinedPenny.png" id="27_xx0cy"]
 [ext_resource type="Texture2D" uid="uid://bf36su4es1r7e" path="res://assets/items/RefinedGold.png" id="28_u4baj"]
 [ext_resource type="Texture2D" uid="uid://c05ea17ejlyq7" path="res://assets/items/Diamond.png" id="29_k1wlb"]
+[ext_resource type="Texture2D" uid="uid://bmv6w1v68k4g1" path="res://assets/items/DeepStuffing.png" id="30_dssb6"]
 
 [sub_resource type="Resource" id="Resource_v05ge"]
 script = ExtResource("2_gp7j7")
@@ -173,7 +174,7 @@ metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
 [sub_resource type="Resource" id="Resource_a8jyo"]
 script = ExtResource("4_iwh46")
-damage_offset = 2.0
+damage_offset = 0.5
 metadata/_custom_type_script = "uid://djcpbulvvrjuf"
 
 [sub_resource type="Resource" id="Resource_gutlp"]
@@ -348,6 +349,14 @@ icon = ExtResource("29_k1wlb")
 block_id = 13
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
+[sub_resource type="Resource" id="Resource_1tj1n"]
+script = ExtResource("2_gp7j7")
+item_id = 27
+item_name = "Deep Stuffing"
+icon = ExtResource("30_dssb6")
+block_id = 14
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
 [node name="ItemDatabase" type="Node" unique_id=1572723925]
 script = ExtResource("1_ptkgt")
-item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn"), SubResource("Resource_1tuwj"), SubResource("Resource_iwh46"), SubResource("Resource_7vfln"), SubResource("Resource_ci6rp"), SubResource("Resource_wo6et"), SubResource("Resource_jw16n"), SubResource("Resource_4pnrd"), SubResource("Resource_efpqa"), SubResource("Resource_310cl"), SubResource("Resource_ldqej"), SubResource("Resource_ud80n"), SubResource("Resource_gutlp"), SubResource("Resource_j4i65"), SubResource("Resource_c6kvi"), SubResource("Resource_ui66f"), SubResource("Resource_6fy5s"), SubResource("Resource_mnwqx"), SubResource("Resource_5tp5t"), SubResource("Resource_78d1o"), SubResource("Resource_xx0cy"), SubResource("Resource_n0470"), SubResource("Resource_u4baj"), SubResource("Resource_k1wlb"), SubResource("Resource_dssb6"), SubResource("Resource_33137")])
+item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn"), SubResource("Resource_1tuwj"), SubResource("Resource_iwh46"), SubResource("Resource_7vfln"), SubResource("Resource_ci6rp"), SubResource("Resource_wo6et"), SubResource("Resource_jw16n"), SubResource("Resource_4pnrd"), SubResource("Resource_efpqa"), SubResource("Resource_310cl"), SubResource("Resource_ldqej"), SubResource("Resource_ud80n"), SubResource("Resource_gutlp"), SubResource("Resource_j4i65"), SubResource("Resource_c6kvi"), SubResource("Resource_ui66f"), SubResource("Resource_6fy5s"), SubResource("Resource_mnwqx"), SubResource("Resource_5tp5t"), SubResource("Resource_78d1o"), SubResource("Resource_xx0cy"), SubResource("Resource_n0470"), SubResource("Resource_u4baj"), SubResource("Resource_k1wlb"), SubResource("Resource_dssb6"), SubResource("Resource_33137"), SubResource("Resource_1tj1n")])
