@@ -469,7 +469,7 @@ func unload_chunk(chunk_x: int, chunk_y: int) -> void:
 
 	for x in range(start_x, start_x + GameSettings.chunk_size):
 		for y in range(start_y, start_y + GameSettings.chunk_size):
-			tilemap.erase_cell(Vector2i(x, y))
+			_gen_tiles_to_erase.append(Vector2i(x, y)) # Erase all tiles
 
 #--------------------------------------------------------#
 # PLAYER DEPENDENT FUNCTIONS

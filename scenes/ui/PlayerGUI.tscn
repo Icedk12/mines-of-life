@@ -527,6 +527,60 @@ step = 16.0
 value = 128.0
 tick_count = 16
 
+[node name="HeadingAse3" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=27162254]
+custom_minimum_size = Vector2(922, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/SettingScrollContainer/Settings/HeadingAse3" unique_id=775820895]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 500.0
+offset_bottom = 70.0
+text = "VISUALS"
+label_settings = ExtResource("7_udjm8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingAse9" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=1251300555]
+custom_minimum_size = Vector2(922, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/SettingScrollContainer/Settings/SettingAse9" unique_id=1310175402]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 500.0
+offset_bottom = 70.0
+text = "Particles:"
+label_settings = ExtResource("7_udjm8")
+vertical_alignment = 1
+
+[node name="CheckButton" type="CheckButton" parent="Settings/SettingScrollContainer/Settings/SettingAse9" unique_id=194817301]
+layout_mode = 0
+offset_left = 215.0
+offset_top = 26.0
+offset_right = 259.0
+offset_bottom = 50.0
+
+[node name="SettingAse10" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=375381227]
+custom_minimum_size = Vector2(922, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/SettingScrollContainer/Settings/SettingAse10" unique_id=1220849100]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 500.0
+offset_bottom = 70.0
+text = "Smooth Transitioning:"
+label_settings = ExtResource("7_udjm8")
+vertical_alignment = 1
+
+[node name="CheckButton" type="CheckButton" parent="Settings/SettingScrollContainer/Settings/SettingAse10" unique_id=1450768635]
+layout_mode = 0
+offset_left = 398.0
+offset_top = 26.0
+offset_right = 442.0
+offset_bottom = 50.0
+
 [node name="ConfirmBtn" type="Button" parent="Settings" unique_id=1827745195]
 layout_mode = 1
 anchors_preset = 5

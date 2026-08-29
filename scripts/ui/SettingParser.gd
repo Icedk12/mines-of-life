@@ -10,7 +10,7 @@ func _parse() -> void:
 	for child in get_children():
 		for grandchild in child.get_children():
 			if grandchild is HSlider:
-				settings[child.get_child(0).text] = grandchild.value
+				settings[child.get_child(0).text] = grandchild.value as int
 
 func _update_game_settings() -> void:
 	_parse()
@@ -22,3 +22,5 @@ func _update_game_settings() -> void:
 	GameSettings.unload_chunks_per_frame = settings["Chunk Unload per frame:"]
 	GameSettings.unload_buffer = settings["Chunk Unload Buffer:"]
 	GameSettings.unload_tiles_per_frame_budget = settings["Unload Tiles per frame:"]
+	GameSettings.particles = bool(settings["Particles:"])
+	GameSettings.tweens = bool(settings["Smooth Transitioning:"])

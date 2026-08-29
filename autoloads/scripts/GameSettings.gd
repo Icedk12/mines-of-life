@@ -10,3 +10,5 @@ var lights_per_frame_budget : int = 128
 var unload_chunks_per_frame : int = 1
 var unload_buffer : int = 2
 var unload_tiles_per_frame_budget : int = 128
+var particles : bool = true
+var tweens : bool = true
