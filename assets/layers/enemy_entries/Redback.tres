@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EnemySpawnEntry" format=3 uid="uid://cnuwuanouiivw"]
+
+[ext_resource type="PackedScene" uid="uid://do4g85chskfhn" path="res://enemy_scenes/Enemy_Redback.tscn" id="1_80grl"]
+[ext_resource type="Script" uid="uid://bqbwgkiq558fa" path="res://scripts/types/EnemySpawnEntry.gd" id="2_iukm4"]
+
+[resource]
+script = ExtResource("2_iukm4")
+enemy_scene = ExtResource("1_80grl")
+metadata/_custom_type_script = "uid://bqbwgkiq558fa"

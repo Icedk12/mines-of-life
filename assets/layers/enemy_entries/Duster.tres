@@ -6,5 +6,6 @@
 [resource]
 script = ExtResource("2_luexe")
 enemy_scene = ExtResource("1_sva8r")
+weight = 0.8
 max_group_size = 2
 metadata/_custom_type_script = "uid://bqbwgkiq558fa"

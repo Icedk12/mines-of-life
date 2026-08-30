@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://cc5arcpxxbg8x" path="res://scripts/Main.gd" id="1_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://ba4y285bqj0ui" path="res://scenes/level/Level.tscn" id="2_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://dw8qkxkdhxep7" path="res://scenes/player/Player.tscn" id="2_rvslj"]
-[ext_resource type="Material" uid="uid://8xkndevfkt7s" path="res://assets/materials/UnshadedMaterial.tres" id="4_vcsgt"]
 [ext_resource type="AudioStream" uid="uid://16yktjp50fwn" path="res://assets/sounds/music/CavesOfCould.wav" id="4_wp0k4"]
 [ext_resource type="Script" uid="uid://bxtr2t12gu527" path="res://scripts/ui/CanvasLayerHider.gd" id="5_dg70y"]
 [ext_resource type="Texture2D" uid="uid://brnvqkom0svjv" path="res://assets/ui/main_bg.png" id="5_lhr70"]
@@ -32,6 +31,7 @@
 [ext_resource type="AudioStream" uid="uid://daeromqsworyc" path="res://assets/sounds/music/Exploration.wav" id="27_e2s0e"]
 [ext_resource type="AudioStream" uid="uid://dphnmkvlo70f2" path="res://assets/sounds/music/Hole in the Wall.wav" id="28_gsxep"]
 [ext_resource type="Script" uid="uid://b24g885fk7e4m" path="res://scripts/ui/CutsceneManager.gd" id="29_e2s0e"]
+[ext_resource type="Script" uid="uid://dls7cmk77rfho" path="res://scenes/EnviromentSetter.gd" id="33_pnhog"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qmy6f"]
 shader = ExtResource("13_qmy6f")
@@ -186,10 +186,27 @@ PopupMenu/styles/separator = SubResource("StyleBoxEmpty_v0vrg")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8cp6k"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pnhog"]
+shader = ExtResource("14_pnhog")
+shader_parameter/speed = 2.0
+shader_parameter/frequency = 3.0
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_g6wdg"]
 shader = ExtResource("14_pnhog")
 shader_parameter/speed = 1.9
 shader_parameter/frequency = 2.0
+
+[sub_resource type="Environment" id="Environment_dg70y"]
+background_mode = 3
+tonemap_white = 11.45
+glow_normalized = true
+glow_intensity = 3.0
+glow_strength = 0.39
+glow_bloom = 1.0
+fog_mode = 1
+fog_density = 0.115
+fog_depth_begin = 1.0
+volumetric_fog_density = 0.6436
 
 [node name="Main" type="Node2D" unique_id=791347418 node_paths=PackedStringArray("player", "level")]
 script = ExtResource("1_0bbpv")
@@ -229,7 +246,6 @@ offset_bottom = -190.0
 scale = Vector2(4, 4)
 
 [node name="Background" type="TextureRect" parent="MainMenu/CanvasLayer/Control" unique_id=200606901]
-material = ExtResource("4_vcsgt")
 layout_mode = 0
 offset_left = 11.0
 offset_top = 57.0
@@ -584,6 +600,7 @@ popup/item_1/text = "NO"
 popup/item_1/id = 1
 
 [node name="StartButton" type="Button" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=1330418876]
+material = SubResource("ShaderMaterial_pnhog")
 layout_mode = 0
 offset_left = 226.25
 offset_top = 276.25
@@ -622,6 +639,10 @@ metadata/_custom_type_script = "uid://b24g885fk7e4m"
 
 [node name="Timer" type="Timer" parent="CutsceneManager" unique_id=1469941348]
 one_shot = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1039159192]
+environment = SubResource("Environment_dg70y")
+script = ExtResource("33_pnhog")
 
 [connection signal="pressed" from="MainMenu/CanvasLayer/Control/PlayBtn" to="MainMenu/CanvasLayer/Control/PlayBtn" method="_on_pressed"]
 [connection signal="pressed" from="MainMenu/CanvasLayer/Control/StartMenu/StartButton" to="MainMenu/CanvasLayer/Control/PlayBtn" method="_confirm_pressed"]

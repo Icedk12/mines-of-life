@@ -8,6 +8,7 @@ extends CharacterComponent
 @export var selection_component : SelectionBoxComponent
 @export var camera : ShakeableCamera2D
 @export var audio_source : AudioSourceComponent
+@export var xp_component : XPComponent
 
 @export_group("Mining")
 @export var max_mining_distance : float = 40.0
@@ -138,6 +139,9 @@ func _attack_enemy(enemy: Node) -> bool:
 	if enemy.has_method("get_health_component"):
 		var hc : HealthComponent = enemy.get_health_component()
 		if hc:
+			if not hc.died.is_connected(on_kill):
+				hc.died.connect(on_kill)
+
 			hc.take_damage(
 				(attack_damage + stat_manager.final_stats.damage_offset) * stat_manager.final_stats.damage_modifier,
 				enemy.global_position.direction_to(enemy.global_position + (enemy.global_position - character.global_position)),
@@ -152,3 +156,6 @@ func _attack_enemy(enemy: Node) -> bool:
 	cd_timer.wait_time = stat_manager.final_stats.swing_speed
 	cd_timer.start()
 	return true
+
+func on_kill(xp : float) -> void:
+	xp_component.add_xp(xp)

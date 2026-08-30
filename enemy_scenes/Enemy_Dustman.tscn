@@ -62,12 +62,14 @@ health_component = NodePath("HealthComponent")
 attack_knockback_force = 150.0
 death_particles = NodePath("DeathParticles")
 
-[node name="HealthComponent" type="Node" parent="." unique_id=422898822 node_paths=PackedStringArray("audio_source") groups=["enemy"]]
+[node name="HealthComponent" type="Node" parent="." unique_id=422898822 node_paths=PackedStringArray("audio_source", "sprite") groups=["enemy"]]
 script = ExtResource("2_3otcr")
+xp_drop = 12.0
 max_health = 3.0
 audio_source = NodePath("../AudioSourceComponent")
 damage_sounds = Array[AudioStream]([ExtResource("3_c5e50")])
 death_sounds = Array[AudioStream]([ExtResource("4_r3qvn")])
+sprite = NodePath("../Sprite")
 metadata/_custom_type_script = "uid://bwrxmli0ytcnx"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=810813100 groups=["enemy"]]
@@ -104,6 +106,6 @@ texture = ExtResource("9_3otcr")
 one_shot = true
 explosiveness = 1.0
 trail_enabled = true
-trail_lifetime = 0.09999999999999999
+trail_lifetime = 0.1
 trail_sections = 2
 process_material = SubResource("ParticleProcessMaterial_r3qvn")

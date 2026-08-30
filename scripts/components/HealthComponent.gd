@@ -1,8 +1,9 @@
 class_name HealthComponent extends CharacterComponent
 
-signal health_changed(current: float, max: float)
-signal died
+signal health_changed(current : float, max : float)
+signal died(xp : float)
 
+@export var xp_drop : float = 1.0
 @export var stat_manager : StatManager
 @export_group("Health & Other")
 @export var max_health : float = 10.0
@@ -13,8 +14,12 @@ signal died
 @export var damage_sounds : Array[AudioStream] = []
 @export var death_sounds : Array[AudioStream] = []
 
-var _fallback_player : AudioStreamPlayer2D
+@export_group("Visuals")
+@export var sprite : Sprite2D
+@export var is_player : bool = false
 
+var _fallback_player : AudioStreamPlayer2D
+var tween : Tween
 var current_health : float
 
 func _ready() -> void:
@@ -40,10 +45,12 @@ func take_damage(damage : float, knockback_dir : Vector2 = Vector2.ZERO, knockba
 	else:
 		_play_sound(damage_sounds)
 		_on_damaged()
+	_overlay_tween(Color(1.0, 0.0, 0.0, 1.0))
 
 func heal(amount : float) -> void:
 	current_health = min(current_health + amount, max_health)
 	health_changed.emit(current_health, max_health)
+	_overlay_tween(Color(0.467, 1.0, 0.0, 1.0))
 
 func _on_damaged() -> void:
 	for component in on_death_components:
@@ -51,7 +58,7 @@ func _on_damaged() -> void:
 			component.on_damaged()
 
 func _on_death() -> void:
-	died.emit()
+	died.emit(xp_drop * GameSettings.difficulty)
 	for component in on_death_components:
 		if component.has_method("on_death"):
 			component.on_death()
@@ -75,3 +82,19 @@ func _play_sound(sounds : Array[AudioStream]) -> void:
 	_fallback_player.stream = sounds[randi() % sounds.size()]
 	_fallback_player.pitch_scale = randf_range(0.95, 1.05)
 	_fallback_player.play()
+
+func _overlay_tween(color : Color) -> void:
+	if not sprite: return
+	if tween and tween.is_running():
+		tween.kill()
+		
+	tween = create_tween().set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(sprite, "self_modulate", color, 0.2)
+	
+	_return_from_tween()
+
+func _return_from_tween() -> void:
+	var col : Color = GameSettings.player_mod if is_player else Color(1, 1, 1)
+	
+	tween.tween_property(sprite, "self_modulate", col, 0.1)\
+		.set_trans(Tween.TRANS_QUAD)

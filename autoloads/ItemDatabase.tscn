@@ -191,7 +191,7 @@ metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 [sub_resource type="Resource" id="Resource_5d8hd"]
 script = ExtResource("4_iwh46")
 speed_modifier = 2.0
-jump_modifier = 1.5
+jump_modifier = 2.0
 metadata/_custom_type_script = "uid://djcpbulvvrjuf"
 
 [sub_resource type="Resource" id="Resource_j4i65"]
