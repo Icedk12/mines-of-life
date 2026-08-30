@@ -4,8 +4,10 @@
 [ext_resource type="Script" uid="uid://dfh7h1yrac1vi" path="res://scripts/types/LayerData.gd" id="2_w3pmp"]
 [ext_resource type="Resource" uid="uid://bev74dwwd24s3" path="res://assets/layers/layer_/Couch.tres" id="3_rml81"]
 [ext_resource type="Resource" uid="uid://cspxbv4rjlbo" path="res://assets/layers/layer_/Depths.tres" id="4_ixpdr"]
+[ext_resource type="Resource" uid="uid://bpvplsx14gd25" path="res://assets/layers/layer_/GroundZero.tres" id="5_15d2x"]
+[ext_resource type="Resource" uid="uid://bf5dedk3a0ime" path="res://assets/layers/layer_/TheCrack.tres" id="6_w3pmp"]
 
 [node name="LayerDatabase" type="Node" unique_id=1891730791]
 script = ExtResource("1_15d2x")
-layers = Array[ExtResource("2_w3pmp")]([ExtResource("3_rml81"), ExtResource("4_ixpdr")])
+layers = Array[ExtResource("2_w3pmp")]([ExtResource("3_rml81"), ExtResource("4_ixpdr"), ExtResource("5_15d2x"), ExtResource("6_w3pmp")])
 metadata/_custom_type_script = "uid://dh3e2l61tpc8e"

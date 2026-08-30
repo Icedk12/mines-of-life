@@ -1,5 +1,6 @@
 class_name BlockData extends Resource
 
+@export var atlas_terrain_index: int = 0
 @export var block_id : int
 @export var display_name : String
 @export var terrain_set_id : int = 0

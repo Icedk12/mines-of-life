@@ -21,7 +21,7 @@ signal initial_generation_finished
 @export var unload_buffer : int = 2
 
 @export_group("Performance")
-@export var tiles_per_frame_budget : int = 128  ## Max tile cells scanned per frame while generating a chunk. Lower = smoother framerate, higher = faster loading.
+@export var frame_time_budget_msec : int = 8  ## Max milliseconds spent generating per frame (8ms targets ~120fps overhead, 16ms targets 60fps).
 @export var unload_chunks_per_frame : int = 1   ## Max full chunk unloads processed per frame.
 
 @export_group("Structures")
@@ -29,6 +29,7 @@ signal initial_generation_finished
 
 @export_group("Enemies")
 @export var entities_parent : Node2D ## Spawn in any layers
+@export var respawn_enemies_on_revisit : bool = true ## If true, enemy pools re-roll every time a chunk (re)generates. If false, a chunk only ever rolls enemies on its very first generation, same as ores/structures.
 
 #--------------------------------------------------------#
 # @ONREADY
@@ -77,6 +78,12 @@ var _gen_y : int = 0
 var _gen_tiles_to_place : Array[Vector2i] = []  ## solid tiles queued to be stamped as terrain this chunk
 var _gen_open_tiles : Array[Vector2i] = []      ## carved-out/air tiles this chunk: candidate enemy spawn points
 var _gen_layer : LayerData                      ## layer resolved for the chunk currently being generated
+var _gen_is_first_generation : bool = true      ## true if ChunkStorage has no save for this chunk yet
+
+var _gen_scanning_done : bool = false
+var _gen_finish_tasks : Array[Callable] = []
+var _gen_lights_started : bool = false
+var _gen_lights_done : bool = false
 
 #--------------------------------------------------------#
 # FALLBACK GENERATION + RNG
@@ -99,7 +106,7 @@ func _process(_delta: float) -> void:
 		return
 
 	if _gen_active:
-		_step_chunk_generation()
+		_step_active_generation()
 	elif generation_queue.size() > 0:
 		var next_chunk = generation_queue.pop_front()
 		if not loaded_chunks.has(next_chunk):
@@ -125,6 +132,30 @@ func _process(_delta: float) -> void:
 	if current_chunk != last_player_chunk:
 		last_player_chunk = current_chunk
 		update_chunks(player.global_position)
+
+func _step_active_generation() -> void:
+	if not _gen_scanning_done:
+		_step_chunk_generation()
+		return
+
+	if not _gen_finish_tasks.is_empty():
+		var task : Callable = _gen_finish_tasks.pop_front()
+		task.call()
+		return
+
+	var chunk_x := _gen_start_x / GameSettings.chunk_size
+	var chunk_y := _gen_start_y / GameSettings.chunk_size
+
+	if not _gen_lights_started:
+		_gen_lights_started = true
+		_gen_lights_done = tilemap.begin_chunk_lights(chunk_x, chunk_y)
+		return
+
+	if not _gen_lights_done:
+		_gen_lights_done = tilemap.step_chunk_lights(GameSettings.lights_per_frame_budget)
+		return
+
+	_complete_chunk_generation()
 
 #--------------------------------------------------------#
 # SIGNAL FUNCTIONS
@@ -195,8 +226,18 @@ func generate_initial_world() -> void:
 	modified_tiles.clear()
 	tile_damage.clear()
 	_gen_active = false
+	_gen_scanning_done = false
+	_gen_lights_started = false
+	_gen_lights_done = false
+	_gen_finish_tasks.clear()
 	_layer_noise_cache.clear()
 	generation_queue.clear()
+
+	for enemies in _chunk_enemies.values():
+		for enemy in enemies:
+			if is_instance_valid(enemy):
+				enemy.queue_free()
+	_chunk_enemies.clear()
 
 	var start_pos = Vector2.ZERO
 	var center_tile = tilemap.local_to_map(start_pos)
@@ -222,11 +263,20 @@ func generate_initial_world() -> void:
 
 ## Starts the generation process for a specific chunk.
 func _begin_chunk_generation(chunk_x: int, chunk_y: int) -> void:
+	var chunk_key := Vector2i(chunk_x, chunk_y)
 	_gen_layer = _get_layer_for_chunk(chunk_x, chunk_y)
+	_gen_is_first_generation = not ChunkStorage.has_chunk(GameSettings.seed_, chunk_key)
 
-	_generate_chunk_structures(chunk_x, chunk_y, _gen_layer)
+	if _gen_is_first_generation:
+		_generate_chunk_structures(chunk_x, chunk_y, _gen_layer)
+	else:
+		_restore_chunk_from_disk(chunk_x, chunk_y, chunk_key)
 
 	_gen_active = true
+	_gen_scanning_done = false
+	_gen_lights_started = false
+	_gen_lights_done = false
+	_gen_finish_tasks.clear()
 	_gen_start_x = chunk_x * GameSettings.chunk_size
 	_gen_start_y = chunk_y * GameSettings.chunk_size
 	_gen_x = 0
@@ -237,20 +287,21 @@ func _begin_chunk_generation(chunk_x: int, chunk_y: int) -> void:
 	_gen_tiles_to_erase.clear()
 
 func _step_chunk_generation() -> void:
-	var processed := 0
+	var start_time = Time.get_ticks_msec()
 	var chunk_size = GameSettings.chunk_size
 	var noise := _get_noise_for_layer(_gen_layer)
 	var generate_chance := _gen_layer.tile_generate_chance if _gen_layer else fallback_tile_generate_chance
-
+ 
 	while _gen_y < chunk_size:
 		while _gen_x < chunk_size:
-			if processed >= tiles_per_frame_budget:
+			# Yield the frame if we have exceeded our time budget
+			if Time.get_ticks_msec() - start_time >= frame_time_budget_msec:
 				return # pick up here next frame
-
+ 
 			var x := _gen_start_x + _gen_x
 			var y := _gen_start_y + _gen_y
 			var tile_pos := Vector2i(x, y)
-
+ 
 			if modified_tiles.has(tile_pos):
 				var stored_id = modified_tiles[tile_pos]
 				if stored_id != -1:
@@ -269,39 +320,126 @@ func _step_chunk_generation() -> void:
 					_gen_open_tiles.append(tile_pos)
 				else:
 					_gen_tiles_to_place.append(tile_pos)
-
-			processed += 1
+ 
 			_gen_x += 1
-
+ 
 		_gen_x = 0
 		_gen_y += 1
+ 
+	_begin_finish_tasks()
 
-	_finish_chunk_generation()
+#--------------------------------------------------------#
+# TASKS
+#--------------------------------------------------------#
 
-func _finish_chunk_generation() -> void:
-	if _gen_tiles_to_erase.size() > 0:
-		for t in _gen_tiles_to_erase:
-			tilemap.erase_cell(t) 
-
-	# Place terrain
-	if _gen_tiles_to_place.size() > 0:
-		var terrain_set := _gen_layer.terrain_set_id if _gen_layer else fallback_terrain_set_id
-		var terrain := _gen_layer.terrain_id if _gen_layer else fallback_terrain_id
-		tilemap.set_cells_terrain_connect(_gen_tiles_to_place, terrain_set, terrain)
-		
-	# Place modified blocks
-	for key in _gen_modified_tiles_to_place.keys():
-		tilemap.set_cells_terrain_connect(_gen_modified_tiles_to_place[key], key.x, key.y)
-
-	# ores and enemies
-	_generate_chunk_ores(_gen_tiles_to_place, _gen_layer)
+## Queues the rest of this chunk's work as small one-shot steps
+func _begin_finish_tasks() -> void:
+	_gen_scanning_done = true
+	_gen_finish_tasks = [
+		_finish_flush_erasures,
+		_finish_flush_placements,
+		_finish_refresh_borders,
+		_finish_ores_task,
+		_finish_enemies_task,
+		_finish_save_task,
+	]
 	
+func _finish_refresh_borders() -> void:
+	var chunk_x := _gen_start_x / GameSettings.chunk_size
+	var chunk_y := _gen_start_y / GameSettings.chunk_size
+	_refresh_neighbor_chunk_borders(chunk_x, chunk_y)
+
+func _refresh_neighbor_chunk_borders(chunk_x: int, chunk_y: int) -> void:
+	var chunk_size := GameSettings.chunk_size
+	var start_x := chunk_x * chunk_size
+	var start_y := chunk_y * chunk_size
+
+	var side_offsets := [Vector2i(-1, 0), Vector2i(1, 0), Vector2i(0, -1), Vector2i(0, 1)]
+	for off in side_offsets:
+		var neighbor_key := Vector2i(chunk_x + off.x, chunk_y + off.y)
+		if not loaded_chunks.has(neighbor_key):
+			continue
+
+		var cells : Array[Vector2i] = []
+		if off.x == -1:
+			for y in range(start_y, start_y + chunk_size):
+				cells.append(Vector2i(start_x - 1, y))
+		elif off.x == 1:
+			for y in range(start_y, start_y + chunk_size):
+				cells.append(Vector2i(start_x + chunk_size, y))
+		elif off.y == -1:
+			for x in range(start_x, start_x + chunk_size):
+				cells.append(Vector2i(x, start_y - 1))
+		else:
+			for x in range(start_x, start_x + chunk_size):
+				cells.append(Vector2i(x, start_y + chunk_size))
+
+		tilemap.refresh_cells(cells)
+
+	var corner_offsets := [Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(1, 1)]
+	for off in corner_offsets:
+		var neighbor_key := Vector2i(chunk_x + off.x, chunk_y + off.y)
+		if not loaded_chunks.has(neighbor_key):
+			continue
+
+		var corner_x := start_x - 1 if off.x == -1 else start_x + chunk_size
+		var corner_y := start_y - 1 if off.y == -1 else start_y + chunk_size
+		tilemap.refresh_cell(Vector2i(corner_x, corner_y))
+
+func _finish_flush_erasures() -> void:
+	if _gen_tiles_to_erase.size() > 0:
+		tilemap.set_cells(_gen_tiles_to_erase, -1)
+
+func _finish_flush_placements() -> void:
+	var chunk_solids : Dictionary = {}
+	for pos in _gen_tiles_to_place:
+		chunk_solids[pos] = true
+	for pos in modified_tiles.keys():
+		var stored_id : int = modified_tiles[pos]
+		if stored_id == -1:
+			continue
+		var bd := BlockDatabase.get_block_by_id(stored_id)
+		if bd and not tilemap.terrain_connects(bd.terrain_id):
+			continue # decorative/furniture blocks don't shape surrounding terrain
+		chunk_solids[pos] = true
+
+	if _gen_tiles_to_place.size() > 0:
+		var source_id := _gen_layer.terrain_set_id if _gen_layer else fallback_terrain_set_id
+		var terrain_idx := _gen_layer.terrain_id if _gen_layer and "terrain_id" in _gen_layer else 0
+		tilemap.custom_terrain_connect(_gen_tiles_to_place, source_id, chunk_solids, terrain_idx)
+
+	for key : Vector2i in _gen_modified_tiles_to_place.keys():
+		var source_id := key.x
+		var terrain_idx := key.y
+		tilemap.custom_terrain_connect(
+			_gen_modified_tiles_to_place[key],
+			source_id,
+			chunk_solids,
+			terrain_idx
+		)
+
+## Ores only ever roll on a chunk's first-ever generation
+func _finish_ores_task() -> void:
+	if _gen_is_first_generation:
+		_generate_chunk_ores(_gen_tiles_to_place, _gen_layer)
+
+func _finish_enemies_task() -> void:
+	if not _gen_is_first_generation and not respawn_enemies_on_revisit:
+		return
 	var chunk_key := Vector2i(_gen_start_x / GameSettings.chunk_size, _gen_start_y / GameSettings.chunk_size)
 	_generate_chunk_enemies(chunk_key, _gen_layer, _gen_open_tiles)
- 
-	tilemap.spawn_chunk_lights(_gen_start_x / GameSettings.chunk_size, _gen_start_y / GameSettings.chunk_size)
- 
+
+func _finish_save_task() -> void:
+	if _gen_is_first_generation:
+		var chunk_key := Vector2i(_gen_start_x / GameSettings.chunk_size, _gen_start_y / GameSettings.chunk_size)
+		_save_chunk_to_disk(chunk_key)
+
+func _complete_chunk_generation() -> void:
 	_gen_active = false
+	_gen_scanning_done = false
+	_gen_lights_started = false
+	_gen_lights_done = false
+	_gen_finish_tasks.clear()
 	_gen_tiles_to_place = []
 	_gen_open_tiles = []
 	_gen_modified_tiles_to_place.clear()
@@ -344,7 +482,8 @@ func _generate_chunk_ores(tiles : Array[Vector2i], layer : LayerData) -> void:
 			modified_tiles[pos] = ore_type.block_id
 			available_set.erase(pos)
 
-		tilemap.set_cells_terrain_connect(vein, bd.terrain_set_id, bd.terrain_id)
+		for pos in vein:
+			tilemap.update_single_tile_and_neighbors(pos, bd.terrain_set_id, bd.terrain_id, false)
 
 ## Rolls the layer's enemy pool once per chunk and spawns any resulting groups
 func _generate_chunk_enemies(chunk_key : Vector2i, layer : LayerData, open_tiles : Array[Vector2i]) -> void:
@@ -354,38 +493,59 @@ func _generate_chunk_enemies(chunk_key : Vector2i, layer : LayerData, open_tiles
 		return
 	if rng.randf() > layer.spawn_chance_per_chunk:
 		return
- 
+
+	var valid_tiles := _filter_valid_spawn_tiles(open_tiles)
+	if valid_tiles.is_empty():
+		return
+
 	var spawned := 0
 	var attempts := 0
 	var max_attempts := layer.max_enemies_per_chunk * 8
- 
+
 	while spawned < layer.max_enemies_per_chunk and attempts < max_attempts:
 		attempts += 1
 		var entry := layer.pick_random_enemy()
 		if entry == null or entry.enemy_scene == null:
 			continue
- 
-		var tile_pos : Vector2i = open_tiles[rng.randi() % open_tiles.size()]
+
+		var tile_pos : Vector2i = valid_tiles[rng.randi() % valid_tiles.size()]
 		var group_size := rng.randi_range(entry.min_group_size, entry.max_group_size)
- 
+
 		for i in group_size:
+			var spot := tile_pos if i == 0 else valid_tiles[rng.randi() % valid_tiles.size()]
+
+			if tilemap.get_cell_source_id(spot) != -1:
+				continue
+
 			var enemy := entry.enemy_scene.instantiate() as Node2D
 			if enemy == null:
 				continue
 			entities_parent.add_child(enemy)
-			enemy.global_position = tilemap.to_global(tilemap.map_to_local(tile_pos))
-			
-			# setup enemy
-			if enemy.has_method("setup"):
-				enemy.setup(player, self) 
+			enemy.global_position = tilemap.to_global(tilemap.map_to_local(spot))
 
-			# that is a nice pattern of _chunk enemies. like stairs
+			if enemy.has_method("setup"):
+				enemy.setup(player, self)
+
 			if not _chunk_enemies.has(chunk_key):
 				_chunk_enemies[chunk_key] = []
 			_chunk_enemies[chunk_key].append(enemy)
 			enemy.tree_exited.connect(_on_tracked_enemy_freed.bind(chunk_key, enemy), CONNECT_ONE_SHOT)
- 
+
 		spawned += 1
+
+func _filter_valid_spawn_tiles(open_tiles : Array[Vector2i]) -> Array[Vector2i]:
+	var valid : Array[Vector2i] = []
+	for pos in open_tiles:
+		if tilemap.get_cell_source_id(pos) != -1:
+			continue
+		if _is_confirmed_solid_ground(pos + Vector2i.DOWN):
+			valid.append(pos)
+	return valid
+
+func _is_confirmed_solid_ground(cell : Vector2i) -> bool:
+	if modified_tiles.has(cell) and modified_tiles[cell] != -1:
+		return true
+	return tilemap.get_cell_source_id(cell) != -1
 
 func _on_tracked_enemy_freed(chunk_key : Vector2i, enemy : Node2D) -> void:
 	if _chunk_enemies.has(chunk_key):
@@ -462,14 +622,64 @@ func _step_unload_queue() -> void:
 		ops += 1
 
 func unload_chunk(chunk_x: int, chunk_y: int) -> void:
+	var chunk_key := Vector2i(chunk_x, chunk_y)
 	var start_x = chunk_x * GameSettings.chunk_size
 	var start_y = chunk_y * GameSettings.chunk_size
-
+ 
 	tilemap.unload_chunk_lights(chunk_x, chunk_y)
-
+ 
+	var local_modified := _extract_local_modified_tiles(chunk_x, chunk_y)
+	ChunkStorage.save_chunk(GameSettings.seed_, chunk_key, local_modified)
+ 
+	var tiles_to_erase : Array[Vector2i] = []
 	for x in range(start_x, start_x + GameSettings.chunk_size):
 		for y in range(start_y, start_y + GameSettings.chunk_size):
-			tilemap.erase_cell(Vector2i(x, y))
+			var tile_pos := Vector2i(x, y)
+			tiles_to_erase.append(tile_pos)
+			modified_tiles.erase(tile_pos)
+			
+	tilemap.set_cells(tiles_to_erase, -1)
+ 
+	_unload_chunk_enemies(chunk_key)
+
+## Frees every enemy still alive that was spawned in this chunk.
+func _unload_chunk_enemies(chunk_key : Vector2i) -> void:
+	if not _chunk_enemies.has(chunk_key):
+		return
+	var enemies := _chunk_enemies[chunk_key]
+	_chunk_enemies.erase(chunk_key)
+	for enemy in enemies:
+		if is_instance_valid(enemy):
+			enemy.queue_free()
+
+#--------------------------------------------------------#
+# CHUNK PERSISTENCE HELPERS
+#--------------------------------------------------------#
+
+func _extract_local_modified_tiles(chunk_x: int, chunk_y: int) -> Dictionary:
+	var start_x := chunk_x * GameSettings.chunk_size
+	var start_y := chunk_y * GameSettings.chunk_size
+	var local : Dictionary = {}
+	for x in range(start_x, start_x + GameSettings.chunk_size):
+		for y in range(start_y, start_y + GameSettings.chunk_size):
+			var tile_pos := Vector2i(x, y)
+			if modified_tiles.has(tile_pos):
+				local[Vector2i(x - start_x, y - start_y)] = modified_tiles[tile_pos]
+	return local
+
+func _restore_chunk_from_disk(chunk_x: int, chunk_y: int, chunk_key: Vector2i) -> void:
+	var local_data := ChunkStorage.load_chunk(GameSettings.seed_, chunk_key)
+	if local_data.is_empty():
+		return
+	var start_x := chunk_x * GameSettings.chunk_size
+	var start_y := chunk_y * GameSettings.chunk_size
+	for local_pos in local_data.keys():
+		var world_pos : Vector2i = Vector2i(start_x, start_y) + local_pos
+		modified_tiles[world_pos] = local_data[local_pos]
+
+func _save_chunk_to_disk(chunk_key: Vector2i) -> void:
+	var local_modified := _extract_local_modified_tiles(chunk_key.x, chunk_key.y)
+	ChunkStorage.save_chunk(GameSettings.seed_, chunk_key, local_modified)
 
 #--------------------------------------------------------#
 # PLAYER DEPENDENT FUNCTIONS
@@ -481,16 +691,18 @@ func modify_tile(tile_pos: Vector2i, is_solid: bool, block_id: int = -1) -> int:
 		if block_data == null:
 			return -1
 		modified_tiles[tile_pos] = block_id
-		tilemap.set_cells_terrain_connect([tile_pos], block_data.terrain_set_id, block_data.terrain_id)
+		
+		tilemap.update_single_tile_and_neighbors(tile_pos, block_data.terrain_set_id, block_data.terrain_id, false)
+		
 		tilemap.spawn_light_at(tile_pos)
 		return block_id
 	else:
 		var td : TileData = tilemap.get_cell_tile_data(tile_pos)
 		var removed_id : int = td.get_custom_data("block_id") if td else -1
 		modified_tiles[tile_pos] = -1
-		var pos_layer = LayerDatabase.get_layer_for_tile(tile_pos)
-		var terrain_set = pos_layer.terrain_set_id if pos_layer else fallback_terrain_set_id
-		tilemap.set_cells_terrain_connect([tile_pos], terrain_set, -1)
+		
+		tilemap.update_single_tile_and_neighbors(tile_pos, -1, 0, true)
+		
 		tilemap.remove_light_at(tile_pos)
 		return removed_id
 
@@ -573,38 +785,37 @@ func _stamp_structure(source_layer: TileMapLayer, origin: Vector2i) -> void:
 	if tile_set == null:
 		return
 
-	var by_terrain : Dictionary = {}
-
 	for cell in source_layer.get_used_cells():
-		var tile_pos : Vector2i = origin + cell
-		var source_id : int = source_layer.get_cell_source_id(cell)
-		var atlas_coords : Vector2i = source_layer.get_cell_atlas_coords(cell)
-		var alt_id : int = source_layer.get_cell_alternative_tile(cell)
+		var tile_pos := origin + cell
+
+		var source_id := source_layer.get_cell_source_id(cell)
+		var atlas_coords := source_layer.get_cell_atlas_coords(cell)
+		var alt_id := source_layer.get_cell_alternative_tile(cell)
+
+		if source_id == -1:
+			continue
 
 		var source := tile_set.get_source(source_id)
 		if source == null or not (source is TileSetAtlasSource):
 			continue
 
-		var td : TileData = (source as TileSetAtlasSource).get_tile_data(atlas_coords, alt_id)
+		var td := (source as TileSetAtlasSource).get_tile_data(atlas_coords, alt_id)
 		if td == null:
 			continue
 
-		var block_id : int = td.get_custom_data("block_id")
+		var block_id: int = td.get_custom_data("block_id")
+
 		if block_id == -67:
 			modify_tile(tile_pos, false)
+			continue
+
 		var block_data := BlockDatabase.get_block_by_id(block_id)
 		if block_data == null:
 			continue
 
 		modified_tiles[tile_pos] = block_id
 
-		var key := Vector2i(block_data.terrain_set_id, block_data.terrain_id)
-		if not by_terrain.has(key):
-			by_terrain[key] = []
-		by_terrain[key].append(tile_pos)
-
-	for key : Vector2i in by_terrain.keys():
-		tilemap.set_cells_terrain_connect(by_terrain[key], key.x, key.y)
+		tilemap.set_cell(tile_pos, source_id, atlas_coords, alt_id)
 
 #--------------------------------------------------------#
 # HELPER FUNCTIONS

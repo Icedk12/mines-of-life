@@ -99,11 +99,16 @@ light_scene = ExtResource("4_ti4pp")
 [node name="LevelGenerator" type="Node" parent="." unique_id=877058791 node_paths=PackedStringArray("tilemap", "entities_parent")]
 script = ExtResource("2_cne4c")
 tilemap = NodePath("../Layer1")
+fallback_terrain_set_id = null
 fallback_terrain_id = -1
-fallback_tile_generate_chance = 0.0
-unload_buffer = 1
+fallback_tile_generate_chance = null
+fallback_noise_frequency = null
+unload_buffer = null
+tiles_per_frame_budget = 70
+unload_chunks_per_frame = null
 structures = Array[ExtResource("6_e4y3p")]([SubResource("Resource_ti4pp"), SubResource("Resource_e4y3p"), SubResource("Resource_gsxep"), SubResource("Resource_744pl"), SubResource("Resource_xqw53"), SubResource("Resource_83ryt"), SubResource("Resource_c630t"), SubResource("Resource_urj03"), SubResource("Resource_jhn0l"), SubResource("Resource_y8nfn"), SubResource("Resource_76sct")])
 entities_parent = NodePath("../EnemyContainer")
+respawn_enemies_on_revisit = null
 metadata/_custom_type_script = "uid://bmmky33tl7eb0"
 
 [node name="Darkness" type="CanvasModulate" parent="." unique_id=696853006]

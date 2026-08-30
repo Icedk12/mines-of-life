@@ -18,6 +18,10 @@
 [ext_resource type="PackedScene" uid="uid://cqosbkjmnpojj" path="res://scenes/ui/EquipmentSlot.tscn" id="14_4y8sh"]
 [ext_resource type="Script" uid="uid://bw3ugnosb0w1w" path="res://scripts/ui/SettingParser.gd" id="15_up3k2"]
 [ext_resource type="FontFile" uid="uid://b6h6ryjq6gnbv" path="res://assets/fonts/Ultracouch.ttf" id="16_yut7p"]
+[ext_resource type="Texture2D" uid="uid://d13a1rdsnpn3d" path="res://assets/ui/HealthBackground.png" id="19_xyrw1"]
+[ext_resource type="Texture2D" uid="uid://bdt711agc7fei" path="res://assets/ui/HealthPip.png" id="20_uy2eo"]
+[ext_resource type="Texture2D" uid="uid://cij5od2a5pfb1" path="res://assets/ui/XPBackground.png" id="21_6fm6b"]
+[ext_resource type="Texture2D" uid="uid://bjt3pgsk3snde" path="res://assets/ui/XPPip.png" id="22_6o14p"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uy2eo"]
 
@@ -42,7 +46,7 @@ VScrollBar/styles/grabber_highlight = SubResource("StyleBoxEmpty_3r278")
 VScrollBar/styles/grabber_pressed = SubResource("StyleBoxEmpty_xyrw1")
 VScrollBar/styles/scroll = SubResource("StyleBoxFlat_omutp")
 
-[node name="PlayerGUI" type="Control" unique_id=1953480870 node_paths=PackedStringArray("inventory_ui", "crafting_ui")]
+[node name="PlayerGUI" type="Control" unique_id=1953480870 node_paths=PackedStringArray("inventory_ui", "crafting_ui", "xp_bar", "health_bar")]
 material = ExtResource("1_o75iu")
 layout_mode = 3
 anchors_preset = 15
@@ -54,6 +58,8 @@ mouse_filter = 1
 script = ExtResource("1_34not")
 inventory_ui = NodePath("InventoryUI")
 crafting_ui = NodePath("CraftingUI")
+xp_bar = NodePath("XPBar")
+health_bar = NodePath("HealthBar")
 
 [node name="FPS_Label" type="Label" parent="." unique_id=165018761]
 material = ExtResource("1_o75iu")
@@ -316,10 +322,11 @@ offset_right = 922.0
 offset_bottom = 606.0
 horizontal_scroll_mode = 0
 
-[node name="Settings" type="GridContainer" parent="Settings/SettingScrollContainer" unique_id=1325540472]
+[node name="Settings" type="GridContainer" parent="Settings/SettingScrollContainer" unique_id=1325540472 node_paths=PackedStringArray("confbtn")]
 custom_minimum_size = Vector2(922, 606)
 layout_mode = 2
 script = ExtResource("15_up3k2")
+confbtn = NodePath("../../ConfirmBtn")
 
 [node name="HeadingAse" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=942482314]
 custom_minimum_size = Vector2(922, 70)
@@ -526,6 +533,66 @@ max_value = 256.0
 step = 16.0
 value = 128.0
 tick_count = 16
+ticks_on_borders = true
+
+[node name="HeadingAse3" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=27162254]
+custom_minimum_size = Vector2(922, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/SettingScrollContainer/Settings/HeadingAse3" unique_id=775820895]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 500.0
+offset_bottom = 70.0
+text = "VISUALS"
+label_settings = ExtResource("7_udjm8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingAse9" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=1251300555]
+custom_minimum_size = Vector2(922, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/SettingScrollContainer/Settings/SettingAse9" unique_id=1310175402]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 500.0
+offset_bottom = 70.0
+text = "Bloom:"
+label_settings = ExtResource("7_udjm8")
+vertical_alignment = 1
+
+[node name="CheckButton" type="CheckButton" parent="Settings/SettingScrollContainer/Settings/SettingAse9" unique_id=194817301]
+layout_mode = 0
+offset_left = 215.0
+offset_top = 26.0
+offset_right = 259.0
+offset_bottom = 50.0
+
+[node name="SettingAse11" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=334329685]
+custom_minimum_size = Vector2(922, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/SettingScrollContainer/Settings/SettingAse11" unique_id=299967352]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 500.0
+offset_bottom = 70.0
+text = "Bloom Intensity:"
+label_settings = ExtResource("7_udjm8")
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="Settings/SettingScrollContainer/Settings/SettingAse11" unique_id=2142314245]
+layout_mode = 0
+offset_left = 406.0
+offset_top = 28.0
+offset_right = 902.0
+offset_bottom = 44.0
+max_value = 10.0
+step = 0.5
+value = 3.0
+tick_count = 16
+ticks_on_borders = true
 
 [node name="ConfirmBtn" type="Button" parent="Settings" unique_id=1827745195]
 layout_mode = 1
@@ -540,3 +607,27 @@ grow_horizontal = 2
 theme_override_fonts/font = ExtResource("16_yut7p")
 theme_override_font_sizes/font_size = 31
 text = "CONFIRM"
+
+[node name="HealthBar" type="TextureProgressBar" parent="." unique_id=1570466905]
+layout_mode = 0
+offset_left = 1065.0
+offset_top = 36.0
+offset_right = 1921.0
+offset_bottom = 133.0
+max_value = 10.0
+step = 0.01
+fill_mode = 1
+texture_under = ExtResource("19_xyrw1")
+texture_progress = ExtResource("20_uy2eo")
+
+[node name="XPBar" type="TextureProgressBar" parent="." unique_id=1819048892]
+layout_mode = 0
+offset_left = 1065.0
+offset_top = 139.0
+offset_right = 1921.0
+offset_bottom = 158.0
+max_value = 10.0
+step = 0.01
+fill_mode = 1
+texture_under = ExtResource("21_6fm6b")
+texture_progress = ExtResource("22_6o14p")

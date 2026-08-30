@@ -106,12 +106,15 @@ func _attack_player() -> void:
 func get_health_component() -> HealthComponent:
 	return health_component
 
-func _on_died() -> void:
-	# Hide body
+func _on_died(xp : float = 0.0) -> void:
+	is_alive = false
+	
+	collision_layer = 0
+	collision_mask = 0
+	
 	sprite_modifier_component.sprite.hide()
 	sprite_modifier_component._flatten()
 	
-	is_alive = false
 	death_particles.emitting = true
 
 	await death_particles.finished
