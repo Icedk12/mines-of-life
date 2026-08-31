@@ -33,7 +33,7 @@ func _play_sound(sounds : Array[AudioStream]) -> void:
 	var voice := _voices[_next_voice]
 	_next_voice = (_next_voice + 1) % _voices.size()
 
-	voice.global_position = character.global_position
+	voice.global_position = get_parent().global_position
 	voice.stream = sounds[randi() % sounds.size()]
 	voice.pitch_scale = randf_range(0.95, 1.05)
 	voice.play()

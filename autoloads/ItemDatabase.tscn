@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://7cegwdgkngi2"]
 
-[ext_resource type="Script" uid="uid://ujhpyj1ftlg4" path="res://autoloads/ItemDatabase.gd" id="1_ptkgt"]
+[ext_resource type="Script" uid="uid://ujhpyj1ftlg4" path="res://autoloads/scripts/ItemDatabase.gd" id="1_ptkgt"]
 [ext_resource type="Script" uid="uid://cjhkyagc4mdgn" path="res://scripts/types/Item.gd" id="2_gp7j7"]
 [ext_resource type="Texture2D" uid="uid://dv011w32v3pq5" path="res://assets/items/Stuffing.png" id="3_gn7kn"]
 [ext_resource type="Texture2D" uid="uid://2y75d66onj5x" path="res://assets/items/LeatherScrap.png" id="4_3xla5"]
@@ -20,6 +20,16 @@
 [ext_resource type="Texture2D" uid="uid://dj2qdy3eraelu" path="res://assets/items/HermesCrown.png" id="18_j3fuy"]
 [ext_resource type="Texture2D" uid="uid://k0x3q371f7fj" path="res://assets/items/Penny.png" id="19_ud80n"]
 [ext_resource type="Texture2D" uid="uid://c8qdcji7juwgf" path="res://assets/items/StuffingBricks.png" id="20_asqo3"]
+[ext_resource type="Texture2D" uid="uid://bytyraqq5wuae" path="res://assets/items/GunkHelmet.png" id="21_a8jyo"]
+[ext_resource type="Texture2D" uid="uid://cpcfiof0wvvyu" path="res://assets/items/GunkArmour.png" id="22_j4i65"]
+[ext_resource type="Texture2D" uid="uid://i4bsooc2jb7r" path="res://assets/items/PennyPickaxe.png" id="23_5d8hd"]
+[ext_resource type="Texture2D" uid="uid://8qnqvos1eary" path="res://assets/items/PennyHelmet.png" id="24_q4hdy"]
+[ext_resource type="Texture2D" uid="uid://bn4bmrvb32o6m" path="res://assets/items/PennyArmour.png" id="25_q4hdy"]
+[ext_resource type="Texture2D" uid="uid://kmcubayo1ijv" path="res://assets/items/GoldNugget.png" id="26_5tp5t"]
+[ext_resource type="Texture2D" uid="uid://dc6aju31510nm" path="res://assets/items/RefinedPenny.png" id="27_xx0cy"]
+[ext_resource type="Texture2D" uid="uid://bf36su4es1r7e" path="res://assets/items/RefinedGold.png" id="28_u4baj"]
+[ext_resource type="Texture2D" uid="uid://c05ea17ejlyq7" path="res://assets/items/Diamond.png" id="29_k1wlb"]
+[ext_resource type="Texture2D" uid="uid://bmv6w1v68k4g1" path="res://assets/items/DeepStuffing.png" id="30_dssb6"]
 
 [sub_resource type="Resource" id="Resource_v05ge"]
 script = ExtResource("2_gp7j7")
@@ -164,7 +174,7 @@ metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
 [sub_resource type="Resource" id="Resource_a8jyo"]
 script = ExtResource("4_iwh46")
-damage_offset = 2.0
+damage_offset = 0.5
 metadata/_custom_type_script = "uid://djcpbulvvrjuf"
 
 [sub_resource type="Resource" id="Resource_gutlp"]
@@ -181,7 +191,7 @@ metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 [sub_resource type="Resource" id="Resource_5d8hd"]
 script = ExtResource("4_iwh46")
 speed_modifier = 2.0
-jump_modifier = 1.5
+jump_modifier = 2.0
 metadata/_custom_type_script = "uid://djcpbulvvrjuf"
 
 [sub_resource type="Resource" id="Resource_j4i65"]
@@ -211,6 +221,142 @@ icon = ExtResource("20_asqo3")
 block_id = 10
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
+[sub_resource type="Resource" id="Resource_fvdbb"]
+script = ExtResource("4_iwh46")
+health_offset = 2.0
+speed_modifier = 0.95
+jump_modifier = 0.95
+damage_modifier = 1.5
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_6fy5s"]
+script = ExtResource("2_gp7j7")
+item_id = 17
+item_name = "Gunk Helmet"
+stack_size = 1
+icon = ExtResource("21_a8jyo")
+block_id = -1
+equipment_slot_mode = 1
+stat_data = SubResource("Resource_fvdbb")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_5hatu"]
+script = ExtResource("4_iwh46")
+health_offset = 3.0
+damage_offset = 1.0
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_mnwqx"]
+script = ExtResource("2_gp7j7")
+item_id = 18
+item_name = "Gunk Armour"
+stack_size = 1
+icon = ExtResource("22_j4i65")
+block_id = -1
+equipment_slot_mode = 2
+stat_data = SubResource("Resource_5hatu")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_dfpmu"]
+script = ExtResource("4_iwh46")
+speed_modifier = 1.1
+mine_strength = 3
+swing_speed = 0.18
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_5tp5t"]
+script = ExtResource("2_gp7j7")
+item_id = 19
+item_name = "Penny Pickaxe"
+stack_size = 1
+icon = ExtResource("23_5d8hd")
+block_id = -1
+equipment_slot_mode = 3
+stat_data = SubResource("Resource_dfpmu")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_kuyi6"]
+script = ExtResource("4_iwh46")
+speed_modifier = 1.2
+speed_offset = 0.67
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_78d1o"]
+script = ExtResource("2_gp7j7")
+item_id = 20
+item_name = "Penny Helmet"
+stack_size = 1
+icon = ExtResource("24_q4hdy")
+block_id = -1
+equipment_slot_mode = 1
+stat_data = SubResource("Resource_kuyi6")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_q4hdy"]
+script = ExtResource("4_iwh46")
+speed_offset = 0.1
+jump_modifier = 0.8
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_xx0cy"]
+script = ExtResource("2_gp7j7")
+item_id = 21
+item_name = "Penny Armour"
+stack_size = 1
+icon = ExtResource("25_q4hdy")
+block_id = -1
+equipment_slot_mode = 2
+stat_data = SubResource("Resource_q4hdy")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_n0470"]
+script = ExtResource("2_gp7j7")
+item_id = 22
+item_name = "Bedrock"
+icon = ExtResource("14_q6xpq")
+block_id = 11
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_u4baj"]
+script = ExtResource("2_gp7j7")
+item_id = 23
+item_name = "Gold Ore"
+icon = ExtResource("26_5tp5t")
+block_id = 12
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_k1wlb"]
+script = ExtResource("2_gp7j7")
+item_id = 24
+item_name = "Melted Penny"
+icon = ExtResource("27_xx0cy")
+block_id = -1
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_dssb6"]
+script = ExtResource("2_gp7j7")
+item_id = 25
+item_name = "Refined Gold"
+icon = ExtResource("28_u4baj")
+block_id = -1
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_33137"]
+script = ExtResource("2_gp7j7")
+item_id = 26
+item_name = "Diamond"
+icon = ExtResource("29_k1wlb")
+block_id = 13
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_1tj1n"]
+script = ExtResource("2_gp7j7")
+item_id = 27
+item_name = "Deep Stuffing"
+icon = ExtResource("30_dssb6")
+block_id = 14
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
 [node name="ItemDatabase" type="Node" unique_id=1572723925]
 script = ExtResource("1_ptkgt")
-item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn"), SubResource("Resource_1tuwj"), SubResource("Resource_iwh46"), SubResource("Resource_7vfln"), SubResource("Resource_ci6rp"), SubResource("Resource_wo6et"), SubResource("Resource_jw16n"), SubResource("Resource_4pnrd"), SubResource("Resource_efpqa"), SubResource("Resource_310cl"), SubResource("Resource_ldqej"), SubResource("Resource_ud80n"), SubResource("Resource_gutlp"), SubResource("Resource_j4i65"), SubResource("Resource_c6kvi"), SubResource("Resource_ui66f")])
+item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn"), SubResource("Resource_1tuwj"), SubResource("Resource_iwh46"), SubResource("Resource_7vfln"), SubResource("Resource_ci6rp"), SubResource("Resource_wo6et"), SubResource("Resource_jw16n"), SubResource("Resource_4pnrd"), SubResource("Resource_efpqa"), SubResource("Resource_310cl"), SubResource("Resource_ldqej"), SubResource("Resource_ud80n"), SubResource("Resource_gutlp"), SubResource("Resource_j4i65"), SubResource("Resource_c6kvi"), SubResource("Resource_ui66f"), SubResource("Resource_6fy5s"), SubResource("Resource_mnwqx"), SubResource("Resource_5tp5t"), SubResource("Resource_78d1o"), SubResource("Resource_xx0cy"), SubResource("Resource_n0470"), SubResource("Resource_u4baj"), SubResource("Resource_k1wlb"), SubResource("Resource_dssb6"), SubResource("Resource_33137"), SubResource("Resource_1tj1n")])

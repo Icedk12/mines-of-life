@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BlockSetting" format=3 uid="uid://xv02ydgnasc0"]
+
+[ext_resource type="Script" uid="uid://dtax1vhaxc7ds" path="res://scripts/types/GenerationSetting.gd" id="1_wjgg8"]
+
+[resource]
+script = ExtResource("1_wjgg8")
+block_id = 2
+terrain_id = 2
+gen_chance = 0.2
+max_size = 12
+min_size = 6
+metadata/_custom_type_script = "uid://dtax1vhaxc7ds"

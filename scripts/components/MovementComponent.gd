@@ -40,6 +40,10 @@ func _physics_process(delta: float) -> void:
 
 func on_walk(delta : float) -> void:
 	sprite_modifier_component._sprite_sin_offset(delta, true)
+	if input_direction == -1.0:
+		sprite_modifier_component.sprite_flip_h(true)
+	else:
+		sprite_modifier_component.sprite_flip_h(false)
 
 func reset_sprite_offset(delta : float) -> void:
 	# Smoothly return the offset back to zero over time

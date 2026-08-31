@@ -6,7 +6,6 @@ class_name Level extends Node2D
 @export var level_generator : LevelGenerator
 @export var _layer1 : TileMapLayer
 
-
 func finished_generation_inital() -> void:
 	music_player._play_next_track()
 	level_generator.modify_tile(Vector2i(0, 0), false)

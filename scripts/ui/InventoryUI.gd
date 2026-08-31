@@ -18,6 +18,7 @@ var inventory_slots : Array[InventorySlot] = []
 var selected_hotbar_index : int = 0
 var active_tween : Tween
 var inventory_tween : Tween
+var setting_tween : Tween
 
 func set_up() -> void:
 	for i in inventory_component.hotbar.size():
@@ -53,6 +54,18 @@ func _unhandled_input(event: InputEvent) -> void:
 			_change_selection(-1)
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			_change_selection(1)
+	elif event.is_action_pressed("settings") and $"../Settings":
+		if setting_tween and setting_tween.is_running():
+			setting_tween.kill()
+		setting_tween = create_tween().set_trans(inventory_trans)
+		
+		if not $"../Settings".visible:
+			$"../Settings".visible = true
+			setting_tween.tween_property($"../Settings", "position", Vector2(499.0, 237.0), 0.5)
+		else:
+			setting_tween.tween_property($"../Settings", "position", Vector2(499.0, 1122.0), 0.5)
+			setting_tween.tween_callback(func(): $"../Settings".visible = false)
+		
 	elif event.is_action_pressed("toggle_inventory") and inventory_panel:
 		if inventory_tween and inventory_tween.is_running():
 			inventory_tween.kill()
@@ -133,6 +146,7 @@ func _refresh() -> void:
 		inventory_slots[i].set_stack(inventory_component._get_stack(InventoryComponent.ItemContainer.INVENTORY, i))
 	for slot in equipment_slots:
 		slot.set_stack(inventory_component._get_stack(InventoryComponent.ItemContainer.EQUIPMENT, slot.category))
+		
 	_on_selection_changed()
 	
 func _move_selection_rect(snap: bool = false) -> void:

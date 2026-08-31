@@ -8,6 +8,9 @@ enum ItemContainer { HOTBAR, INVENTORY, EQUIPMENT }
 @export var hotbar_size : int = 9
 @export var inventory_size : int = 27
 
+@onready var helmet_sprite : Sprite2D = $"../Sprite/EquipmentSprites/Helmet"
+@onready var tool_sprite : Sprite2D = $"../Sprite/EquipmentSprites/Tool"
+
 var hotbar : Array[ItemStack] = []
 var inventory : Array[ItemStack] = []
 var equipment : Array[ItemStack] = []
@@ -104,12 +107,25 @@ func recalculate_equipment_stats() -> void:
 
 	stat_manager.clear_mods()
 
+	if helmet_sprite:
+		helmet_sprite.texture = null
+	if tool_sprite:
+		tool_sprite.texture = null
+
 	for istack : ItemStack in equipment:
 		if istack.is_empty():
 			continue
 
-		var item : ItemData = ItemDatabase.get_item_by_id(istack.item_id) # was istack.get_item_id() — that method never existed
-		if item != null and item.stat_data != null:
+		var item : ItemData = ItemDatabase.get_item_by_id(istack.item_id)
+		if item == null:
+			continue
+
+		if item.equipment_slot_mode == EquipmentSlotMode.Mode.HELMET and helmet_sprite:
+			helmet_sprite.texture = item.icon
+		elif item.equipment_slot_mode == EquipmentSlotMode.Mode.TOOL and tool_sprite:
+			tool_sprite.texture = item.icon
+
+		if item.stat_data != null:
 			stat_manager._add_mod(item.stat_data)
 
 ## Removes from wherever it can find it — hotbar first, then inventory.

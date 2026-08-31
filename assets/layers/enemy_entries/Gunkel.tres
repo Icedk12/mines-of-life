@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemySpawnEntry" format=3 uid="uid://dp4w5quapd12y"]
+
+[ext_resource type="PackedScene" uid="uid://pkd53abgkjlr" path="res://enemy_scenes/Enemy_Gunkel.tscn" id="1_ric7g"]
+[ext_resource type="Script" uid="uid://bqbwgkiq558fa" path="res://scripts/types/EnemySpawnEntry.gd" id="2_dxh1n"]
+
+[resource]
+script = ExtResource("2_dxh1n")
+enemy_scene = ExtResource("1_ric7g")
+max_group_size = 3
+metadata/_custom_type_script = "uid://bqbwgkiq558fa"

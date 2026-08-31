@@ -1,0 +1,7 @@
+[gd_scene format=4 uid="uid://bc3iy11fycqq"]
+
+[ext_resource type="TileSet" uid="uid://d032x3h6ws4lp" path="res://assets/level/CouchTileset.tres" id="1_urj03"]
+
+[node name="Struct_Dih" type="TileMapLayer" unique_id=2007801309]
+tile_map_data = PackedByteArray("AAD+/wAAAAALABoAAAD9/wAAAAAHABgAAAD9/wEAAAAHABkAAAD+/wEAAAAIABkAAAABAAAAAAAKABoAAAABAAEAAAAHABkAAAACAAEAAAAIABkAAAACAAAAAAAIABgAAAAAAP//AAAHABoAAAAAAP7/AAAHABoAAAAAAP3/AAAHABoAAAAAAPz/AAAHABoAAAAAAPv/AAAIABgAAAD///v/AAAHABgAAAD///z/AAAGABoAAAD///3/AAAGABoAAAD///7/AAAGABoAAAD/////AAAGABoAAAAAAAAAAAALABsAAAD//wAAAAAKABsAAAA=")
+tile_set = ExtResource("1_urj03")

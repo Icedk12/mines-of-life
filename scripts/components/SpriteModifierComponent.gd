@@ -9,6 +9,8 @@ extends CharacterComponent
 @export var squash_tween : TweenInfo
 @export var stretch_tween : TweenInfo
 @export var return_tween : TweenInfo ## How long it takes to return to normal value after tween
+@export var flatten_tween : TweenInfo
+@export var hide_tween : TweenInfo
 
 @export_group("Mining Tweens")
 @export var mining_tween : TweenInfo
@@ -19,6 +21,9 @@ extends CharacterComponent
 @export var amplitude : float = 1.0
 @export var rot_amplitude : float = 5.0
 @export var rot_frequency : float = 25.0
+
+@export var helmet_sprite : Sprite2D
+@export var tool_sprite : Sprite2D
 
 var active_tween : Tween ## Track active tween to prevent spamming
 var _sin_time : float = 0.0
@@ -57,6 +62,33 @@ func _stretch() -> void:
 	
 	active_tween.tween_property(sprite, "scale", stretch_tween.scale, stretch_tween.duration)\
 		.set_trans(stretch_tween.transition_type).set_ease(stretch_tween.easing_style)
+	
+	_return_from_tween()
+	
+func _flatten() -> void:
+	if not sprite or not flatten_tween or not return_tween: return
+	_verify_tween()
+	
+	active_tween.tween_property(sprite, "scale", flatten_tween.scale, flatten_tween.duration)\
+		.set_trans(flatten_tween.transition_type).set_ease(flatten_tween.easing_style)
+	
+	_return_from_tween()
+
+func _visible(val: bool = true) -> void:
+	if not sprite or not hide_tween: return
+	_verify_tween()
+	
+	var target_alpha: float = 1.0 if val else 0.0
+	
+	if val:
+		sprite.visible = true
+	
+	active_tween.tween_property(sprite, "modulate:a", target_alpha, hide_tween.duration)\
+		.set_trans(hide_tween.transition_type)\
+		.set_ease(hide_tween.easing_style)
+	
+	if not val:
+		active_tween.tween_callback(func(): sprite.visible = false)
 	
 	_return_from_tween()
 
@@ -100,7 +132,8 @@ func _verify_tween() -> void:
 	active_tween = create_tween()
 
 func _mining_tween(direction : Vector2 = Vector2.RIGHT) -> void:
-	if not sprite or not mining_tween or not return_tween: return
+	if not sprite or not mining_tween or not return_tween:
+		return
 	_verify_tween()
 	
 	var dir_x : float = sign(direction.x) if direction.x != 0 else 1.0
@@ -112,8 +145,17 @@ func _mining_tween(direction : Vector2 = Vector2.RIGHT) -> void:
 	active_tween.tween_property(sprite, "scale", mining_tween.scale, mining_tween.duration)\
 		.set_trans(mining_tween.transition_type).set_ease(mining_tween.easing_style)
 	
+	
 	active_tween.chain().set_parallel(true)
 	active_tween.tween_property(sprite, "scale", return_tween.scale, return_tween.duration)\
 		.set_trans(return_tween.transition_type).set_ease(return_tween.easing_style)
 	active_tween.tween_property(sprite, "rotation", 0.0, return_tween.duration)\
 		.set_trans(return_tween.transition_type).set_ease(return_tween.easing_style)
+
+func sprite_flip_h(val : bool) -> void:
+	tool_sprite.flip_h = val
+	sprite.flip_h = val
+	if val == true:
+		tool_sprite.offset.x = -10
+	else:
+		tool_sprite.offset.x = 0

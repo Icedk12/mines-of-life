@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://i4ujihhonmig"]
 
-[ext_resource type="Script" uid="uid://cv1o1qoe633a5" path="res://autoloads/BlockDatabase.gd" id="1_v6wp7"]
+[ext_resource type="Script" uid="uid://cv1o1qoe633a5" path="res://autoloads/scripts/BlockDatabase.gd" id="1_v6wp7"]
 [ext_resource type="Script" uid="uid://h7cwu8wnif38" path="res://scripts/types/BlockData.gd" id="2_kxxcu"]
 [ext_resource type="AudioStream" uid="uid://dygcbsxly28p1" path="res://assets/sounds/hit.mp3" id="3_kxxcu"]
 [ext_resource type="AudioStream" uid="uid://ve6762bpg3ou" path="res://assets/sounds/leather_hit.wav" id="3_ui66f"]
@@ -15,6 +15,7 @@ metadata/_custom_type_script = "uid://h7cwu8wnif38"
 
 [sub_resource type="Resource" id="Resource_8nn5r"]
 script = ExtResource("2_kxxcu")
+atlas_terrain_index = 1
 block_id = 1
 display_name = "Hardened Leather"
 terrain_id = 1
@@ -24,6 +25,7 @@ metadata/_custom_type_script = "uid://h7cwu8wnif38"
 
 [sub_resource type="Resource" id="Resource_ui66f"]
 script = ExtResource("2_kxxcu")
+atlas_terrain_index = 2
 block_id = 2
 display_name = "Gunk"
 terrain_id = 2
@@ -64,6 +66,7 @@ metadata/_custom_type_script = "uid://h7cwu8wnif38"
 
 [sub_resource type="Resource" id="Resource_oofu8"]
 script = ExtResource("2_kxxcu")
+atlas_terrain_index = 3
 block_id = 6
 display_name = "Leather Scrap"
 terrain_id = 6
@@ -90,6 +93,7 @@ metadata/_custom_type_script = "uid://h7cwu8wnif38"
 
 [sub_resource type="Resource" id="Resource_32fc5"]
 script = ExtResource("2_kxxcu")
+atlas_terrain_index = 4
 block_id = 9
 display_name = "Penny Ore"
 terrain_id = 9
@@ -101,6 +105,7 @@ metadata/_custom_type_script = "uid://h7cwu8wnif38"
 
 [sub_resource type="Resource" id="Resource_yx65c"]
 script = ExtResource("2_kxxcu")
+atlas_terrain_index = 5
 block_id = 10
 display_name = "Stuffing Bricks"
 terrain_id = 10
@@ -108,6 +113,47 @@ hit_sounds = Array[AudioStream]([ExtResource("3_ui66f")])
 place_sounds = Array[AudioStream]([ExtResource("3_ui66f")])
 metadata/_custom_type_script = "uid://h7cwu8wnif38"
 
+[sub_resource type="Resource" id="Resource_ou2gv"]
+script = ExtResource("2_kxxcu")
+atlas_terrain_index = 6
+block_id = -2
+display_name = "Bedrock"
+terrain_id = 11
+hardness = 8223372036854775808
+required_strength = 6742000000000000
+hit_sounds = Array[AudioStream]([ExtResource("3_kxxcu")])
+place_sounds = Array[AudioStream]([ExtResource("3_kxxcu")])
+metadata/_custom_type_script = "uid://h7cwu8wnif38"
+
+[sub_resource type="Resource" id="Resource_bordp"]
+script = ExtResource("2_kxxcu")
+atlas_terrain_index = 7
+block_id = 12
+display_name = "Gold Ore"
+terrain_id = 12
+hardness = 10
+required_strength = 4
+metadata/_custom_type_script = "uid://h7cwu8wnif38"
+
+[sub_resource type="Resource" id="Resource_qm8gl"]
+script = ExtResource("2_kxxcu")
+atlas_terrain_index = 8
+block_id = 13
+display_name = "Diamond"
+terrain_id = 13
+hardness = 16
+required_strength = 5
+metadata/_custom_type_script = "uid://h7cwu8wnif38"
+
+[sub_resource type="Resource" id="Resource_4bfcm"]
+script = ExtResource("2_kxxcu")
+atlas_terrain_index = 9
+block_id = 14
+display_name = "Deep Stuffing"
+terrain_id = 14
+required_strength = 4
+metadata/_custom_type_script = "uid://h7cwu8wnif38"
+
 [node name="BlockDatabase" type="Node" unique_id=1572723925]
 script = ExtResource("1_v6wp7")
-blocks = Array[ExtResource("2_kxxcu")]([SubResource("Resource_6ojj1"), SubResource("Resource_8nn5r"), SubResource("Resource_ui66f"), SubResource("Resource_xqib3"), SubResource("Resource_32n22"), SubResource("Resource_p6eds"), SubResource("Resource_oofu8"), SubResource("Resource_iwh46"), SubResource("Resource_n0470"), SubResource("Resource_32fc5"), SubResource("Resource_yx65c")])
+blocks = Array[ExtResource("2_kxxcu")]([SubResource("Resource_6ojj1"), SubResource("Resource_8nn5r"), SubResource("Resource_ui66f"), SubResource("Resource_xqib3"), SubResource("Resource_32n22"), SubResource("Resource_p6eds"), SubResource("Resource_oofu8"), SubResource("Resource_iwh46"), SubResource("Resource_n0470"), SubResource("Resource_32fc5"), SubResource("Resource_yx65c"), SubResource("Resource_ou2gv"), SubResource("Resource_bordp"), SubResource("Resource_qm8gl"), SubResource("Resource_4bfcm")])

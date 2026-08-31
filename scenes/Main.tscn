@@ -3,17 +3,17 @@
 [ext_resource type="Script" uid="uid://cc5arcpxxbg8x" path="res://scripts/Main.gd" id="1_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://ba4y285bqj0ui" path="res://scenes/level/Level.tscn" id="2_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://dw8qkxkdhxep7" path="res://scenes/player/Player.tscn" id="2_rvslj"]
-[ext_resource type="Material" uid="uid://8xkndevfkt7s" path="res://assets/materials/UnshadedMaterial.tres" id="4_vcsgt"]
 [ext_resource type="AudioStream" uid="uid://16yktjp50fwn" path="res://assets/sounds/music/CavesOfCould.wav" id="4_wp0k4"]
+[ext_resource type="Script" uid="uid://bxtr2t12gu527" path="res://scripts/ui/CanvasLayerHider.gd" id="5_dg70y"]
 [ext_resource type="Texture2D" uid="uid://brnvqkom0svjv" path="res://assets/ui/main_bg.png" id="5_lhr70"]
 [ext_resource type="Texture2D" uid="uid://bikasj8gy6jmy" path="res://assets/ui/main_play.png" id="6_c01mt"]
 [ext_resource type="Texture2D" uid="uid://c53bxv8h1qlg1" path="res://assets/ui/main_play-press.png" id="7_nxtc6"]
 [ext_resource type="Texture2D" uid="uid://2an0wuakfbm1" path="res://assets/ui/Title.png" id="8_jlsqs"]
 [ext_resource type="LabelSettings" uid="uid://kpj4f245y1v6" path="res://assets/labels/MenuLabelSettings.tres" id="8_lhr70"]
 [ext_resource type="Script" uid="uid://cq10g2fnfrkmf" path="res://scripts/ui/PlayButton.gd" id="8_wp0k4"]
-[ext_resource type="Script" uid="uid://bgrobf4mavkho" path="res://scripts/ui/Hover.gd" id="12_bjd11"]
 [ext_resource type="Shader" uid="uid://5hogyrnpyfc3" path="res://scripts/shaders/Vignette.gdshader" id="13_qmy6f"]
 [ext_resource type="Texture2D" uid="uid://1m67vyv7siox" path="res://assets/ui/StartOptions.png" id="14_mwfav"]
+[ext_resource type="Shader" uid="uid://c82x57jo7befi" path="res://scenes/Wiggle.gdshader" id="14_pnhog"]
 [ext_resource type="LabelSettings" uid="uid://2lchjb3vtapf" path="res://assets/labels/StartLabelSettings.tres" id="15_3p2gp"]
 [ext_resource type="Texture2D" uid="uid://3gwm6kc7l0s" path="res://assets/player/PlayerRecolourable.png" id="16_cvmbd"]
 [ext_resource type="Script" uid="uid://b8dd8kca0y16v" path="res://scripts/ui/PlayerPreviewer.gd" id="17_ft6cd"]
@@ -24,10 +24,14 @@
 [ext_resource type="Texture2D" uid="uid://dnribgdmwgxie" path="res://assets/ui/Darkness.png" id="22_xa025"]
 [ext_resource type="Texture2D" uid="uid://dvcwwtstrhn57" path="res://assets/player/SelectionBox12x12.png" id="23_ebg2g"]
 [ext_resource type="Texture2D" uid="uid://b2ibw5226ajqs" path="res://assets/above/MenuParticles.png" id="24_2ofn6"]
-[ext_resource type="Script" uid="uid://bgkkdjmqq8fr7" path="res://scripts/MusicPlayer.gd" id="25_xa025"]
+[ext_resource type="Script" uid="uid://bgkkdjmqq8fr7" path="res://scripts/ui/MusicPlayer.gd" id="25_xa025"]
 [ext_resource type="AudioStream" uid="uid://b1nxqi52jla6h" path="res://assets/sounds/music/Suspense.wav" id="26_ma7h6"]
+[ext_resource type="Texture2D" uid="uid://cck18rged6uil" path="res://assets/ui/Logo.png" id="26_v0vrg"]
+[ext_resource type="LabelSettings" uid="uid://f2ospt7yna68" path="res://assets/labels/CreditLabelSettings.tres" id="27_dg70y"]
 [ext_resource type="AudioStream" uid="uid://daeromqsworyc" path="res://assets/sounds/music/Exploration.wav" id="27_e2s0e"]
 [ext_resource type="AudioStream" uid="uid://dphnmkvlo70f2" path="res://assets/sounds/music/Hole in the Wall.wav" id="28_gsxep"]
+[ext_resource type="Script" uid="uid://b24g885fk7e4m" path="res://scripts/ui/CutsceneManager.gd" id="29_e2s0e"]
+[ext_resource type="Script" uid="uid://dls7cmk77rfho" path="res://scenes/EnviromentSetter.gd" id="33_pnhog"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qmy6f"]
 shader = ExtResource("13_qmy6f")
@@ -73,6 +77,21 @@ _data = {
 &"fade_vignette": SubResource("Animation_mwfav")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hq6as"]
+shader = ExtResource("14_pnhog")
+shader_parameter/speed = 2.0
+shader_parameter/frequency = 2.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2c4at"]
+shader = ExtResource("14_pnhog")
+shader_parameter/speed = 4.065
+shader_parameter/frequency = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dg70y"]
+shader = ExtResource("14_pnhog")
+shader_parameter/speed = 2.0
+shader_parameter/frequency = 5.0
+
 [sub_resource type="Curve" id="Curve_fs0b5"]
 _limits = [0.0, 1.0, 0.0, 3.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1.5457317, 0), 0.0, 0.0, 0, 0]
@@ -81,6 +100,13 @@ point_count = 2
 [sub_resource type="CurveTexture" id="CurveTexture_36rkl"]
 texture_mode = 1
 curve = SubResource("Curve_fs0b5")
+
+[sub_resource type="Gradient" id="Gradient_dg70y"]
+offsets = PackedFloat32Array(0, 0.74834436, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dg70y"]
+gradient = SubResource("Gradient_dg70y")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ebg2g"]
 particle_flag_disable_z = true
@@ -92,6 +118,7 @@ spread = 113.914
 gravity = Vector3(0, -98, 0)
 scale_min = 8.0
 scale_max = 8.0
+color_ramp = SubResource("GradientTexture1D_dg70y")
 alpha_curve = SubResource("CurveTexture_36rkl")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfivy"]
@@ -159,6 +186,28 @@ PopupMenu/styles/separator = SubResource("StyleBoxEmpty_v0vrg")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8cp6k"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pnhog"]
+shader = ExtResource("14_pnhog")
+shader_parameter/speed = 2.0
+shader_parameter/frequency = 3.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g6wdg"]
+shader = ExtResource("14_pnhog")
+shader_parameter/speed = 1.9
+shader_parameter/frequency = 2.0
+
+[sub_resource type="Environment" id="Environment_dg70y"]
+background_mode = 3
+tonemap_white = 11.45
+glow_normalized = true
+glow_intensity = 3.0
+glow_strength = 0.39
+glow_bloom = 1.0
+fog_mode = 1
+fog_density = 0.115
+fog_depth_begin = 1.0
+volumetric_fog_density = 0.6436
+
 [node name="Main" type="Node2D" unique_id=791347418 node_paths=PackedStringArray("player", "level")]
 script = ExtResource("1_0bbpv")
 player = NodePath("Player")
@@ -176,6 +225,7 @@ level = NodePath("../Level")
 [node name="MainMenu" type="Node2D" parent="." unique_id=815849707]
 
 [node name="CameraMainMenu" type="Camera2D" parent="MainMenu" unique_id=2085208049]
+ignore_rotation = false
 zoom = Vector2(4, 4)
 
 [node name="MainMenuTheme" type="AudioStreamPlayer2D" parent="MainMenu" unique_id=843395466]
@@ -184,6 +234,7 @@ stream = ExtResource("4_wp0k4")
 autoplay = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="MainMenu" unique_id=30027952]
+script = ExtResource("5_dg70y")
 
 [node name="Control" type="Control" parent="MainMenu/CanvasLayer" unique_id=152853203]
 layout_mode = 3
@@ -195,7 +246,6 @@ offset_bottom = -190.0
 scale = Vector2(4, 4)
 
 [node name="Background" type="TextureRect" parent="MainMenu/CanvasLayer/Control" unique_id=200606901]
-material = ExtResource("4_vcsgt")
 layout_mode = 0
 offset_left = 11.0
 offset_top = 57.0
@@ -216,8 +266,22 @@ libraries/ = SubResource("AnimationLibrary_3p2gp")
 autoplay = &"fade_vignette"
 speed_scale = 2.0
 
+[node name="CreditsLbl" type="Label" parent="MainMenu/CanvasLayer/Control" unique_id=437343778]
+modulate = Color(1, 1, 1, 0.18431373)
+material = SubResource("ShaderMaterial_hq6as")
+layout_mode = 0
+offset_left = 33.0
+offset_top = 297.25
+offset_right = 145.0
+offset_bottom = 326.25
+text = "CREDITS:
+Tom Patton-Low (Code)
+Harry Patton-Low (Art)"
+label_settings = ExtResource("27_dg70y")
+horizontal_alignment = 1
+
 [node name="PlayBtn" type="TextureButton" parent="MainMenu/CanvasLayer/Control" unique_id=318958663]
-material = ExtResource("4_vcsgt")
+material = SubResource("ShaderMaterial_2c4at")
 layout_mode = 0
 offset_left = 199.0
 offset_top = 206.25
@@ -242,7 +306,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Title" type="TextureRect" parent="MainMenu/CanvasLayer/Control" unique_id=1117939590]
-material = ExtResource("4_vcsgt")
+material = SubResource("ShaderMaterial_dg70y")
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 6.762
@@ -255,11 +319,10 @@ offset_right = 128.51999
 offset_bottom = 54.519997
 pivot_offset = Vector2(128.5, 54.5)
 texture = ExtResource("8_jlsqs")
-script = ExtResource("12_bjd11")
 
 [node name="UpwardsParticles" type="GPUParticles2D" parent="MainMenu/CanvasLayer/Control" unique_id=1433568083]
 modulate = Color(0.5014065, 0.50140655, 0.50140643, 0.36078432)
-position = Vector2(258.5, 326.25)
+position = Vector2(259.5, 335)
 scale = Vector2(1.2249552, 0.25)
 amount = 20
 texture = ExtResource("24_2ofn6")
@@ -537,6 +600,7 @@ popup/item_1/text = "NO"
 popup/item_1/id = 1
 
 [node name="StartButton" type="Button" parent="MainMenu/CanvasLayer/Control/StartMenu" unique_id=1330418876]
+material = SubResource("ShaderMaterial_pnhog")
 layout_mode = 0
 offset_left = 226.25
 offset_top = 276.25
@@ -548,9 +612,19 @@ theme_override_fonts/font = ExtResource("18_bb450")
 theme_override_font_sizes/font_size = 14
 text = "LET'S START"
 
+[node name="LogoRect" type="TextureRect" parent="MainMenu/CanvasLayer/Control" unique_id=1348731]
+material = SubResource("ShaderMaterial_g6wdg")
+layout_mode = 0
+offset_left = 464.0
+offset_top = 305.0
+offset_right = 603.75
+offset_bottom = 331.0
+texture = ExtResource("26_v0vrg")
+stretch_mode = 2
+
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=778092633 node_paths=PackedStringArray("wait_timer")]
 script = ExtResource("25_xa025")
-playlist = Array[AudioStream]([ExtResource("4_wp0k4"), ExtResource("26_ma7h6"), ExtResource("27_e2s0e"), ExtResource("28_gsxep")])
+playlist = Array[AudioStream]([ExtResource("26_ma7h6"), ExtResource("27_e2s0e"), ExtResource("28_gsxep")])
 max_delay = 5.0
 wait_timer = NodePath("Timer")
 metadata/_custom_type_script = "uid://bgkkdjmqq8fr7"
@@ -558,5 +632,19 @@ metadata/_custom_type_script = "uid://bgkkdjmqq8fr7"
 [node name="Timer" type="Timer" parent="MusicPlayer" unique_id=257314391]
 one_shot = true
 
+[node name="CutsceneManager" type="Node" parent="." unique_id=1348951401 node_paths=PackedStringArray("camera")]
+script = ExtResource("29_e2s0e")
+camera = NodePath("../MainMenu/CameraMainMenu")
+metadata/_custom_type_script = "uid://b24g885fk7e4m"
+
+[node name="Timer" type="Timer" parent="CutsceneManager" unique_id=1469941348]
+one_shot = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1039159192]
+environment = SubResource("Environment_dg70y")
+script = ExtResource("33_pnhog")
+
 [connection signal="pressed" from="MainMenu/CanvasLayer/Control/PlayBtn" to="MainMenu/CanvasLayer/Control/PlayBtn" method="_on_pressed"]
 [connection signal="pressed" from="MainMenu/CanvasLayer/Control/StartMenu/StartButton" to="MainMenu/CanvasLayer/Control/PlayBtn" method="_confirm_pressed"]
+[connection signal="cutscene_ended" from="CutsceneManager" to="MainMenu/CanvasLayer" method="_cutscene_ended"]
+[connection signal="cutscene_started" from="CutsceneManager" to="MainMenu/CanvasLayer" method="_cutscene_started"]

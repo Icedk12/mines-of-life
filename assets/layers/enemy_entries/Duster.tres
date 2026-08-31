@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EnemySpawnEntry" format=3 uid="uid://bmi7v3kinv4u7"]
+
+[ext_resource type="PackedScene" uid="uid://soc8s8mwupai" path="res://enemy_scenes/Enemy_Duster.tscn" id="1_sva8r"]
+[ext_resource type="Script" uid="uid://bqbwgkiq558fa" path="res://scripts/types/EnemySpawnEntry.gd" id="2_luexe"]
+
+[resource]
+script = ExtResource("2_luexe")
+enemy_scene = ExtResource("1_sva8r")
+weight = 0.8
+max_group_size = 2
+metadata/_custom_type_script = "uid://bqbwgkiq558fa"

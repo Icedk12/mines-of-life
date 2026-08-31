@@ -1,10 +1,10 @@
 class_name CharacterComponent extends Component
 
-@export var character : Player ## [OPTIONAL]
+@export var character : CharacterBody2D ## [OPTIONAL]
 
 func _ready() -> void:
 	if character == null:
-		character = get_parent() as Player
+		character = get_parent() as CharacterBody2D
 
 func _is_character_null() -> bool:
 	return character == null

@@ -1,0 +1,7 @@
+[gd_scene format=4 uid="uid://d6dmrmokxowe"]
+
+[ext_resource type="TileSet" uid="uid://d032x3h6ws4lp" path="res://assets/level/CouchTileset.tres" id="1_e5rpt"]
+
+[node name="Struct_GoldRing2" type="TileMapLayer" unique_id=2007801309]
+tile_map_data = PackedByteArray("AAACAP//AAABACAAAAABAP//AAAGACEAAAADAAAAAAABACAAAAACAAAAAAAAACEAAAADAAIAAAAGACAAAAADAAEAAAACACEAAAD//wMAAAAIACEAAAD//wIAAAAIACAAAAD+/wMAAAAHACEAAAD+/wIAAAAHACAAAAD9/wAAAAAGACAAAAD9////AAAFACEAAAADAAUAAAAFACAAAAACAAUAAAACACAAAAABAAUAAAAGACEAAAA=")
+tile_set = ExtResource("1_e5rpt")

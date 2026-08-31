@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://st2fd3vmctdi"]
+
+[ext_resource type="Script" uid="uid://cybuen7tbc70s" path="res://scripts/types/Cutscene.gd" id="1_nkm35"]
+[ext_resource type="Script" uid="uid://b13sc1200k75w" path="res://scripts/types/KeyframeMarker.gd" id="2_r4wqn"]
+
+[node name="Intro" type="Node" unique_id=1480877104]
+script = ExtResource("1_nkm35")
+
+[node name="KeyframeMarker" type="Marker2D" parent="." unique_id=1378926649]
+script = ExtResource("2_r4wqn")
+metadata/_custom_type_script = "uid://b13sc1200k75w"

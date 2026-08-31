@@ -5,6 +5,8 @@
 [ext_resource type="LabelSettings" uid="uid://deqse088eb6bt" path="res://assets/labels/FPSLabelSettings.tres" id="1_xn0hd"]
 [ext_resource type="Script" uid="uid://crlam6hyxcj0" path="res://scripts/ui/FPSLabel.gd" id="3_wkpe3"]
 [ext_resource type="Script" uid="uid://dg65yfjw86ln4" path="res://scripts/ui/InventoryUI.gd" id="5_34not"]
+[ext_resource type="Script" uid="uid://v6k0bm4gxffr" path="res://scripts/ui/SeedLabel.gd" id="5_078xo"]
+[ext_resource type="Script" uid="uid://nb32mlq6yf0y" path="res://scripts/ui/CoordsPlayer.gd" id="6_3r278"]
 [ext_resource type="Texture2D" uid="uid://bdq1nt614x1e4" path="res://assets/ui/Backpack.png" id="6_4y8sh"]
 [ext_resource type="Texture2D" uid="uid://dvcwwtstrhn57" path="res://assets/player/SelectionBox12x12.png" id="6_rtmgd"]
 [ext_resource type="Texture2D" uid="uid://tfjm17qm7qyy" path="res://assets/ui/HotBar.png" id="6_up3k2"]
@@ -14,6 +16,12 @@
 [ext_resource type="Script" uid="uid://bspo3badeq4nj" path="res://scripts/ui/CraftingUI.gd" id="11_81k2o"]
 [ext_resource type="LabelSettings" uid="uid://kpj4f245y1v6" path="res://assets/labels/MenuLabelSettings.tres" id="12_osq45"]
 [ext_resource type="PackedScene" uid="uid://cqosbkjmnpojj" path="res://scenes/ui/EquipmentSlot.tscn" id="14_4y8sh"]
+[ext_resource type="Script" uid="uid://bw3ugnosb0w1w" path="res://scripts/ui/SettingParser.gd" id="15_up3k2"]
+[ext_resource type="FontFile" uid="uid://b6h6ryjq6gnbv" path="res://assets/fonts/Ultracouch.ttf" id="16_yut7p"]
+[ext_resource type="Texture2D" uid="uid://d13a1rdsnpn3d" path="res://assets/ui/HealthBackground.png" id="19_xyrw1"]
+[ext_resource type="Texture2D" uid="uid://bdt711agc7fei" path="res://assets/ui/HealthPip.png" id="20_uy2eo"]
+[ext_resource type="Texture2D" uid="uid://cij5od2a5pfb1" path="res://assets/ui/XPBackground.png" id="21_6fm6b"]
+[ext_resource type="Texture2D" uid="uid://bjt3pgsk3snde" path="res://assets/ui/XPPip.png" id="22_6o14p"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uy2eo"]
 
@@ -38,7 +46,7 @@ VScrollBar/styles/grabber_highlight = SubResource("StyleBoxEmpty_3r278")
 VScrollBar/styles/grabber_pressed = SubResource("StyleBoxEmpty_xyrw1")
 VScrollBar/styles/scroll = SubResource("StyleBoxFlat_omutp")
 
-[node name="PlayerGUI" type="Control" unique_id=1953480870 node_paths=PackedStringArray("inventory_ui", "crafting_ui")]
+[node name="PlayerGUI" type="Control" unique_id=1953480870 node_paths=PackedStringArray("inventory_ui", "crafting_ui", "xp_bar", "health_bar")]
 material = ExtResource("1_o75iu")
 layout_mode = 3
 anchors_preset = 15
@@ -50,17 +58,41 @@ mouse_filter = 1
 script = ExtResource("1_34not")
 inventory_ui = NodePath("InventoryUI")
 crafting_ui = NodePath("CraftingUI")
+xp_bar = NodePath("XPBar")
+health_bar = NodePath("HealthBar")
 
 [node name="FPS_Label" type="Label" parent="." unique_id=165018761]
 material = ExtResource("1_o75iu")
 layout_mode = 0
-offset_left = 7.0
-offset_top = 6.0
-offset_right = 386.0
-offset_bottom = 77.0
+offset_left = 29.0
+offset_top = 141.0
+offset_right = 132.0
+offset_bottom = 162.0
 text = "FPS: 60"
 label_settings = ExtResource("1_xn0hd")
 script = ExtResource("3_wkpe3")
+
+[node name="SEED_Label" type="Label" parent="." unique_id=1884305094]
+material = ExtResource("1_o75iu")
+layout_mode = 0
+offset_left = 28.0
+offset_top = 164.0
+offset_right = 131.0
+offset_bottom = 185.0
+text = "SEED: 0"
+label_settings = ExtResource("1_xn0hd")
+script = ExtResource("5_078xo")
+
+[node name="COORDS_Label" type="Label" parent="." unique_id=60457504]
+material = ExtResource("1_o75iu")
+layout_mode = 0
+offset_left = 29.0
+offset_top = 187.0
+offset_right = 209.0
+offset_bottom = 208.0
+text = "COORDINATES: (0,0)"
+label_settings = ExtResource("1_xn0hd")
+script = ExtResource("6_3r278")
 
 [node name="InventoryUI" type="Node" parent="." unique_id=407773419 node_paths=PackedStringArray("hotbar_grid", "inventory_grid", "selection_rect", "inventory_panel", "equipment_slots")]
 script = ExtResource("5_34not")
@@ -73,15 +105,15 @@ inventory_trans = 5
 equipment_slots = [NodePath("../InventoryPanel/HelmetSlot"), NodePath("../InventoryPanel/ArmourSlot"), NodePath("../InventoryPanel/ToolSlot"), NodePath("../InventoryPanel/WeaponSlot")]
 metadata/_custom_type_script = "uid://dg65yfjw86ln4"
 
-[node name="HotbarTemporary" type="Panel" parent="." unique_id=517985495]
+[node name="HotbarSprites" type="Panel" parent="." unique_id=517985495]
 layout_mode = 0
 offset_left = 5.0
-offset_top = 54.0
+offset_top = 45.0
 offset_right = 485.0
-offset_bottom = 123.0
+offset_bottom = 114.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_uy2eo")
 
-[node name="TextureRect" type="TextureRect" parent="HotbarTemporary" unique_id=1321852212]
+[node name="TextureRect" type="TextureRect" parent="HotbarSprites" unique_id=1321852212]
 layout_mode = 0
 offset_left = -4.0
 offset_top = -46.0
@@ -228,9 +260,9 @@ custom_minimum_size = Vector2(100, 100)
 custom_maximum_size = Vector2(-1, 100)
 layout_mode = 0
 offset_left = 44.0
-offset_top = 55.0
+offset_top = 46.0
 offset_right = 768.0
-offset_bottom = 155.0
+offset_bottom = 146.0
 theme_override_constants/h_separation = 8
 columns = 7
 
@@ -242,9 +274,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -916.0
-offset_top = -1025.0
+offset_top = -1034.0
 offset_right = -883.5
-offset_bottom = -992.5
+offset_bottom = -1001.5
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(2, 2)
@@ -267,3 +299,335 @@ offset_right = 1311.0
 offset_bottom = 1166.2084
 label_settings = ExtResource("12_osq45")
 autowrap_mode = 2
+
+[node name="Settings" type="Panel" parent="." unique_id=1130868835]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -461.0
+offset_top = 582.0
+offset_right = 461.0
+offset_bottom = 1188.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingScrollContainer" type="ScrollContainer" parent="Settings" unique_id=2002243124]
+custom_maximum_size = Vector2(-1, 608)
+layout_mode = 0
+offset_right = 922.0
+offset_bottom = 606.0
+horizontal_scroll_mode = 0
+
+[node name="Settings" type="GridContainer" parent="Settings/SettingScrollContainer" unique_id=1325540472 node_paths=PackedStringArray("confbtn")]
+custom_minimum_size = Vector2(922, 606)
+layout_mode = 2
+script = ExtResource("15_up3k2")
+confbtn = NodePath("../../ConfirmBtn")
+
+[node name="HeadingAse" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=942482314]
+custom_minimum_size = Vector2(922, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/SettingScrollContainer/Settings/HeadingAse" unique_id=1827575257]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 500.0
+offset_bottom = 70.0
+text = "CHUNK SETTINGS"
+label_settings = ExtResource("7_udjm8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingAse" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=1086977499]
+custom_minimum_size = Vector2(922, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/SettingScrollContainer/Settings/SettingAse" unique_id=1608703835]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 500.0
+offset_bottom = 70.0
+text = "Chunk Render Distance:"
+label_settings = ExtResource("7_udjm8")
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="Settings/SettingScrollContainer/Settings/SettingAse" unique_id=1127270287]
+layout_mode = 0
+offset_left = 406.0
+offset_top = 28.0
+offset_right = 902.0
+offset_bottom = 44.0
+min_value = 1.0
+max_value = 8.0
+value = 3.0
+scrollable = false
+tick_count = 8
+ticks_on_borders = true
+
+[node name="SettingAse3" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=68721455]
+custom_minimum_size = Vector2(922, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/SettingScrollContainer/Settings/SettingAse3" unique_id=962895465]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 500.0
+offset_bottom = 70.0
+text = "Chunk Unload Buffer:"
+label_settings = ExtResource("7_udjm8")
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="Settings/SettingScrollContainer/Settings/SettingAse3" unique_id=670852261]
+layout_mode = 0
+offset_left = 406.0
+offset_top = 28.0
+offset_right = 902.0
+offset_bottom = 44.0
+min_value = 1.0
+max_value = 6.0
+value = 2.0
+tick_count = 6
+ticks_on_borders = true
+
+[node name="SettingAse4" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=2039524035]
+custom_minimum_size = Vector2(922, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/SettingScrollContainer/Settings/SettingAse4" unique_id=83943535]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 500.0
+offset_bottom = 70.0
+text = "Chunk Unload per frame:"
+label_settings = ExtResource("7_udjm8")
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="Settings/SettingScrollContainer/Settings/SettingAse4" unique_id=277813633]
+layout_mode = 0
+offset_left = 406.0
+offset_top = 28.0
+offset_right = 902.0
+offset_bottom = 44.0
+min_value = 1.0
+max_value = 8.0
+value = 1.0
+tick_count = 8
+ticks_on_borders = true
+
+[node name="HeadingAse2" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=653537156]
+custom_minimum_size = Vector2(922, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/SettingScrollContainer/Settings/HeadingAse2" unique_id=1436585041]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 500.0
+offset_bottom = 70.0
+text = "PERFORMANCE SETTINGS"
+label_settings = ExtResource("7_udjm8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingAse5" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=34540314]
+custom_minimum_size = Vector2(922, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/SettingScrollContainer/Settings/SettingAse5" unique_id=549720767]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 500.0
+offset_bottom = 70.0
+text = "Tiles per frame:"
+label_settings = ExtResource("7_udjm8")
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="Settings/SettingScrollContainer/Settings/SettingAse5" unique_id=1959473742]
+layout_mode = 0
+offset_left = 406.0
+offset_top = 28.0
+offset_right = 902.0
+offset_bottom = 44.0
+min_value = 16.0
+max_value = 256.0
+step = 16.0
+value = 128.0
+tick_count = 16
+ticks_on_borders = true
+
+[node name="SettingAse6" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=374911147]
+custom_minimum_size = Vector2(922, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/SettingScrollContainer/Settings/SettingAse6" unique_id=1168381573]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 500.0
+offset_bottom = 70.0
+text = "Ores per frame:"
+label_settings = ExtResource("7_udjm8")
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="Settings/SettingScrollContainer/Settings/SettingAse6" unique_id=1852020918]
+layout_mode = 0
+offset_left = 406.0
+offset_top = 28.0
+offset_right = 902.0
+offset_bottom = 44.0
+min_value = 1.0
+max_value = 16.0
+value = 4.0
+tick_count = 16
+ticks_on_borders = true
+
+[node name="SettingAse7" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=877905711]
+custom_minimum_size = Vector2(922, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/SettingScrollContainer/Settings/SettingAse7" unique_id=2028424305]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 500.0
+offset_bottom = 70.0
+text = "Lights per frame:"
+label_settings = ExtResource("7_udjm8")
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="Settings/SettingScrollContainer/Settings/SettingAse7" unique_id=833579613]
+layout_mode = 0
+offset_left = 406.0
+offset_top = 28.0
+offset_right = 902.0
+offset_bottom = 44.0
+min_value = 16.0
+max_value = 256.0
+step = 16.0
+value = 128.0
+tick_count = 16
+ticks_on_borders = true
+
+[node name="SettingAse8" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=919212641]
+custom_minimum_size = Vector2(922, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/SettingScrollContainer/Settings/SettingAse8" unique_id=620053843]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 500.0
+offset_bottom = 70.0
+text = "Unload Tiles per frame:"
+label_settings = ExtResource("7_udjm8")
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="Settings/SettingScrollContainer/Settings/SettingAse8" unique_id=1056177197]
+layout_mode = 0
+offset_left = 406.0
+offset_top = 28.0
+offset_right = 902.0
+offset_bottom = 44.0
+min_value = 16.0
+max_value = 256.0
+step = 16.0
+value = 128.0
+tick_count = 16
+ticks_on_borders = true
+
+[node name="HeadingAse3" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=27162254]
+custom_minimum_size = Vector2(922, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/SettingScrollContainer/Settings/HeadingAse3" unique_id=775820895]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 500.0
+offset_bottom = 70.0
+text = "VISUALS"
+label_settings = ExtResource("7_udjm8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingAse9" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=1251300555]
+custom_minimum_size = Vector2(922, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/SettingScrollContainer/Settings/SettingAse9" unique_id=1310175402]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 500.0
+offset_bottom = 70.0
+text = "Bloom:"
+label_settings = ExtResource("7_udjm8")
+vertical_alignment = 1
+
+[node name="CheckButton" type="CheckButton" parent="Settings/SettingScrollContainer/Settings/SettingAse9" unique_id=194817301]
+layout_mode = 0
+offset_left = 215.0
+offset_top = 26.0
+offset_right = 259.0
+offset_bottom = 50.0
+
+[node name="SettingAse11" type="Panel" parent="Settings/SettingScrollContainer/Settings" unique_id=334329685]
+custom_minimum_size = Vector2(922, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/SettingScrollContainer/Settings/SettingAse11" unique_id=299967352]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 500.0
+offset_bottom = 70.0
+text = "Bloom Intensity:"
+label_settings = ExtResource("7_udjm8")
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="Settings/SettingScrollContainer/Settings/SettingAse11" unique_id=2142314245]
+layout_mode = 0
+offset_left = 406.0
+offset_top = 28.0
+offset_right = 902.0
+offset_bottom = 44.0
+max_value = 10.0
+step = 0.5
+value = 3.0
+tick_count = 16
+ticks_on_borders = true
+
+[node name="ConfirmBtn" type="Button" parent="Settings" unique_id=1827745195]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -95.5
+offset_top = -41.0
+offset_right = 95.5
+offset_bottom = -3.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("16_yut7p")
+theme_override_font_sizes/font_size = 31
+text = "CONFIRM"
+
+[node name="HealthBar" type="TextureProgressBar" parent="." unique_id=1570466905]
+layout_mode = 0
+offset_left = 1065.0
+offset_top = 36.0
+offset_right = 1921.0
+offset_bottom = 133.0
+max_value = 10.0
+step = 0.01
+fill_mode = 1
+texture_under = ExtResource("19_xyrw1")
+texture_progress = ExtResource("20_uy2eo")
+
+[node name="XPBar" type="TextureProgressBar" parent="." unique_id=1819048892]
+layout_mode = 0
+offset_left = 1065.0
+offset_top = 139.0
+offset_right = 1921.0
+offset_bottom = 158.0
+max_value = 10.0
+step = 0.01
+fill_mode = 1
+texture_under = ExtResource("21_6fm6b")
+texture_progress = ExtResource("22_6o14p")

@@ -1,0 +1,119 @@
+[gd_scene format=3 uid="uid://ba4y285bqj0ui"]
+
+[ext_resource type="TileSet" uid="uid://d032x3h6ws4lp" path="res://assets/level/CouchTileset.tres" id="1_751o5"]
+[ext_resource type="Script" uid="uid://b5kh7fpv0ui22" path="res://scripts/level/Level.gd" id="1_l1x8v"]
+[ext_resource type="Script" uid="uid://bmmky33tl7eb0" path="res://scripts/level/LevelGenerator.gd" id="2_cne4c"]
+[ext_resource type="Script" uid="uid://c1mnta77cea82" path="res://scripts/level/LevelMap.gd" id="3_5l2jw"]
+[ext_resource type="PackedScene" uid="uid://cqj3bvrl7lun5" path="res://scenes/light/TileLight.tscn" id="4_ti4pp"]
+[ext_resource type="Script" uid="uid://71hg30844ma2" path="res://scripts/types/Structure.gd" id="6_e4y3p"]
+[ext_resource type="PackedScene" uid="uid://dlb2r30dsafii" path="res://scenes/level/structures/Struct_PennyForge.tscn" id="6_reyld"]
+[ext_resource type="PackedScene" uid="uid://b06vvdvipp1ds" path="res://scenes/level/structures/Struct_Template.tscn" id="8_4nqmc"]
+[ext_resource type="PackedScene" uid="uid://dja43ig86g12g" path="res://scenes/level/structures/Struct_Maze.tscn" id="9_f6d01"]
+[ext_resource type="PackedScene" uid="uid://bw7ujdar7uj5v" path="res://scenes/level/structures/Struct_RichCave.tscn" id="10_8onpu"]
+[ext_resource type="PackedScene" uid="uid://bcunkht75sod5" path="res://scenes/level/structures/Struct_Ruins1.tscn" id="12_0gguh"]
+[ext_resource type="PackedScene" uid="uid://co6qc3t56354p" path="res://scenes/level/structures/Struct_SmallRuins1.tscn" id="13_8wbt5"]
+[ext_resource type="PackedScene" uid="uid://cj3rw2j8amd2m" path="res://scenes/level/structures/Struct_SmallRuins2.tscn" id="14_p0gqr"]
+[ext_resource type="PackedScene" uid="uid://bc3iy11fycqq" path="res://scenes/level/structures/Struct_Dih.tscn" id="15_8wbt5"]
+[ext_resource type="PackedScene" uid="uid://csfkk8prwx2hb" path="res://scenes/level/structures/Struct_Maze2.tscn" id="16_p0gqr"]
+[ext_resource type="PackedScene" uid="uid://cgnfsm5qs58rd" path="res://scenes/level/structures/Struct_GoldRing.tscn" id="17_7jckg"]
+[ext_resource type="PackedScene" uid="uid://d6dmrmokxowe" path="res://scenes/level/structures/Struct_GoldRing2.tscn" id="18_y8nfn"]
+
+[sub_resource type="Resource" id="Resource_ti4pp"]
+script = ExtResource("6_e4y3p")
+scene = ExtResource("6_reyld")
+spawn_chance = 0.015
+metadata/_custom_type_script = "uid://71hg30844ma2"
+
+[sub_resource type="Resource" id="Resource_e4y3p"]
+script = ExtResource("6_e4y3p")
+scene = ExtResource("8_4nqmc")
+spawn_chance = 0.001
+metadata/_custom_type_script = "uid://71hg30844ma2"
+
+[sub_resource type="Resource" id="Resource_gsxep"]
+script = ExtResource("6_e4y3p")
+scene = ExtResource("9_f6d01")
+spawn_chance = 0.015
+metadata/_custom_type_script = "uid://71hg30844ma2"
+
+[sub_resource type="Resource" id="Resource_744pl"]
+script = ExtResource("6_e4y3p")
+scene = ExtResource("10_8onpu")
+spawn_chance = 0.01
+metadata/_custom_type_script = "uid://71hg30844ma2"
+
+[sub_resource type="Resource" id="Resource_xqw53"]
+script = ExtResource("6_e4y3p")
+scene = ExtResource("12_0gguh")
+spawn_chance = 0.005
+metadata/_custom_type_script = "uid://71hg30844ma2"
+
+[sub_resource type="Resource" id="Resource_83ryt"]
+script = ExtResource("6_e4y3p")
+scene = ExtResource("13_8wbt5")
+spawn_chance = 0.009
+metadata/_custom_type_script = "uid://71hg30844ma2"
+
+[sub_resource type="Resource" id="Resource_c630t"]
+script = ExtResource("6_e4y3p")
+scene = ExtResource("14_p0gqr")
+spawn_chance = 0.01
+metadata/_custom_type_script = "uid://71hg30844ma2"
+
+[sub_resource type="Resource" id="Resource_urj03"]
+script = ExtResource("6_e4y3p")
+scene = ExtResource("15_8wbt5")
+spawn_chance = 0.001
+metadata/_custom_type_script = "uid://71hg30844ma2"
+
+[sub_resource type="Resource" id="Resource_jhn0l"]
+script = ExtResource("6_e4y3p")
+scene = ExtResource("16_p0gqr")
+spawn_chance = 0.008
+metadata/_custom_type_script = "uid://71hg30844ma2"
+
+[sub_resource type="Resource" id="Resource_y8nfn"]
+script = ExtResource("6_e4y3p")
+scene = ExtResource("17_7jckg")
+spawn_chance = 0.001
+min_spacing = 100
+metadata/_custom_type_script = "uid://71hg30844ma2"
+
+[sub_resource type="Resource" id="Resource_76sct"]
+script = ExtResource("6_e4y3p")
+scene = ExtResource("18_y8nfn")
+spawn_chance = 0.002
+min_spacing = 50
+metadata/_custom_type_script = "uid://71hg30844ma2"
+
+[node name="Level" type="Node2D" unique_id=131454242 node_paths=PackedStringArray("level_generator", "_layer1")]
+script = ExtResource("1_l1x8v")
+level_generator = NodePath("LevelGenerator")
+_layer1 = NodePath("Layer1")
+
+[node name="Layer1" type="TileMapLayer" parent="." unique_id=1300922217]
+tile_set = ExtResource("1_751o5")
+script = ExtResource("3_5l2jw")
+light_scene = ExtResource("4_ti4pp")
+
+[node name="LevelGenerator" type="Node" parent="." unique_id=877058791 node_paths=PackedStringArray("tilemap", "entities_parent")]
+script = ExtResource("2_cne4c")
+tilemap = NodePath("../Layer1")
+fallback_terrain_set_id = null
+fallback_terrain_id = -1
+fallback_tile_generate_chance = null
+fallback_noise_frequency = null
+unload_buffer = null
+tiles_per_frame_budget = 70
+unload_chunks_per_frame = null
+structures = Array[ExtResource("6_e4y3p")]([SubResource("Resource_ti4pp"), SubResource("Resource_e4y3p"), SubResource("Resource_gsxep"), SubResource("Resource_744pl"), SubResource("Resource_xqw53"), SubResource("Resource_83ryt"), SubResource("Resource_c630t"), SubResource("Resource_urj03"), SubResource("Resource_jhn0l"), SubResource("Resource_y8nfn"), SubResource("Resource_76sct")])
+entities_parent = NodePath("../EnemyContainer")
+respawn_enemies_on_revisit = null
+metadata/_custom_type_script = "uid://bmmky33tl7eb0"
+
+[node name="Darkness" type="CanvasModulate" parent="." unique_id=696853006]
+color = Color(0, 0, 0, 1)
+
+[node name="EnemyContainer" type="Node2D" parent="." unique_id=1460262785]
+
+[connection signal="initial_generation_finished" from="LevelGenerator" to="." method="finished_generation_inital"]

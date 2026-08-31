@@ -3,6 +3,9 @@ class_name StatData extends Resource
 @export var health_modifier : float = 1.0
 @export var health_offset : float = 0.0
 
+@export var defense_modifier : float = 1.0
+@export var defense_offset : float = 0.0
+
 @export var speed_modifier : float = 1.0
 @export var speed_offset : float = 0.0
 
