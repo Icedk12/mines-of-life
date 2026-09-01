@@ -18,5 +18,23 @@ class_name BlockData extends Resource
 @export var drop_scarcity : Array[int] ## Chance for each drop to not drop, if zero its guarentteed
 
 @export_group("Audio") ## sound played when hit/broken
-@export var hit_sounds : Array[AudioStream] = []
-@export var place_sounds : Array[AudioStream] = []
+const DEFAULT_HIT: Array[AudioStream] = [
+	preload("res://assets/sounds/hit.mp3")
+]
+const DEFAULT_PLACE: Array[AudioStream] = [
+	preload("res://assets/sounds/hit.mp3")
+]
+
+@export var hit_sounds: Array[AudioStream] = DEFAULT_HIT.duplicate()
+@export var place_sounds: Array[AudioStream] = DEFAULT_PLACE.duplicate()
+
+## Helper functions to fetch audio
+func get_hit_sounds() -> Array[AudioStream]:
+	if not hit_sounds.is_empty():
+		return hit_sounds
+	return DEFAULT_HIT
+
+func get_place_sounds() -> Array[AudioStream]:
+	if not place_sounds.is_empty():
+		return place_sounds
+	return DEFAULT_PLACE

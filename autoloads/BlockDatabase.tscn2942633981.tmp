@@ -9,8 +9,6 @@
 script = ExtResource("2_kxxcu")
 display_name = "Stuffing"
 hardness = 2
-hit_sounds = Array[AudioStream]([ExtResource("3_ui66f")])
-place_sounds = Array[AudioStream]([ExtResource("3_ui66f")])
 metadata/_custom_type_script = "uid://h7cwu8wnif38"
 
 [sub_resource type="Resource" id="Resource_8nn5r"]
@@ -81,8 +79,6 @@ block_id = 7
 display_name = "Torch"
 terrain_id = 7
 hardness = 1
-hit_sounds = null
-place_sounds = null
 metadata/_custom_type_script = "uid://h7cwu8wnif38"
 
 [sub_resource type="Resource" id="Resource_n0470"]
@@ -91,8 +87,6 @@ block_id = 8
 display_name = "Furnace"
 terrain_id = 8
 hardness = 2
-hit_sounds = null
-place_sounds = null
 metadata/_custom_type_script = "uid://h7cwu8wnif38"
 
 [sub_resource type="Resource" id="Resource_32fc5"]
@@ -137,8 +131,6 @@ display_name = "Gold Ore"
 terrain_id = 12
 hardness = 10
 required_strength = 4
-hit_sounds = null
-place_sounds = null
 metadata/_custom_type_script = "uid://h7cwu8wnif38"
 
 [sub_resource type="Resource" id="Resource_qm8gl"]
@@ -149,8 +141,6 @@ display_name = "Diamond"
 terrain_id = 13
 hardness = 16
 required_strength = 5
-hit_sounds = null
-place_sounds = null
 metadata/_custom_type_script = "uid://h7cwu8wnif38"
 
 [sub_resource type="Resource" id="Resource_4bfcm"]

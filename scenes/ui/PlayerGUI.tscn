@@ -64,10 +64,10 @@ health_bar = NodePath("HealthBar")
 [node name="FPS_Label" type="Label" parent="." unique_id=165018761]
 material = ExtResource("1_o75iu")
 layout_mode = 0
-offset_left = 29.0
-offset_top = 141.0
-offset_right = 132.0
-offset_bottom = 162.0
+offset_left = 43.0
+offset_top = 240.0
+offset_right = 146.0
+offset_bottom = 261.0
 text = "FPS: 60"
 label_settings = ExtResource("1_xn0hd")
 script = ExtResource("3_wkpe3")
@@ -75,10 +75,10 @@ script = ExtResource("3_wkpe3")
 [node name="SEED_Label" type="Label" parent="." unique_id=1884305094]
 material = ExtResource("1_o75iu")
 layout_mode = 0
-offset_left = 28.0
-offset_top = 164.0
-offset_right = 131.0
-offset_bottom = 185.0
+offset_left = 42.0
+offset_top = 263.0
+offset_right = 145.0
+offset_bottom = 284.0
 text = "SEED: 0"
 label_settings = ExtResource("1_xn0hd")
 script = ExtResource("5_078xo")
@@ -86,15 +86,15 @@ script = ExtResource("5_078xo")
 [node name="COORDS_Label" type="Label" parent="." unique_id=60457504]
 material = ExtResource("1_o75iu")
 layout_mode = 0
-offset_left = 29.0
-offset_top = 187.0
-offset_right = 209.0
-offset_bottom = 208.0
+offset_left = 43.0
+offset_top = 286.0
+offset_right = 223.0
+offset_bottom = 307.0
 text = "COORDINATES: (0,0)"
 label_settings = ExtResource("1_xn0hd")
 script = ExtResource("6_3r278")
 
-[node name="InventoryUI" type="Node" parent="." unique_id=407773419 node_paths=PackedStringArray("hotbar_grid", "inventory_grid", "selection_rect", "inventory_panel", "equipment_slots")]
+[node name="InventoryUI" type="Node" parent="." unique_id=407773419 node_paths=PackedStringArray("hotbar_grid", "inventory_grid", "selection_rect", "inventory_panel")]
 script = ExtResource("5_34not")
 hotbar_grid = NodePath("../Hotbar")
 inventory_grid = NodePath("../InventoryPanel/InventoryGrid")
@@ -102,7 +102,6 @@ selection_rect = NodePath("../SelectionRect")
 tween_duration = 0.2
 inventory_panel = NodePath("../InventoryPanel")
 inventory_trans = 5
-equipment_slots = [NodePath("../InventoryPanel/HelmetSlot"), NodePath("../InventoryPanel/ArmourSlot"), NodePath("../InventoryPanel/ToolSlot"), NodePath("../InventoryPanel/WeaponSlot")]
 metadata/_custom_type_script = "uid://dg65yfjw86ln4"
 
 [node name="HotbarSprites" type="Panel" parent="." unique_id=517985495]
@@ -189,7 +188,6 @@ label_settings = ExtResource("7_udjm8")
 [node name="InventoryGrid" type="GridContainer" parent="InventoryPanel" unique_id=316862347]
 use_parent_material = true
 custom_minimum_size = Vector2(100, 100)
-custom_maximum_size = Vector2(-1, 300)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -218,7 +216,6 @@ horizontal_scroll_mode = 0
 [node name="Recipes" type="GridContainer" parent="InventoryPanel/ScrollContainer" unique_id=666936972]
 use_parent_material = true
 custom_minimum_size = Vector2(100, 100)
-custom_maximum_size = Vector2(-1, 1000)
 layout_mode = 2
 columns = 6
 
@@ -257,7 +254,6 @@ category = 4
 [node name="Hotbar" type="GridContainer" parent="." unique_id=1340635200]
 use_parent_material = true
 custom_minimum_size = Vector2(100, 100)
-custom_maximum_size = Vector2(-1, 100)
 layout_mode = 0
 offset_left = 44.0
 offset_top = 46.0
@@ -291,7 +287,6 @@ grid = NodePath("../InventoryPanel/ScrollContainer/Recipes")
 metadata/_custom_type_script = "uid://bspo3badeq4nj"
 
 [node name="HoverLabel" type="Label" parent="." unique_id=1526722845]
-custom_maximum_size = Vector2(300, -1)
 layout_mode = 0
 offset_left = 1011.0
 offset_top = 1122.0
@@ -316,7 +311,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SettingScrollContainer" type="ScrollContainer" parent="Settings" unique_id=2002243124]
-custom_maximum_size = Vector2(-1, 608)
 layout_mode = 0
 offset_right = 922.0
 offset_bottom = 606.0
@@ -610,24 +604,24 @@ text = "CONFIRM"
 
 [node name="HealthBar" type="TextureProgressBar" parent="." unique_id=1570466905]
 layout_mode = 0
-offset_left = 1065.0
-offset_top = 36.0
-offset_right = 1921.0
-offset_bottom = 133.0
+offset_left = 40.0
+offset_top = 141.0
+offset_right = 326.0
+offset_bottom = 183.0
 max_value = 10.0
 step = 0.01
-fill_mode = 1
 texture_under = ExtResource("19_xyrw1")
 texture_progress = ExtResource("20_uy2eo")
+texture_progress_offset = Vector2(16, 10)
 
 [node name="XPBar" type="TextureProgressBar" parent="." unique_id=1819048892]
 layout_mode = 0
-offset_left = 1065.0
-offset_top = 139.0
-offset_right = 1921.0
-offset_bottom = 158.0
+offset_left = 39.0
+offset_top = 187.0
+offset_right = 325.0
+offset_bottom = 229.0
 max_value = 10.0
 step = 0.01
-fill_mode = 1
 texture_under = ExtResource("21_6fm6b")
 texture_progress = ExtResource("22_6o14p")
+texture_progress_offset = Vector2(16, 10)
