@@ -40,7 +40,7 @@ metadata/_custom_type_script = "uid://dtax1vhaxc7ds"
 script = ExtResource("4_wgbhs")
 block_id = 12
 terrain_id = 12
-gen_chance = 0.08
+gen_chance = 0.1
 max_size = 4
 min_size = 10
 metadata/_custom_type_script = "uid://dtax1vhaxc7ds"
@@ -54,6 +54,15 @@ max_size = 2
 min_size = 5
 metadata/_custom_type_script = "uid://dtax1vhaxc7ds"
 
+[sub_resource type="Resource" id="Resource_nyhy4"]
+script = ExtResource("4_wgbhs")
+block_id = 15
+terrain_id = 15
+gen_chance = 0.18
+max_size = 8
+min_size = 3
+metadata/_custom_type_script = "uid://dtax1vhaxc7ds"
+
 [resource]
 script = ExtResource("8_p3b3j")
 layer_id = 1
@@ -63,7 +72,7 @@ y_bottom = 1000
 terrain_id = 14
 tile_generate_chance = 0.3
 noise_frequency = 0.05
-ores = Array[ExtResource("4_wgbhs")]([SubResource("Resource_wb1o8"), SubResource("Resource_qgtjv"), SubResource("Resource_r7kj2"), SubResource("Resource_rd83f"), SubResource("Resource_gj2mk")])
+ores = Array[ExtResource("4_wgbhs")]([SubResource("Resource_wb1o8"), SubResource("Resource_qgtjv"), SubResource("Resource_r7kj2"), SubResource("Resource_rd83f"), SubResource("Resource_gj2mk"), SubResource("Resource_nyhy4")])
 enemy_pool = Array[ExtResource("1_rd83f")]([ExtResource("2_gj2mk"), ExtResource("3_nyhy4"), ExtResource("4_qgtjv"), ExtResource("5_r7kj2")])
 max_enemies_per_chunk = 4
 spawn_chance_per_chunk = 0.3

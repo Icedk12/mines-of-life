@@ -30,6 +30,8 @@
 [ext_resource type="Texture2D" uid="uid://bf36su4es1r7e" path="res://assets/items/RefinedGold.png" id="28_u4baj"]
 [ext_resource type="Texture2D" uid="uid://c05ea17ejlyq7" path="res://assets/items/Diamond.png" id="29_k1wlb"]
 [ext_resource type="Texture2D" uid="uid://bmv6w1v68k4g1" path="res://assets/items/DeepStuffing.png" id="30_dssb6"]
+[ext_resource type="Texture2D" uid="uid://dahk78ahsbx25" path="res://assets/items/Plastic.png" id="31_1tj1n"]
+[ext_resource type="Texture2D" uid="uid://dm4l7svkmbjgl" path="res://assets/items/MeltedPlastic.png" id="32_t8n80"]
 
 [sub_resource type="Resource" id="Resource_v05ge"]
 script = ExtResource("2_gp7j7")
@@ -357,6 +359,22 @@ icon = ExtResource("30_dssb6")
 block_id = 14
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
+[sub_resource type="Resource" id="Resource_w81ab"]
+script = ExtResource("2_gp7j7")
+item_id = 28
+item_name = "Raw Plastic"
+icon = ExtResource("31_1tj1n")
+block_id = 15
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_hr6jk"]
+script = ExtResource("2_gp7j7")
+item_id = 29
+item_name = "Melted Plastic"
+icon = ExtResource("32_t8n80")
+block_id = -1
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
 [node name="ItemDatabase" type="Node" unique_id=1572723925]
 script = ExtResource("1_ptkgt")
-item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn"), SubResource("Resource_1tuwj"), SubResource("Resource_iwh46"), SubResource("Resource_7vfln"), SubResource("Resource_ci6rp"), SubResource("Resource_wo6et"), SubResource("Resource_jw16n"), SubResource("Resource_4pnrd"), SubResource("Resource_efpqa"), SubResource("Resource_310cl"), SubResource("Resource_ldqej"), SubResource("Resource_ud80n"), SubResource("Resource_gutlp"), SubResource("Resource_j4i65"), SubResource("Resource_c6kvi"), SubResource("Resource_ui66f"), SubResource("Resource_6fy5s"), SubResource("Resource_mnwqx"), SubResource("Resource_5tp5t"), SubResource("Resource_78d1o"), SubResource("Resource_xx0cy"), SubResource("Resource_n0470"), SubResource("Resource_u4baj"), SubResource("Resource_k1wlb"), SubResource("Resource_dssb6"), SubResource("Resource_33137"), SubResource("Resource_1tj1n")])
+item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn"), SubResource("Resource_1tuwj"), SubResource("Resource_iwh46"), SubResource("Resource_7vfln"), SubResource("Resource_ci6rp"), SubResource("Resource_wo6et"), SubResource("Resource_jw16n"), SubResource("Resource_4pnrd"), SubResource("Resource_efpqa"), SubResource("Resource_310cl"), SubResource("Resource_ldqej"), SubResource("Resource_ud80n"), SubResource("Resource_gutlp"), SubResource("Resource_j4i65"), SubResource("Resource_c6kvi"), SubResource("Resource_ui66f"), SubResource("Resource_6fy5s"), SubResource("Resource_mnwqx"), SubResource("Resource_5tp5t"), SubResource("Resource_78d1o"), SubResource("Resource_xx0cy"), SubResource("Resource_n0470"), SubResource("Resource_u4baj"), SubResource("Resource_k1wlb"), SubResource("Resource_dssb6"), SubResource("Resource_33137"), SubResource("Resource_1tj1n"), SubResource("Resource_w81ab"), SubResource("Resource_hr6jk")])

@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://bc3iy11fycqq" path="res://scenes/level/structures/Struct_Dih.tscn" id="15_8wbt5"]
 [ext_resource type="PackedScene" uid="uid://csfkk8prwx2hb" path="res://scenes/level/structures/Struct_Maze2.tscn" id="16_p0gqr"]
 [ext_resource type="PackedScene" uid="uid://cgnfsm5qs58rd" path="res://scenes/level/structures/Struct_GoldRing.tscn" id="17_7jckg"]
+[ext_resource type="PackedScene" uid="uid://bi7v28u580i36" path="res://scenes/level/structures/Struct_Waterbottle.tscn" id="18_76sct"]
 [ext_resource type="PackedScene" uid="uid://d6dmrmokxowe" path="res://scenes/level/structures/Struct_GoldRing2.tscn" id="18_y8nfn"]
 
 [sub_resource type="Resource" id="Resource_ti4pp"]
@@ -86,6 +87,11 @@ spawn_chance = 0.002
 min_spacing = 50
 metadata/_custom_type_script = "uid://71hg30844ma2"
 
+[sub_resource type="Resource" id="Resource_sxcmc"]
+script = ExtResource("6_e4y3p")
+scene = ExtResource("18_76sct")
+metadata/_custom_type_script = "uid://71hg30844ma2"
+
 [node name="Level" type="Node2D" unique_id=131454242 node_paths=PackedStringArray("level_generator", "_layer1")]
 script = ExtResource("1_l1x8v")
 level_generator = NodePath("LevelGenerator")
@@ -102,7 +108,7 @@ tilemap = NodePath("../Layer1")
 fallback_terrain_id = -1
 fallback_tile_generate_chance = 0.0
 unload_buffer = 1
-structures = Array[ExtResource("6_e4y3p")]([SubResource("Resource_ti4pp"), SubResource("Resource_e4y3p"), SubResource("Resource_gsxep"), SubResource("Resource_744pl"), SubResource("Resource_xqw53"), SubResource("Resource_83ryt"), SubResource("Resource_c630t"), SubResource("Resource_urj03"), SubResource("Resource_jhn0l"), SubResource("Resource_y8nfn"), SubResource("Resource_76sct")])
+structures = Array[ExtResource("6_e4y3p")]([SubResource("Resource_ti4pp"), SubResource("Resource_e4y3p"), SubResource("Resource_gsxep"), SubResource("Resource_744pl"), SubResource("Resource_xqw53"), SubResource("Resource_83ryt"), SubResource("Resource_c630t"), SubResource("Resource_urj03"), SubResource("Resource_jhn0l"), SubResource("Resource_y8nfn"), SubResource("Resource_76sct"), SubResource("Resource_sxcmc")])
 entities_parent = NodePath("../EnemyContainer")
 metadata/_custom_type_script = "uid://bmmky33tl7eb0"
 
