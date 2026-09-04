@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://5465ov2xul4s"]
+
+[ext_resource type="Script" uid="uid://dygmhxqk01awv" path="res://autoloads/scripts/UpgradeDatabase.gd" id="1_j4hte"]
+[ext_resource type="Script" uid="uid://e1yhfdilgcqt" path="res://scripts/types/Upgrade.gd" id="2_hr7v6"]
+[ext_resource type="Texture2D" uid="uid://bn4bmrvb32o6m" path="res://assets/items/PennyArmour.png" id="3_beeo5"]
+[ext_resource type="Script" uid="uid://djcpbulvvrjuf" path="res://scripts/types/StatData.gd" id="3_kxwsu"]
+
+[sub_resource type="Resource" id="Resource_beeo5"]
+script = ExtResource("3_kxwsu")
+health_offset = 1.0
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_j4hte"]
+script = ExtResource("2_hr7v6")
+texture = ExtResource("3_beeo5")
+display_name = "Tough Skin"
+details = "+1 Max Health"
+stat_data = SubResource("Resource_beeo5")
+metadata/_custom_type_script = "uid://e1yhfdilgcqt"
+
+[node name="UpgradeDatabase" type="Node" unique_id=1155908573]
+script = ExtResource("1_j4hte")
+upgrades = Array[ExtResource("2_hr7v6")]([SubResource("Resource_j4hte")])
