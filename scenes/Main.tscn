@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://cq10g2fnfrkmf" path="res://scripts/ui/PlayButton.gd" id="8_wp0k4"]
 [ext_resource type="Shader" uid="uid://5hogyrnpyfc3" path="res://scripts/shaders/Vignette.gdshader" id="13_qmy6f"]
 [ext_resource type="Texture2D" uid="uid://1m67vyv7siox" path="res://assets/ui/StartOptions.png" id="14_mwfav"]
-[ext_resource type="Shader" uid="uid://c82x57jo7befi" path="res://scenes/Wiggle.gdshader" id="14_pnhog"]
+[ext_resource type="Shader" uid="uid://c82x57jo7befi" path="res://scripts/shaders/Wiggle.gdshader" id="14_pnhog"]
 [ext_resource type="LabelSettings" uid="uid://2lchjb3vtapf" path="res://assets/labels/StartLabelSettings.tres" id="15_3p2gp"]
 [ext_resource type="Texture2D" uid="uid://3gwm6kc7l0s" path="res://assets/player/PlayerRecolourable.png" id="16_cvmbd"]
 [ext_resource type="Script" uid="uid://b8dd8kca0y16v" path="res://scripts/ui/PlayerPreviewer.gd" id="17_ft6cd"]
@@ -31,7 +31,7 @@
 [ext_resource type="AudioStream" uid="uid://daeromqsworyc" path="res://assets/sounds/music/Exploration.wav" id="27_e2s0e"]
 [ext_resource type="AudioStream" uid="uid://dphnmkvlo70f2" path="res://assets/sounds/music/Hole in the Wall.wav" id="28_gsxep"]
 [ext_resource type="Script" uid="uid://b24g885fk7e4m" path="res://scripts/ui/CutsceneManager.gd" id="29_e2s0e"]
-[ext_resource type="Script" uid="uid://dls7cmk77rfho" path="res://scenes/EnviromentSetter.gd" id="33_pnhog"]
+[ext_resource type="Script" uid="uid://dls7cmk77rfho" path="res://scripts/level/EnviromentSetter.gd" id="33_pnhog"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qmy6f"]
 shader = ExtResource("13_qmy6f")

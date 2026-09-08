@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://bdt711agc7fei" path="res://assets/ui/HealthPip.png" id="20_uy2eo"]
 [ext_resource type="Texture2D" uid="uid://cij5od2a5pfb1" path="res://assets/ui/XPBackground.png" id="21_6fm6b"]
 [ext_resource type="Texture2D" uid="uid://bjt3pgsk3snde" path="res://assets/ui/XPPip.png" id="22_6o14p"]
+[ext_resource type="Script" uid="uid://cnsu0amy8jre5" path="res://scripts/ui/UpgradeSelector.gd" id="23_omutp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uy2eo"]
 
@@ -45,6 +46,8 @@ VScrollBar/styles/grabber = SubResource("StyleBoxEmpty_yut7p")
 VScrollBar/styles/grabber_highlight = SubResource("StyleBoxEmpty_3r278")
 VScrollBar/styles/grabber_pressed = SubResource("StyleBoxEmpty_xyrw1")
 VScrollBar/styles/scroll = SubResource("StyleBoxFlat_omutp")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_spnw5"]
 
 [node name="PlayerGUI" type="Control" unique_id=1953480870 node_paths=PackedStringArray("inventory_ui", "crafting_ui", "xp_bar", "health_bar")]
 material = ExtResource("1_o75iu")
@@ -625,3 +628,36 @@ step = 0.01
 texture_under = ExtResource("21_6fm6b")
 texture_progress = ExtResource("22_6o14p")
 texture_progress_offset = Vector2(16, 10)
+
+[node name="UpgradePanelHolder" type="Panel" parent="." unique_id=1844325552]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.26500002
+anchor_top = 0.28300002
+anchor_right = 0.74500006
+anchor_bottom = 0.74600005
+offset_left = -0.3000183
+offset_top = -0.14001465
+offset_right = 0.5998535
+offset_bottom = -0.18005371
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_spnw5")
+script = ExtResource("23_omutp")
+
+[node name="UpgradeChoice1" type="Panel" parent="UpgradePanelHolder" unique_id=384526261]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 500.0
+
+[node name="UpgradeChoice2" type="Panel" parent="UpgradePanelHolder" unique_id=457955765]
+layout_mode = 0
+offset_left = 310.5
+offset_right = 610.5
+offset_bottom = 500.0
+
+[node name="UpgradeChoice3" type="Panel" parent="UpgradePanelHolder" unique_id=1026051776]
+layout_mode = 0
+offset_left = 623.5
+offset_right = 923.5
+offset_bottom = 500.0
