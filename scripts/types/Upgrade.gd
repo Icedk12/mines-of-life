@@ -11,7 +11,7 @@ enum UpgradeType {
 @export var details : String
 @export var type : UpgradeType
 
-@export var stat_data : StatData
+@export var stat_data : StatData = StatData.new()
 
-func activate_effect() -> void:
+func activate_effect(delta : float) -> void:
 	pass

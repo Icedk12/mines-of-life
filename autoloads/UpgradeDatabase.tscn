@@ -4,6 +4,11 @@
 [ext_resource type="Script" uid="uid://e1yhfdilgcqt" path="res://scripts/types/Upgrade.gd" id="2_hr7v6"]
 [ext_resource type="Texture2D" uid="uid://bn4bmrvb32o6m" path="res://assets/items/PennyArmour.png" id="3_beeo5"]
 [ext_resource type="Script" uid="uid://djcpbulvvrjuf" path="res://scripts/types/StatData.gd" id="3_kxwsu"]
+[ext_resource type="Texture2D" uid="uid://basv4tp44fl7h" path="res://assets/items/GoldSword.png" id="5_uhl7g"]
+[ext_resource type="Texture2D" uid="uid://bn7h0mbgekjb3" path="res://assets/items/LeatherHelmet.png" id="6_jbtlk"]
+[ext_resource type="Texture2D" uid="uid://dnribgdmwgxie" path="res://assets/ui/Darkness.png" id="7_pxwwb"]
+[ext_resource type="Texture2D" uid="uid://bavx0abfrnd5c" path="res://assets/items/Verified.png" id="8_ij5qv"]
+[ext_resource type="Texture2D" uid="uid://byl74pih8ko7j" path="res://assets/items/Heart.png" id="9_shcay"]
 
 [sub_resource type="Resource" id="Resource_beeo5"]
 script = ExtResource("3_kxwsu")
@@ -14,10 +19,80 @@ metadata/_custom_type_script = "uid://djcpbulvvrjuf"
 script = ExtResource("2_hr7v6")
 texture = ExtResource("3_beeo5")
 display_name = "Tough Skin"
-details = "+1 Max Health"
+details = "+1 Health. You feel protected."
 stat_data = SubResource("Resource_beeo5")
+metadata/_custom_type_script = "uid://e1yhfdilgcqt"
+
+[sub_resource type="Resource" id="Resource_05p8n"]
+script = ExtResource("3_kxwsu")
+damage_offset = 1.0
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_kxwsu"]
+script = ExtResource("2_hr7v6")
+upgrade_id = 1
+texture = ExtResource("5_uhl7g")
+display_name = "Holy Sword"
+details = "+ 1 Damage. Thy weapon doth be a holy one."
+stat_data = SubResource("Resource_05p8n")
+metadata/_custom_type_script = "uid://e1yhfdilgcqt"
+
+[sub_resource type="Resource" id="Resource_pxwwb"]
+script = ExtResource("3_kxwsu")
+health_offset = 2.0
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_bvphr"]
+script = ExtResource("2_hr7v6")
+upgrade_id = 2
+texture = ExtResource("6_jbtlk")
+display_name = "PPE"
+details = "+ 1 Health. Necessary for experiments."
+stat_data = SubResource("Resource_pxwwb")
+metadata/_custom_type_script = "uid://e1yhfdilgcqt"
+
+[sub_resource type="Resource" id="Resource_jbtlk"]
+script = ExtResource("3_kxwsu")
+jump_offset = 10.0
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_ij5qv"]
+script = ExtResource("2_hr7v6")
+upgrade_id = 3
+texture = ExtResource("7_pxwwb")
+display_name = "Moon's Blessing"
+details = "+ 10 Jump Power. Space suit not included."
+stat_data = SubResource("Resource_jbtlk")
+metadata/_custom_type_script = "uid://e1yhfdilgcqt"
+
+[sub_resource type="Resource" id="Resource_khw54"]
+script = ExtResource("3_kxwsu")
+swing_speed_offset = 0.02
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_shcay"]
+script = ExtResource("2_hr7v6")
+upgrade_id = 4
+texture = ExtResource("8_ij5qv")
+display_name = "Verification"
+details = "+ 0.02 Mine Speed. You feel tremendous."
+stat_data = SubResource("Resource_khw54")
+metadata/_custom_type_script = "uid://e1yhfdilgcqt"
+
+[sub_resource type="Resource" id="Resource_ye1dr"]
+script = ExtResource("3_kxwsu")
+health_offset = 1.0
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_dcsf3"]
+script = ExtResource("2_hr7v6")
+upgrade_id = 5
+texture = ExtResource("9_shcay")
+display_name = "Vitality"
+details = "+ 1 Health."
+stat_data = SubResource("Resource_ye1dr")
 metadata/_custom_type_script = "uid://e1yhfdilgcqt"
 
 [node name="UpgradeDatabase" type="Node" unique_id=1155908573]
 script = ExtResource("1_j4hte")
-upgrades = Array[ExtResource("2_hr7v6")]([SubResource("Resource_j4hte")])
+upgrades = Array[ExtResource("2_hr7v6")]([SubResource("Resource_j4hte"), SubResource("Resource_kxwsu"), SubResource("Resource_bvphr"), SubResource("Resource_ij5qv"), SubResource("Resource_shcay"), SubResource("Resource_dcsf3")])
