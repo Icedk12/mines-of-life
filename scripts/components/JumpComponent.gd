@@ -35,7 +35,7 @@ func _can_jump() -> bool:
 ## Applies upward velocity and resets coyote time
 func _execute_jump() -> void:
 	_on_jump()
-	control_component.set_y((-jump_velocity + stat_manager.final_stats.jump_offset) * stat_manager.final_stats.jump_modifier) # Apply jump velocity
+	control_component.set_y(-(jump_velocity + stat_manager.final_stats.jump_offset) * stat_manager.final_stats.jump_modifier) # Apply jump velocity
 	if sprite_modifier_component:
 		sprite_modifier_component._stretch() # Stretch sprite
 	if audio_source:

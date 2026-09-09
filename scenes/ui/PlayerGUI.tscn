@@ -47,9 +47,9 @@ VScrollBar/styles/grabber_highlight = SubResource("StyleBoxEmpty_3r278")
 VScrollBar/styles/grabber_pressed = SubResource("StyleBoxEmpty_xyrw1")
 VScrollBar/styles/scroll = SubResource("StyleBoxFlat_omutp")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_spnw5"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_snrtm"]
 
-[node name="PlayerGUI" type="Control" unique_id=1953480870 node_paths=PackedStringArray("inventory_ui", "crafting_ui", "xp_bar", "health_bar")]
+[node name="PlayerGUI" type="Control" unique_id=1953480870 node_paths=PackedStringArray("inventory_ui", "crafting_ui", "upgrade_panel_holder", "xp_bar", "health_bar")]
 material = ExtResource("1_o75iu")
 layout_mode = 3
 anchors_preset = 15
@@ -61,6 +61,7 @@ mouse_filter = 1
 script = ExtResource("1_34not")
 inventory_ui = NodePath("InventoryUI")
 crafting_ui = NodePath("CraftingUI")
+upgrade_panel_holder = NodePath("UpgradePanelHolder")
 xp_bar = NodePath("XPBar")
 health_bar = NodePath("HealthBar")
 
@@ -630,6 +631,7 @@ texture_progress = ExtResource("22_6o14p")
 texture_progress_offset = Vector2(16, 10)
 
 [node name="UpgradePanelHolder" type="Panel" parent="." unique_id=1844325552]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.26500002
@@ -642,7 +644,7 @@ offset_right = 0.5998535
 offset_bottom = -0.18005371
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_spnw5")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_snrtm")
 script = ExtResource("23_omutp")
 
 [node name="UpgradeChoice1" type="Panel" parent="UpgradePanelHolder" unique_id=384526261]
@@ -650,14 +652,98 @@ layout_mode = 0
 offset_right = 300.0
 offset_bottom = 500.0
 
-[node name="UpgradeChoice2" type="Panel" parent="UpgradePanelHolder" unique_id=457955765]
+[node name="Image" type="TextureRect" parent="UpgradePanelHolder/UpgradeChoice1" unique_id=228891265]
 layout_mode = 0
-offset_left = 310.5
-offset_right = 610.5
+offset_left = 70.5
+offset_top = 26.5
+offset_right = 232.5
+offset_bottom = 188.5
+
+[node name="Name" type="Label" parent="UpgradePanelHolder/UpgradeChoice1" unique_id=1620214576]
+layout_mode = 0
+offset_left = 9.5
+offset_top = 209.5
+offset_right = 291.5
+offset_bottom = 232.5
+label_settings = ExtResource("7_udjm8")
+horizontal_alignment = 1
+autowrap_mode = 3
+uppercase = true
+
+[node name="Desc" type="Label" parent="UpgradePanelHolder/UpgradeChoice1" unique_id=120837347]
+layout_mode = 0
+offset_left = 9.5
+offset_top = 245.5
+offset_right = 291.5
+offset_bottom = 479.5
+label_settings = ExtResource("7_udjm8")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="UpgradeChoice2" type="Panel" parent="UpgradePanelHolder" unique_id=2101569250]
+layout_mode = 0
+offset_left = 311.5
+offset_right = 611.5
 offset_bottom = 500.0
 
-[node name="UpgradeChoice3" type="Panel" parent="UpgradePanelHolder" unique_id=1026051776]
+[node name="Image" type="TextureRect" parent="UpgradePanelHolder/UpgradeChoice2" unique_id=1148428531]
+layout_mode = 0
+offset_left = 70.5
+offset_top = 26.5
+offset_right = 232.5
+offset_bottom = 188.5
+
+[node name="Name" type="Label" parent="UpgradePanelHolder/UpgradeChoice2" unique_id=1429381486]
+layout_mode = 0
+offset_left = 9.5
+offset_top = 209.5
+offset_right = 291.5
+offset_bottom = 232.5
+label_settings = ExtResource("7_udjm8")
+horizontal_alignment = 1
+autowrap_mode = 3
+uppercase = true
+
+[node name="Desc" type="Label" parent="UpgradePanelHolder/UpgradeChoice2" unique_id=1894486608]
+layout_mode = 0
+offset_left = 9.5
+offset_top = 245.5
+offset_right = 291.5
+offset_bottom = 479.5
+label_settings = ExtResource("7_udjm8")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="UpgradeChoice3" type="Panel" parent="UpgradePanelHolder" unique_id=1206857595]
 layout_mode = 0
 offset_left = 623.5
 offset_right = 923.5
 offset_bottom = 500.0
+
+[node name="Image" type="TextureRect" parent="UpgradePanelHolder/UpgradeChoice3" unique_id=1579824782]
+layout_mode = 0
+offset_left = 70.5
+offset_top = 26.5
+offset_right = 232.5
+offset_bottom = 188.5
+
+[node name="Name" type="Label" parent="UpgradePanelHolder/UpgradeChoice3" unique_id=1948507402]
+layout_mode = 0
+offset_left = 9.5
+offset_top = 209.5
+offset_right = 291.5
+offset_bottom = 232.5
+label_settings = ExtResource("7_udjm8")
+horizontal_alignment = 1
+autowrap_mode = 3
+uppercase = true
+
+[node name="Desc" type="Label" parent="UpgradePanelHolder/UpgradeChoice3" unique_id=1852064574]
+layout_mode = 0
+offset_left = 9.5
+offset_top = 245.5
+offset_right = 291.5
+offset_bottom = 479.5
+label_settings = ExtResource("7_udjm8")
+horizontal_alignment = 1
+autowrap_mode = 3

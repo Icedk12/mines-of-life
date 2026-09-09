@@ -7,6 +7,7 @@ class_name PlayerGUI extends Control
 @export var player : Player
 @export var health_component : HealthComponent
 @export var xp_component : XPComponent
+@export var upgrade_panel_holder : UpgradePanelHolder
 
 @export var xp_bar : TextureProgressBar
 @export var health_bar : TextureProgressBar
@@ -23,6 +24,7 @@ func _ready() -> void:
 	_health_update(health_component.max_health, health_component.max_health )
 	health_component.health_changed.connect(_health_update)
 	xp_component.xp_changed.connect(_xp_update)
+	xp_component.level_up.connect(_level_up)
 
 func _health_update(current : float, max : float) -> void:
 	if current_tween and current_tween.is_running():
@@ -39,3 +41,6 @@ func _xp_update(current : float, max : float) -> void:
 	xp_bar.max_value = max
 	current_tween = create_tween().set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN_OUT)
 	current_tween.tween_property(xp_bar, "value", current, 0.5)
+
+func _level_up(new_level : int) -> void:
+	upgrade_panel_holder.draw_hand()
