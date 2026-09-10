@@ -10,8 +10,14 @@ signal selection_changed(item_id: int)
 @export var tween_duration : float = 0.1
 @export var inventory_panel : Control ## the full backpack view, toggled separately from the always-visible hotbar
 @export var inventory_trans : Tween.TransitionType
+@export var settings : Panel
 
 @export var equipment_slots : Array[EquipmentSlot] = []
+
+var inv_active_position := Vector2.ZERO
+var inv_disabled_position := Vector2.ZERO
+var set_active_position := Vector2.ZERO
+var set_disabled_position := Vector2.ZERO
 
 var hotbar_slots : Array[InventorySlot] = []
 var inventory_slots : Array[InventorySlot] = []
@@ -19,6 +25,27 @@ var selected_hotbar_index : int = 0
 var active_tween : Tween
 var inventory_tween : Tween
 var setting_tween : Tween
+
+func _ready() -> void:
+	if settings == null:
+		push_error("InventoryUI: 'settings' is null")
+	if inventory_panel == null:
+		push_error("InventoryUI: 'inventory_panel' is null")
+
+	if not FullscreenManager.setup_complete.is_connected(_on_fullscreen_setup_complete):
+		FullscreenManager.setup_complete.connect(_on_fullscreen_setup_complete, CONNECT_ONE_SHOT) # connect for 1 emission
+
+	if FullscreenManager.inventory_ui_default_pos != Vector2.ZERO:
+		_apply_default_position()
+
+func _on_fullscreen_setup_complete() -> void:
+	_apply_default_position()
+
+func _apply_default_position() -> void:
+	if settings:
+		settings.position = FullscreenManager.setting_ui_default_pos
+	if inventory_panel:
+		inventory_panel.position = FullscreenManager.inventory_ui_default_pos
 
 func set_up() -> void:
 	for i in inventory_component.hotbar.size():
@@ -54,17 +81,17 @@ func _unhandled_input(event: InputEvent) -> void:
 			_change_selection(-1)
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			_change_selection(1)
-	elif event.is_action_pressed("settings") and $"../Settings":
+	elif event.is_action_pressed("settings") and settings:
 		if setting_tween and setting_tween.is_running():
 			setting_tween.kill()
 		setting_tween = create_tween().set_trans(inventory_trans)
 		
-		if not $"../Settings".visible:
-			$"../Settings".visible = true
-			setting_tween.tween_property($"../Settings", "position", Vector2(499.0, 237.0), 0.5)
+		if not settings.visible:
+			settings.visible = true
+			setting_tween.tween_property(settings, "position", set_active_position, 0.5)
 		else:
-			setting_tween.tween_property($"../Settings", "position", Vector2(499.0, 1122.0), 0.5)
-			setting_tween.tween_callback(func(): $"../Settings".visible = false)
+			setting_tween.tween_property(settings, "position", set_disabled_position, 0.5)
+			setting_tween.tween_callback(func(): settings.visible = false)
 		
 	elif event.is_action_pressed("toggle_inventory") and inventory_panel:
 		if inventory_tween and inventory_tween.is_running():
@@ -73,10 +100,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 		if not inventory_panel.visible:
 			inventory_panel.visible = true
-			inventory_tween.tween_property(inventory_panel, "position", Vector2(460.0, 405.0), 0.5)
+			inventory_tween.tween_property(inventory_panel, "position", inv_active_position, 0.5)
 
 		else:
-			inventory_tween.tween_property(inventory_panel, "position", Vector2(460.0, 1122.0), 0.5)
+			inventory_tween.tween_property(inventory_panel, "position", inv_disabled_position, 0.5)
 			inventory_tween.tween_callback(func(): inventory_panel.visible = false)
 
 func _change_selection(direction: int) -> void:

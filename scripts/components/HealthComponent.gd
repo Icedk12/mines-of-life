@@ -50,7 +50,7 @@ func take_damage(damage : float, knockback_dir : Vector2 = Vector2.ZERO, knockba
 func heal(amount : float) -> void:
 	current_health = min(current_health + amount, max_health)
 	health_changed.emit(current_health, max_health)
-	_overlay_tween(Color(0.467, 1.0, 0.0, 1.0))
+	_overlay_tween(Color(0.891, 0.891, 0.0, 1.0))
 
 func _on_damaged() -> void:
 	for component in on_death_components:

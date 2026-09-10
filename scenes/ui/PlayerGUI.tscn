@@ -55,8 +55,11 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 567.40295
+offset_bottom = 319.16412
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.67, 0.67)
 mouse_filter = 1
 script = ExtResource("1_34not")
 inventory_ui = NodePath("InventoryUI")
@@ -98,7 +101,7 @@ text = "COORDINATES: (0,0)"
 label_settings = ExtResource("1_xn0hd")
 script = ExtResource("6_3r278")
 
-[node name="InventoryUI" type="Node" parent="." unique_id=407773419 node_paths=PackedStringArray("hotbar_grid", "inventory_grid", "selection_rect", "inventory_panel")]
+[node name="InventoryUI" type="Node" parent="." unique_id=407773419 node_paths=PackedStringArray("hotbar_grid", "inventory_grid", "selection_rect", "inventory_panel", "settings", "equipment_slots")]
 script = ExtResource("5_34not")
 hotbar_grid = NodePath("../Hotbar")
 inventory_grid = NodePath("../InventoryPanel/InventoryGrid")
@@ -106,6 +109,8 @@ selection_rect = NodePath("../SelectionRect")
 tween_duration = 0.2
 inventory_panel = NodePath("../InventoryPanel")
 inventory_trans = 5
+settings = NodePath("../Settings")
+equipment_slots = [NodePath("../InventoryPanel/HelmetSlot"), NodePath("../InventoryPanel/ArmourSlot"), NodePath("../InventoryPanel/ToolSlot"), NodePath("../InventoryPanel/WeaponSlot")]
 metadata/_custom_type_script = "uid://dg65yfjw86ln4"
 
 [node name="HotbarSprites" type="Panel" parent="." unique_id=517985495]
@@ -133,23 +138,23 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -500.0
-offset_top = 42.0
+offset_left = -500.00003
+offset_top = 64.0
 offset_right = 500.0
-offset_bottom = 556.0
+offset_bottom = 578.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = SubResource("Theme_rtmgd")
 
 [node name="BagRect" type="TextureRect" parent="InventoryPanel" unique_id=272838316]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_right = 1.001
+anchor_bottom = 1.2720001
 offset_left = -1.0
 offset_top = -42.0
-offset_right = 1.3175659
-offset_bottom = 140.0
+offset_right = 0.31750488
+offset_bottom = 0.19195557
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("6_4y8sh")
@@ -308,9 +313,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -461.0
-offset_top = 582.0
-offset_right = 461.0
-offset_bottom = 1188.0
+offset_top = -259.7015
+offset_right = 460.99994
+offset_bottom = 346.2985
 grow_horizontal = 2
 grow_vertical = 2
 

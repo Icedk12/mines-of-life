@@ -9,6 +9,7 @@ var chunk_size : int = 16  ## How big the chunks are.
 
 var player_mod : Color
 var difficulty : float = 1.0
+var cheats : bool = false
 
 var tiles_per_frame_budget : int = 128
 var ores_per_frame_budget : int = 4   ## how many ore types to roll per frame

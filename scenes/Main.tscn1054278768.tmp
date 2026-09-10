@@ -33,7 +33,6 @@
 [ext_resource type="Script" uid="uid://b24g885fk7e4m" path="res://scripts/ui/CutsceneManager.gd" id="29_e2s0e"]
 [ext_resource type="Script" uid="uid://cqw3x551uw0wc" path="res://scripts/ui/FullscreenManager.gd" id="33_2c4at"]
 [ext_resource type="Script" uid="uid://dls7cmk77rfho" path="res://scripts/level/EnviromentSetter.gd" id="33_pnhog"]
-[ext_resource type="PackedScene" uid="uid://c5ex65xovf0w6" path="res://scenes/ui/Console.tscn" id="34_2c4at"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qmy6f"]
 shader = ExtResource("13_qmy6f")
@@ -210,11 +209,10 @@ fog_density = 0.115
 fog_depth_begin = 1.0
 volumetric_fog_density = 0.6436
 
-[node name="Main" type="Node2D" unique_id=791347418 node_paths=PackedStringArray("player", "level", "console")]
+[node name="Main" type="Node2D" unique_id=791347418 node_paths=PackedStringArray("player", "level")]
 script = ExtResource("1_0bbpv")
 player = NodePath("Player")
 level = NodePath("Level")
-console = NodePath("DebugConsole")
 
 [node name="Level" parent="." unique_id=131454242 node_paths=PackedStringArray("music_player", "main_menu", "player") instance=ExtResource("2_0bbpv")]
 music_player = NodePath("../MusicPlayer")
@@ -237,15 +235,16 @@ stream = ExtResource("4_wp0k4")
 autoplay = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="MainMenu" unique_id=30027952]
+follow_viewport_enabled = true
 script = ExtResource("5_dg70y")
 
 [node name="Control" type="Control" parent="MainMenu/CanvasLayer" unique_id=152853203]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -136.0
-offset_top = -231.0
-offset_right = -96.0
-offset_bottom = -191.0
+offset_left = -132.0
+offset_top = -230.0
+offset_right = -92.0
+offset_bottom = -190.0
 scale = Vector2(4, 4)
 
 [node name="Background" type="TextureRect" parent="MainMenu/CanvasLayer/Control" unique_id=200606901]
@@ -650,14 +649,8 @@ one_shot = true
 environment = SubResource("Environment_dg70y")
 script = ExtResource("33_pnhog")
 
-[node name="FullscreenManager" type="Node" parent="." unique_id=571452193 node_paths=PackedStringArray("control", "player")]
+[node name="FullscreenManager" type="Node" parent="." unique_id=571452193]
 script = ExtResource("33_2c4at")
-control = NodePath("../MainMenu/CanvasLayer/Control")
-player = NodePath("../Player")
-
-[node name="DebugConsole" parent="." unique_id=1648263377 node_paths=PackedStringArray("main") instance=ExtResource("34_2c4at")]
-visible = false
-main = NodePath("..")
 
 [connection signal="pressed" from="MainMenu/CanvasLayer/Control/PlayBtn" to="MainMenu/CanvasLayer/Control/PlayBtn" method="_on_pressed"]
 [connection signal="pressed" from="MainMenu/CanvasLayer/Control/StartMenu/StartButton" to="MainMenu/CanvasLayer/Control/PlayBtn" method="_confirm_pressed"]
