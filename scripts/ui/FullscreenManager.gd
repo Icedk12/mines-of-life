@@ -34,10 +34,10 @@ func _ready() -> void:
 			ui.inventory_panel.scale = Vector2(0.67, 0.67)
 			
 			ui.inv_active_position = Vector2(525, 513)
-			ui.set_active_position = Vector2(398, 223)
+			ui.set_active_position = Vector2(525, 513)
 			
 			ui.inv_disabled_position = Vector2(525, 1000)
-			ui.set_disabled_position = Vector2(398, 1000)
+			ui.set_disabled_position = Vector2(525, 1000)
 			
 			inventory_ui_default_pos = ui.inv_disabled_position
 			setting_ui_default_pos = ui.set_disabled_position
@@ -52,7 +52,7 @@ func _ready() -> void:
 			ui.inventory_panel.scale = Vector2.ONE
 			
 			ui.inv_active_position = Vector2(460, 408)
-			ui.set_active_position = Vector2(460, 408)
+			ui.set_active_position = Vector2(460, 315)
 			
 			ui.inv_disabled_position = Vector2(460, 1134)
 			ui.set_disabled_position = Vector2(460, 1134)

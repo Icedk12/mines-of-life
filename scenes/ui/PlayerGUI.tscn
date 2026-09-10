@@ -11,7 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://dvcwwtstrhn57" path="res://assets/player/SelectionBox12x12.png" id="6_rtmgd"]
 [ext_resource type="Texture2D" uid="uid://tfjm17qm7qyy" path="res://assets/ui/HotBar.png" id="6_up3k2"]
 [ext_resource type="LabelSettings" uid="uid://yje3vadd7xff" path="res://assets/labels/PlayerGUILabelSettings.tres" id="7_udjm8"]
-[ext_resource type="LabelSettings" uid="uid://2lchjb3vtapf" path="res://assets/labels/StartLabelSettings.tres" id="8_cgyhp"]
 [ext_resource type="PackedScene" uid="uid://b05mh5codd064" path="res://scenes/ui/CraftingSlot.tscn" id="9_81k2o"]
 [ext_resource type="Script" uid="uid://bspo3badeq4nj" path="res://scripts/ui/CraftingUI.gd" id="11_81k2o"]
 [ext_resource type="LabelSettings" uid="uid://kpj4f245y1v6" path="res://assets/labels/MenuLabelSettings.tres" id="12_osq45"]
@@ -31,6 +30,15 @@
 [sub_resource type="Theme" id="Theme_rtmgd"]
 Panel/styles/panel = SubResource("StyleBoxEmpty_rtmgd")
 
+[sub_resource type="LabelSettings" id="LabelSettings_6o14p"]
+font = ExtResource("16_yut7p")
+font_size = 22
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 10
+shadow_color = Color(0, 0, 0, 0.47058824)
+shadow_offset = Vector2(1.945, 2.015)
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yut7p"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3r278"]
@@ -49,7 +57,7 @@ VScrollBar/styles/scroll = SubResource("StyleBoxFlat_omutp")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_snrtm"]
 
-[node name="PlayerGUI" type="Control" unique_id=1953480870 node_paths=PackedStringArray("inventory_ui", "crafting_ui", "upgrade_panel_holder", "xp_bar", "health_bar")]
+[node name="PlayerGUI" type="Control" unique_id=1953480870 node_paths=PackedStringArray("inventory_ui", "crafting_ui", "upgrade_panel_holder", "xp_bar", "health_bar", "stat_lbl")]
 material = ExtResource("1_o75iu")
 layout_mode = 3
 anchors_preset = 15
@@ -67,6 +75,7 @@ crafting_ui = NodePath("CraftingUI")
 upgrade_panel_holder = NodePath("UpgradePanelHolder")
 xp_bar = NodePath("XPBar")
 health_bar = NodePath("HealthBar")
+stat_lbl = NodePath("InventoryPanel/STATS")
 
 [node name="FPS_Label" type="Label" parent="." unique_id=165018761]
 material = ExtResource("1_o75iu")
@@ -131,7 +140,6 @@ texture = ExtResource("6_up3k2")
 expand_mode = 5
 
 [node name="InventoryPanel" type="Panel" parent="." unique_id=1146373450]
-visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -167,16 +175,15 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -287.0
-offset_top = -254.00002
+offset_top = -262.3542
 offset_right = -145.0
-offset_bottom = -205.58334
+offset_bottom = -197.22919
 grow_horizontal = 2
 grow_vertical = 2
 text = "LEVEL: 1
-PLAYTIME: 999 HOURS
-ACHIEVEMENTS: 0/100
+
 "
-label_settings = ExtResource("8_cgyhp")
+label_settings = SubResource("LabelSettings_6o14p")
 
 [node name="CRAFTING" type="Label" parent="InventoryPanel" unique_id=1939513885]
 layout_mode = 1
@@ -305,7 +312,6 @@ label_settings = ExtResource("12_osq45")
 autowrap_mode = 2
 
 [node name="Settings" type="Panel" parent="." unique_id=1130868835]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -313,9 +319,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -461.0
-offset_top = -259.7015
-offset_right = 460.99994
-offset_bottom = 346.2985
+offset_top = 1022.8059
+offset_right = 461.0
+offset_bottom = 1628.8059
 grow_horizontal = 2
 grow_vertical = 2
 
