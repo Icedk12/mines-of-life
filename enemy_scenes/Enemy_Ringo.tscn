@@ -1,0 +1,112 @@
+[gd_scene format=3 uid="uid://bdev8octkt2pg"]
+
+[ext_resource type="Script" uid="uid://cpwuytnqsb3el" path="res://scripts/player/Enemy.gd" id="1_sjgs5"]
+[ext_resource type="Script" uid="uid://bwrxmli0ytcnx" path="res://scripts/components/HealthComponent.gd" id="2_a7ba5"]
+[ext_resource type="AudioStream" uid="uid://gcflgcm0rdqc" path="res://assets/sounds/punch.mp3" id="3_u34va"]
+[ext_resource type="AudioStream" uid="uid://clmywct42c2fw" path="res://assets/sounds/EnemyDeath.wav" id="4_i82h7"]
+[ext_resource type="Texture2D" uid="uid://b53vstpt280rx" path="res://assets/enemies/Ringo.png" id="5_sjgs5"]
+[ext_resource type="Script" uid="uid://bkn8koxdnb8w0" path="res://scripts/components/AudioSource.gd" id="6_qun4t"]
+[ext_resource type="Script" uid="uid://b23pa557xdb" path="res://scripts/components/SpriteModifierComponent.gd" id="7_vheb0"]
+[ext_resource type="Script" uid="uid://d164jamb4hq8l" path="res://scripts/types/TweenInfo.gd" id="8_fehip"]
+[ext_resource type="Resource" uid="uid://dv3vrykt2w7dn" path="res://assets/tweens/FlattenDefault.tres" id="9_s47pn"]
+[ext_resource type="Resource" uid="uid://c4ksnhibohkjd" path="res://assets/tweens/DeathTween.tres" id="10_vphun"]
+[ext_resource type="Texture2D" uid="uid://b2ibw5226ajqs" path="res://assets/above/MenuParticles.png" id="11_7av35"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ed2m"]
+size = Vector2(7.6908693, 8.141918)
+
+[sub_resource type="Resource" id="Resource_8mung"]
+script = ExtResource("8_fehip")
+scale = Vector2(1.5, 1.5)
+metadata/_custom_type_script = "uid://d164jamb4hq8l"
+
+[sub_resource type="Resource" id="Resource_vhjhn"]
+script = ExtResource("8_fehip")
+metadata/_custom_type_script = "uid://d164jamb4hq8l"
+
+[sub_resource type="Resource" id="Resource_f6ogp"]
+script = ExtResource("8_fehip")
+metadata/_custom_type_script = "uid://d164jamb4hq8l"
+
+[sub_resource type="Resource" id="Resource_hcxxg"]
+script = ExtResource("8_fehip")
+scale = Vector2(1.5, 0.8)
+metadata/_custom_type_script = "uid://d164jamb4hq8l"
+
+[sub_resource type="Gradient" id="Gradient_c5e50"]
+offsets = PackedFloat32Array(0.0033112583, 0.16556291, 1)
+colors = PackedColorArray(0.6901961, 0.35686275, 0.17254902, 1, 0.972549, 0.77254903, 0.22745098, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hcxxg"]
+gradient = SubResource("Gradient_c5e50")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r3qvn"]
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 43.719997
+initial_velocity_max = 43.719997
+angular_velocity_min = -287.21002
+angular_velocity_max = 200.65997
+gravity = Vector3(0, 98, 0)
+color_ramp = SubResource("GradientTexture1D_hcxxg")
+anim_speed_max = 3.4499998
+
+[node name="Enemy" type="CharacterBody2D" unique_id=1603327297 node_paths=PackedStringArray("sprite_modifier_component", "health_component", "death_particles") groups=["enemy"]]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_sjgs5")
+sprite_modifier_component = NodePath("SpriteModifierComponent")
+health_component = NodePath("HealthComponent")
+move_speed = 80.0
+contact_damage = 2.0
+jump_velocity = 50.0
+death_particles = NodePath("DeathParticles")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=422898822 node_paths=PackedStringArray("audio_source", "sprite") groups=["enemy"]]
+script = ExtResource("2_a7ba5")
+xp_drop = 30.0
+audio_source = NodePath("../AudioSourceComponent")
+damage_sounds = Array[AudioStream]([ExtResource("3_u34va")])
+death_sounds = Array[AudioStream]([ExtResource("4_i82h7")])
+sprite = NodePath("../Sprite")
+metadata/_custom_type_script = "uid://bwrxmli0ytcnx"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=810813100 groups=["enemy"]]
+position = Vector2(1.1920929e-07, 0.06852741)
+scale = Vector2(1.0401945, 0.96573627)
+shape = SubResource("RectangleShape2D_3ed2m")
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=2115411176 groups=["enemy"]]
+texture = ExtResource("5_sjgs5")
+
+[node name="AudioSourceComponent" type="Node" parent="." unique_id=1932332966 node_paths=PackedStringArray("audio_player")]
+script = ExtResource("6_qun4t")
+audio_player = NodePath("AudioStreamPlayer2D")
+metadata/_custom_type_script = "uid://bkn8koxdnb8w0"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="AudioSourceComponent" unique_id=971496366]
+
+[node name="SpriteModifierComponent" type="Node" parent="." unique_id=1932079127 node_paths=PackedStringArray("sprite", "audio_source")]
+script = ExtResource("7_vheb0")
+sprite = NodePath("../Sprite")
+audio_source = NodePath("../AudioSourceComponent")
+squash_tween = SubResource("Resource_8mung")
+stretch_tween = SubResource("Resource_vhjhn")
+return_tween = SubResource("Resource_f6ogp")
+flatten_tween = ExtResource("9_s47pn")
+hide_tween = ExtResource("10_vphun")
+mining_tween = SubResource("Resource_hcxxg")
+mining_angle_degrees = 45.0
+metadata/_custom_type_script = "uid://b23pa557xdb"
+
+[node name="DeathParticles" type="GPUParticles2D" parent="." unique_id=150083457]
+emitting = false
+texture = ExtResource("11_7av35")
+one_shot = true
+explosiveness = 1.0
+trail_enabled = true
+trail_lifetime = 0.1
+trail_sections = 2
+process_material = SubResource("ParticleProcessMaterial_r3qvn")

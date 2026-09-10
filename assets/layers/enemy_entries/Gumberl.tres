@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EnemySpawnEntry" format=3 uid="uid://c8y1tx8t03hva"]
+
+[ext_resource type="PackedScene" uid="uid://pa0cultm5qnq" path="res://enemy_scenes/Enemy_Gumberl.tscn" id="1_4k32p"]
+[ext_resource type="Script" uid="uid://bqbwgkiq558fa" path="res://scripts/types/EnemySpawnEntry.gd" id="2_571ui"]
+
+[resource]
+script = ExtResource("2_571ui")
+enemy_scene = ExtResource("1_4k32p")
+metadata/_custom_type_script = "uid://bqbwgkiq558fa"

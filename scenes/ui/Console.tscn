@@ -8,6 +8,7 @@ oversampling_override = 1.0
 title = "mol-debug"
 position = Vector2i(0, 36)
 size = Vector2i(600, 400)
+unresizable = true
 theme_override_fonts/title_font = ExtResource("1_qdcll")
 theme_override_font_sizes/title_font_size = 14
 script = ExtResource("2_cvmmc")

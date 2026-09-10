@@ -29,6 +29,8 @@ func _ready() -> void:
 	register_command("dmg", _cmd_damage, "Damages player x health, enter a number.")
 	register_command("zoom", _cmd_zoom, "Sets player camera zoom.")
 	register_command("xp", _cmd_add_xp, "Adds XP to the player.")
+	
+	register_command("upgrade", _cmd_add_upgrade, "Gives upgrade by numerical id.")
 
 
 func toggle_console() -> void:
@@ -48,8 +50,8 @@ func register_command(command_name: String, callback: Callable, description: Str
 	}
 
 func log_message(text: String) -> void:
+	
 	output_log.append_text(text + "\n")
-
 func _on_text_submitted(input_text: String) -> void:
 	input_line.clear()
 	
@@ -59,13 +61,11 @@ func _on_text_submitted(input_text: String) -> void:
 		
 	log_message("[color=gray]> " + trimmed + "[/color]")
 	
-	# Parse command name and arguments
 	var parts := trimmed.split(" ", false)
 	var cmd_name := parts[0].to_lower()
-	var args: Array[String] = []
 	
-	for i in range(1, parts.size()):
-		args.append(parts[i])
+	var args: Array[String] = []
+	args.assign(parts.slice(1))
 		
 	if commands.has(cmd_name):
 		commands[cmd_name]["callback"].call(args)
@@ -161,6 +161,21 @@ func _cmd_add_xp(_args: Array[String]) -> void:
 	
 	main.player.xp_component.add_xp(float(_args[0]))
 	log_message("gave %s xp to player" % _args[0])
+
+func _cmd_add_upgrade(_args: Array[String]) -> void:
+	validate_args(_args)
+	
+	if not _args[0].is_valid_int() and not _args[0].is_valid_float():
+		log_message("invalid arg")
+	
+	if not _args[1].is_valid_int() and not _args[1].is_valid_float():
+		log_message("invalid length")
+	
+	var up := UpgradeDatabase.get_upgrade_by_id(int(_args[0]))
+	
+	for i : int in range(int(_args[1])):
+		main.player.stat_manager._new_upgrade(up)
+	log_message("gave upgrade %s to player %s times" % [up.display_name, _args[1]])
 
 func _cmd_contrib(_args: Array[String]) -> void:
 	_cmd_clear(_args)

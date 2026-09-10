@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EnemySpawnEntry" format=3 uid="uid://bblk0uxavwp2g"]
+
+[ext_resource type="PackedScene" uid="uid://dt8gptbugk8hs" path="res://enemy_scenes/Enemy_Choc.tscn" id="1_vwg1b"]
+[ext_resource type="Script" uid="uid://bqbwgkiq558fa" path="res://scripts/types/EnemySpawnEntry.gd" id="2_c15ys"]
+
+[resource]
+script = ExtResource("2_c15ys")
+enemy_scene = ExtResource("1_vwg1b")
+weight = 1.1
+max_group_size = 3
+metadata/_custom_type_script = "uid://bqbwgkiq558fa"

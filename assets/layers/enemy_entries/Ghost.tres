@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemySpawnEntry" format=3 uid="uid://ddlvtty14ii47"]
+
+[ext_resource type="PackedScene" uid="uid://bfsvsqr20m2et" path="res://enemy_scenes/Enemy_Ghost.tscn" id="1_mpqx3"]
+[ext_resource type="Script" uid="uid://bqbwgkiq558fa" path="res://scripts/types/EnemySpawnEntry.gd" id="2_es4ie"]
+
+[resource]
+script = ExtResource("2_es4ie")
+enemy_scene = ExtResource("1_mpqx3")
+max_group_size = 2
+metadata/_custom_type_script = "uid://bqbwgkiq558fa"

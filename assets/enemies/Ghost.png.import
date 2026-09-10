@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c682mwoq1syr2"
-path="res://.godot/imported/Redback.png-3ac914952c68d623d8b94abb464df5f1.ctex"
+uid="uid://cl5w6mj6impht"
+path="res://.godot/imported/Ghost.png-b79ee83ccf5ec67bb9ce6fd58f88c86e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemies/Redback.png"
-dest_files=["res://.godot/imported/Redback.png-3ac914952c68d623d8b94abb464df5f1.ctex"]
+source_file="res://assets/enemies/Ghost.png"
+dest_files=["res://.godot/imported/Ghost.png-b79ee83ccf5ec67bb9ce6fd58f88c86e.ctex"]
 
 [params]
 

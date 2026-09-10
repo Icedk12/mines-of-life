@@ -13,4 +13,6 @@ y_top = 1070
 y_bottom = 1200
 terrain_id = 11
 tile_generate_chance = 1.0
+max_enemies_per_chunk = 0
+spawn_chance_per_chunk = 0.0
 metadata/_custom_type_script = "uid://dfh7h1yrac1vi"

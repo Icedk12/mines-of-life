@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EnemySpawnEntry" format=3 uid="uid://bi57sj8fqhnca"]
+
+[ext_resource type="PackedScene" uid="uid://bdev8octkt2pg" path="res://enemy_scenes/Enemy_Ringo.tscn" id="1_yrn2i"]
+[ext_resource type="Script" uid="uid://bqbwgkiq558fa" path="res://scripts/types/EnemySpawnEntry.gd" id="2_pkv2c"]
+
+[resource]
+script = ExtResource("2_pkv2c")
+enemy_scene = ExtResource("1_yrn2i")
+metadata/_custom_type_script = "uid://bqbwgkiq558fa"

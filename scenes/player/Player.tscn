@@ -60,9 +60,10 @@ metadata/_custom_type_script = "uid://d164jamb4hq8l"
 
 [sub_resource type="AudioStreamWAV" id="AudioStreamWAV_mndc6"]
 
-[node name="Player" type="CharacterBody2D" unique_id=872088493 node_paths=PackedStringArray("xp_component", "player_gui", "health_component", "mine_component", "control_component", "sprite_modifier_component") groups=["player"]]
+[node name="Player" type="CharacterBody2D" unique_id=872088493 node_paths=PackedStringArray("stat_manager", "xp_component", "player_gui", "health_component", "mine_component", "control_component", "sprite_modifier_component") groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_wr5hl")
+stat_manager = NodePath("StatManager")
 xp_component = NodePath("XPComponent")
 player_gui = NodePath("UILayer/PlayerGUI")
 health_component = NodePath("HealthComponent")
