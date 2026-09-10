@@ -160,11 +160,11 @@ agent_radius = 0.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_oaixa"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ijwxs"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_n0470"]
 load_path = "res://.godot/imported/CouchTilemap.png-c79457538c50f1965f593671a3c9ad84.ctex"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_akadf"]
-texture = SubResource("CompressedTexture2D_ijwxs")
+texture = SubResource("CompressedTexture2D_n0470")
 texture_region_size = Vector2i(8, 8)
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -1526,6 +1526,7 @@ texture_region_size = Vector2i(8, 8)
 0:12/0 = 0
 0:12/0/terrain_set = 0
 0:12/0/terrain = 4
+0:12/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
 0:12/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_ajxk3")
 0:12/0/custom_data_0 = 4
 1:12/0 = 0
@@ -1535,6 +1536,7 @@ texture_region_size = Vector2i(8, 8)
 2:12/0 = 0
 2:12/0/terrain_set = 0
 2:12/0/terrain = 3
+2:12/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
 2:12/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_ajxk3")
 2:12/0/custom_data_0 = 3
 2:12/0/custom_data_1 = 1
@@ -2019,6 +2021,7 @@ texture_region_size = Vector2i(8, 8)
 0:13/0 = 0
 0:13/0/terrain_set = 0
 0:13/0/terrain = 8
+0:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
 0:13/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_1cofa")
 0:13/0/custom_data_0 = 8
 0:13/0/custom_data_1 = 2
@@ -4834,8 +4837,12 @@ texture_region_size = Vector2i(8, 8)
 11:43/0/terrains_peering_bit/top_side = 14
 11:43/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_x7gjp")
 11:43/0/custom_data_0 = 14
-8:11/0 = 0
 2:13/0 = 0
+2:13/0/terrain_set = 0
+2:13/0/terrain = 16
+2:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+2:13/0/custom_data_0 = 16
+2:13/0/custom_data_1 = 4
 0:44/0 = 0
 0:44/0/terrain_set = 0
 0:44/0/terrain = 15
@@ -5304,6 +5311,12 @@ texture_region_size = Vector2i(8, 8)
 8:46/0/terrains_peering_bit/top_side = 15
 8:46/0/terrains_peering_bit/top_right_corner = 15
 8:46/0/custom_data_0 = 15
+3:13/0 = 0
+3:13/0/terrain_set = 0
+3:13/0/terrain = 17
+3:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -2.981762, 4, -2.981762, 4, 4, -4, 4)
+3:13/0/custom_data_0 = 17
+3:13/0/custom_data_1 = 3
 
 [resource]
 tile_size = Vector2i(8, 8)
@@ -5342,6 +5355,10 @@ terrain_set_0/terrain_14/name = "Deep Stuffing"
 terrain_set_0/terrain_14/color = Color(0.5, 0.25, 0.34375, 1)
 terrain_set_0/terrain_15/name = "Plastic"
 terrain_set_0/terrain_15/color = Color(0.94700533, 0, 0.22292438, 1)
+terrain_set_0/terrain_16/name = "Heavy Furnace"
+terrain_set_0/terrain_16/color = Color(0.5, 0.34375, 0.25, 1)
+terrain_set_0/terrain_17/name = "Anvil"
+terrain_set_0/terrain_17/color = Color(0.5, 0.4375, 0.25, 1)
 navigation_layer_0/layers = 1
 custom_data_layer_0/name = "block_id"
 custom_data_layer_0/type = 2
