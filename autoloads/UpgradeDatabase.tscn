@@ -9,6 +9,11 @@
 [ext_resource type="Texture2D" uid="uid://dnribgdmwgxie" path="res://assets/ui/Darkness.png" id="7_pxwwb"]
 [ext_resource type="Texture2D" uid="uid://bavx0abfrnd5c" path="res://assets/items/Verified.png" id="8_ij5qv"]
 [ext_resource type="Texture2D" uid="uid://byl74pih8ko7j" path="res://assets/items/Heart.png" id="9_shcay"]
+[ext_resource type="Texture2D" uid="uid://dahk78ahsbx25" path="res://assets/items/Plastic.png" id="10_4cot0"]
+[ext_resource type="Texture2D" uid="uid://doan8gyvb11jn" path="res://assets/items/DiamondPickaxe.png" id="11_af11p"]
+[ext_resource type="Texture2D" uid="uid://bucaeac24tjir" path="res://assets/items/BeserkerTonic.png" id="12_w6lmb"]
+[ext_resource type="Texture2D" uid="uid://3tqacb6tau0a" path="res://assets/items/TurtleShell.png" id="13_af11p"]
+[ext_resource type="Texture2D" uid="uid://bf88coteb1ihb" path="res://assets/items/HermesBoots.png" id="14_w6lmb"]
 
 [sub_resource type="Resource" id="Resource_beeo5"]
 script = ExtResource("3_kxwsu")
@@ -93,6 +98,86 @@ details = "+ 1 Health."
 stat_data = SubResource("Resource_ye1dr")
 metadata/_custom_type_script = "uid://e1yhfdilgcqt"
 
+[sub_resource type="Resource" id="Resource_4cot0"]
+script = ExtResource("3_kxwsu")
+speed_modifier = 1.15
+jump_offset = 1.0
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_af11p"]
+script = ExtResource("2_hr7v6")
+upgrade_id = 6
+texture = ExtResource("10_4cot0")
+display_name = "Lightfooted"
+details = "+15% Movement speed and +1 Jump height"
+stat_data = SubResource("Resource_4cot0")
+metadata/_custom_type_script = "uid://e1yhfdilgcqt"
+
+[sub_resource type="Resource" id="Resource_w6lmb"]
+script = ExtResource("3_kxwsu")
+mine_damage_modifier = 1.25
+mine_strength = 1
+swing_speed = 0.5
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_qfk01"]
+script = ExtResource("2_hr7v6")
+upgrade_id = 7
+texture = ExtResource("11_af11p")
+display_name = "Heavy Pick"
+details = "You feel stronger, at what cost?"
+stat_data = SubResource("Resource_w6lmb")
+metadata/_custom_type_script = "uid://e1yhfdilgcqt"
+
+[sub_resource type="Resource" id="Resource_fluax"]
+script = ExtResource("3_kxwsu")
+damage_modifier = 1.25
+swing_speed_offset = 0.05
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_pq0xd"]
+script = ExtResource("2_hr7v6")
+upgrade_id = 8
+texture = ExtResource("12_w6lmb")
+display_name = "Beserker Tonic"
+details = "+20% Damage and +0.05 Swing speed."
+stat_data = SubResource("Resource_fluax")
+metadata/_custom_type_script = "uid://e1yhfdilgcqt"
+
+[sub_resource type="Resource" id="Resource_a301m"]
+script = ExtResource("3_kxwsu")
+health_modifier = 1.25
+health_offset = 3.0
+defense_modifier = 1.5
+defense_offset = 1.0
+speed_modifier = 0.7
+jump_modifier = 0.8
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_ao02e"]
+script = ExtResource("2_hr7v6")
+upgrade_id = 9
+texture = ExtResource("13_af11p")
+display_name = "Turtle Shell"
+details = "Increased health, lowered speed."
+stat_data = SubResource("Resource_a301m")
+metadata/_custom_type_script = "uid://e1yhfdilgcqt"
+
+[sub_resource type="Resource" id="Resource_a0ijp"]
+script = ExtResource("3_kxwsu")
+speed_modifier = 1.3
+jump_offset = 0.3
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_otjqf"]
+script = ExtResource("2_hr7v6")
+upgrade_id = 10
+texture = ExtResource("14_w6lmb")
+display_name = "Hermes Boots"
+details = "The wearer can run super fast!"
+stat_data = SubResource("Resource_a0ijp")
+metadata/_custom_type_script = "uid://e1yhfdilgcqt"
+
 [node name="UpgradeDatabase" type="Node" unique_id=1155908573]
 script = ExtResource("1_j4hte")
-upgrades = Array[ExtResource("2_hr7v6")]([SubResource("Resource_j4hte"), SubResource("Resource_kxwsu"), SubResource("Resource_bvphr"), SubResource("Resource_ij5qv"), SubResource("Resource_shcay"), SubResource("Resource_dcsf3")])
+upgrades = Array[ExtResource("2_hr7v6")]([SubResource("Resource_j4hte"), SubResource("Resource_kxwsu"), SubResource("Resource_bvphr"), SubResource("Resource_ij5qv"), SubResource("Resource_shcay"), SubResource("Resource_dcsf3"), SubResource("Resource_af11p"), SubResource("Resource_qfk01"), SubResource("Resource_pq0xd"), SubResource("Resource_ao02e"), SubResource("Resource_otjqf")])

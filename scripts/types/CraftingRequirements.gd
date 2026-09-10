@@ -5,4 +5,5 @@ enum Block {
 	CRAFTING_TABLE = 1,
 	FURNACE = 2,
 	ANVIL = 3,
+	HEAVYFURNACE = 4
 }

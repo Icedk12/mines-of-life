@@ -176,6 +176,24 @@ hit_sounds = null
 place_sounds = null
 metadata/_custom_type_script = "uid://h7cwu8wnif38"
 
+[sub_resource type="Resource" id="Resource_eoquc"]
+script = ExtResource("2_kxxcu")
+block_id = 16
+display_name = "Heavy Furnace"
+terrain_id = 16
+hit_sounds = null
+place_sounds = null
+metadata/_custom_type_script = "uid://h7cwu8wnif38"
+
+[sub_resource type="Resource" id="Resource_78shv"]
+script = ExtResource("2_kxxcu")
+block_id = 17
+display_name = "Anvil"
+terrain_id = 17
+hit_sounds = null
+place_sounds = null
+metadata/_custom_type_script = "uid://h7cwu8wnif38"
+
 [node name="BlockDatabase" type="Node" unique_id=1572723925]
 script = ExtResource("1_v6wp7")
-blocks = Array[ExtResource("2_kxxcu")]([SubResource("Resource_6ojj1"), SubResource("Resource_8nn5r"), SubResource("Resource_ui66f"), SubResource("Resource_xqib3"), SubResource("Resource_32n22"), SubResource("Resource_p6eds"), SubResource("Resource_oofu8"), SubResource("Resource_iwh46"), SubResource("Resource_n0470"), SubResource("Resource_32fc5"), SubResource("Resource_yx65c"), SubResource("Resource_ou2gv"), SubResource("Resource_bordp"), SubResource("Resource_qm8gl"), SubResource("Resource_4bfcm"), SubResource("Resource_jd7sx")])
+blocks = Array[ExtResource("2_kxxcu")]([SubResource("Resource_6ojj1"), SubResource("Resource_8nn5r"), SubResource("Resource_ui66f"), SubResource("Resource_xqib3"), SubResource("Resource_32n22"), SubResource("Resource_p6eds"), SubResource("Resource_oofu8"), SubResource("Resource_iwh46"), SubResource("Resource_n0470"), SubResource("Resource_32fc5"), SubResource("Resource_yx65c"), SubResource("Resource_ou2gv"), SubResource("Resource_bordp"), SubResource("Resource_qm8gl"), SubResource("Resource_4bfcm"), SubResource("Resource_jd7sx"), SubResource("Resource_eoquc"), SubResource("Resource_78shv")])

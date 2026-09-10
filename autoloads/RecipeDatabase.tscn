@@ -186,12 +186,148 @@ metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
 [sub_resource type="Resource" id="Resource_tb7a4"]
 script = ExtResource("2_ldqej")
+label = "Plastic Pickaxe"
 crafting_requirement = 2
 output_item_id = 29
 input_item_ids = Array[int]([28])
 input_amounts = Array[int]([1])
 metadata/_custom_type_script = "uid://3orf6a8h3jra"
 
+[sub_resource type="Resource" id="Resource_6gbsl"]
+script = ExtResource("2_ldqej")
+label = "Diamond Pickaxe"
+crafting_requirement = 1
+output_item_id = 30
+input_item_ids = Array[int]([0, 26])
+input_amounts = Array[int]([1, 3])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_2nwwc"]
+script = ExtResource("2_ldqej")
+label = "Diamond Helmet"
+crafting_requirement = 1
+output_item_id = 31
+input_item_ids = Array[int]([26])
+input_amounts = Array[int]([5])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_v5nhk"]
+script = ExtResource("2_ldqej")
+label = "Diamond Armour"
+crafting_requirement = 1
+output_item_id = 32
+input_item_ids = Array[int]([26])
+input_amounts = Array[int]([8])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_wutqr"]
+script = ExtResource("2_ldqej")
+label = "Diamond Sword"
+crafting_requirement = 1
+output_item_id = 33
+input_item_ids = Array[int]([26])
+input_amounts = Array[int]([4])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_qaab1"]
+script = ExtResource("2_ldqej")
+label = "Gold Sword"
+crafting_requirement = 1
+output_item_id = 35
+input_item_ids = Array[int]([25])
+input_amounts = Array[int]([4])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_06lun"]
+script = ExtResource("2_ldqej")
+label = "Leather Sword"
+crafting_requirement = 1
+output_item_id = 34
+input_item_ids = Array[int]([1])
+input_amounts = Array[int]([4])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_nmv6c"]
+script = ExtResource("2_ldqej")
+label = "Gold Pickaxe"
+crafting_requirement = 1
+output_item_id = 38
+input_item_ids = Array[int]([0, 25])
+input_amounts = Array[int]([1, 3])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_1bs3u"]
+script = ExtResource("2_ldqej")
+label = "Gold Armour"
+crafting_requirement = 1
+output_item_id = 37
+input_item_ids = Array[int]([25])
+input_amounts = Array[int]([8])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_40anq"]
+script = ExtResource("2_ldqej")
+label = "Gold Helmet"
+crafting_requirement = 1
+output_item_id = 36
+input_item_ids = Array[int]([25])
+input_amounts = Array[int]([5])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_ey2hx"]
+script = ExtResource("2_ldqej")
+label = "Penny Sword"
+crafting_requirement = 1
+output_item_id = 39
+input_item_ids = Array[int]([24])
+input_amounts = Array[int]([4])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_mwbti"]
+script = ExtResource("2_ldqej")
+label = "Plastic Pickaxe"
+crafting_requirement = 1
+output_item_id = 42
+input_item_ids = Array[int]([0, 29])
+input_amounts = Array[int]([1, 3])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_pb0gm"]
+script = ExtResource("2_ldqej")
+label = "Plastic Helmet"
+crafting_requirement = 1
+output_item_id = 40
+input_item_ids = Array[int]([29])
+input_amounts = Array[int]([5])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_t20r6"]
+script = ExtResource("2_ldqej")
+label = "Plastic Armour"
+crafting_requirement = 1
+output_item_id = 41
+input_item_ids = Array[int]([29])
+input_amounts = Array[int]([8])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_xxi1d"]
+script = ExtResource("2_ldqej")
+label = "Heavy Furnace"
+crafting_requirement = 1
+output_item_id = 43
+input_item_ids = Array[int]([27, 10])
+input_amounts = Array[int]([8, 1])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
+[sub_resource type="Resource" id="Resource_xjs6c"]
+script = ExtResource("2_ldqej")
+label = "Anvil"
+crafting_requirement = 1
+output_item_id = 44
+input_item_ids = Array[int]([27])
+input_amounts = Array[int]([12])
+metadata/_custom_type_script = "uid://3orf6a8h3jra"
+
 [node name="RecipeDatabase" type="Node" unique_id=1958750374]
 script = ExtResource("1_wtpcr")
-recipes = Array[ExtResource("2_ldqej")]([SubResource("Resource_wtpcr"), SubResource("Resource_wo6et"), SubResource("Resource_ldqej"), SubResource("Resource_4pnrd"), SubResource("Resource_310cl"), SubResource("Resource_78d1o"), SubResource("Resource_kuyi6"), SubResource("Resource_mdjt3"), SubResource("Resource_tor6a"), SubResource("Resource_xulxr"), SubResource("Resource_lujpk"), SubResource("Resource_j3fuy"), SubResource("Resource_gutlp"), SubResource("Resource_n0470"), SubResource("Resource_yx65c"), SubResource("Resource_u4baj"), SubResource("Resource_805j6"), SubResource("Resource_dfpmu"), SubResource("Resource_mbtbv"), SubResource("Resource_y1ru1"), SubResource("Resource_tb7a4")])
+recipes = Array[ExtResource("2_ldqej")]([SubResource("Resource_wtpcr"), SubResource("Resource_wo6et"), SubResource("Resource_ldqej"), SubResource("Resource_4pnrd"), SubResource("Resource_310cl"), SubResource("Resource_78d1o"), SubResource("Resource_kuyi6"), SubResource("Resource_mdjt3"), SubResource("Resource_tor6a"), SubResource("Resource_xulxr"), SubResource("Resource_lujpk"), SubResource("Resource_j3fuy"), SubResource("Resource_gutlp"), SubResource("Resource_n0470"), SubResource("Resource_yx65c"), SubResource("Resource_u4baj"), SubResource("Resource_805j6"), SubResource("Resource_dfpmu"), SubResource("Resource_mbtbv"), SubResource("Resource_y1ru1"), SubResource("Resource_tb7a4"), SubResource("Resource_6gbsl"), SubResource("Resource_2nwwc"), SubResource("Resource_v5nhk"), SubResource("Resource_wutqr"), SubResource("Resource_qaab1"), SubResource("Resource_06lun"), SubResource("Resource_nmv6c"), SubResource("Resource_1bs3u"), SubResource("Resource_40anq"), SubResource("Resource_ey2hx"), SubResource("Resource_mwbti"), SubResource("Resource_pb0gm"), SubResource("Resource_t20r6"), SubResource("Resource_xxi1d"), SubResource("Resource_xjs6c")])

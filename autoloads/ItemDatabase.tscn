@@ -32,6 +32,21 @@
 [ext_resource type="Texture2D" uid="uid://bmv6w1v68k4g1" path="res://assets/items/DeepStuffing.png" id="30_dssb6"]
 [ext_resource type="Texture2D" uid="uid://dahk78ahsbx25" path="res://assets/items/Plastic.png" id="31_1tj1n"]
 [ext_resource type="Texture2D" uid="uid://dm4l7svkmbjgl" path="res://assets/items/MeltedPlastic.png" id="32_t8n80"]
+[ext_resource type="Texture2D" uid="uid://doan8gyvb11jn" path="res://assets/items/DiamondPickaxe.png" id="33_hr6jk"]
+[ext_resource type="Texture2D" uid="uid://d4iqr31xrn8eb" path="res://assets/items/DiamondHelmet.png" id="34_ftda2"]
+[ext_resource type="Texture2D" uid="uid://6y08kjvgux6g" path="res://assets/items/DiamondArmour.png" id="35_see1o"]
+[ext_resource type="Texture2D" uid="uid://bo3na6n5qey0k" path="res://assets/items/DiamondSword.png" id="36_iwcbe"]
+[ext_resource type="Texture2D" uid="uid://74l7nrke2u2p" path="res://assets/items/LeatherSword.png" id="37_0r5as"]
+[ext_resource type="Texture2D" uid="uid://basv4tp44fl7h" path="res://assets/items/GoldSword.png" id="38_7dklb"]
+[ext_resource type="Texture2D" uid="uid://yke10vs70uvm" path="res://assets/items/GoldHelmet.png" id="39_0r5as"]
+[ext_resource type="Texture2D" uid="uid://jmgucyjurgjs" path="res://assets/items/GoldArmour.png" id="40_7dklb"]
+[ext_resource type="Texture2D" uid="uid://bjcm3wpm1lsmq" path="res://assets/items/GoldPickaxe.png" id="41_biu8j"]
+[ext_resource type="Texture2D" uid="uid://fj02wpn0r4h4" path="res://assets/items/PennySword.png" id="42_2as62"]
+[ext_resource type="Texture2D" uid="uid://dx5kwxxlbw13o" path="res://assets/items/PlasticHelmet.png" id="43_mh8cg"]
+[ext_resource type="Texture2D" uid="uid://itbnk02we7nx" path="res://assets/items/PlasticArmour.png" id="44_owovl"]
+[ext_resource type="Texture2D" uid="uid://iacjtjj44244" path="res://assets/items/PlasticPickaxe.png" id="45_4jhjs"]
+[ext_resource type="Texture2D" uid="uid://brthcfyfpb7ec" path="res://assets/items/HeavyFurnace.png" id="46_cxdr3"]
+[ext_resource type="Texture2D" uid="uid://713a7i0x7c1r" path="res://assets/items/Anvil.png" id="47_qgj71"]
 
 [sub_resource type="Resource" id="Resource_v05ge"]
 script = ExtResource("2_gp7j7")
@@ -176,7 +191,7 @@ metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
 [sub_resource type="Resource" id="Resource_a8jyo"]
 script = ExtResource("4_iwh46")
-damage_offset = 0.5
+damage_offset = 1.0
 metadata/_custom_type_script = "uid://djcpbulvvrjuf"
 
 [sub_resource type="Resource" id="Resource_gutlp"]
@@ -375,21 +390,248 @@ icon = ExtResource("32_t8n80")
 block_id = -1
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
+[sub_resource type="Resource" id="Resource_iwcbe"]
+script = ExtResource("4_iwh46")
+damage_modifier = 1.15
+damage_offset = 0.5
+mine_damage_modifier = 2.0
+mine_strength = 15
+swing_speed = 0.42
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
 [sub_resource type="Resource" id="Resource_t8n80"]
 script = ExtResource("2_gp7j7")
 item_id = 30
-item_name = "Plastic Pickaxe"
+item_name = "Diamond Pickaxe"
 stack_size = 1
+icon = ExtResource("33_hr6jk")
+block_id = -1
+equipment_slot_mode = 3
+stat_data = SubResource("Resource_iwcbe")
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_0r5as"]
+script = ExtResource("4_iwh46")
+health_offset = 2.0
+speed_modifier = 1.15
+jump_modifier = 1.15
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
 
 [sub_resource type="Resource" id="Resource_ftda2"]
 script = ExtResource("2_gp7j7")
+item_id = 31
+item_name = "Diamond Helmet"
+stack_size = 1
+icon = ExtResource("34_ftda2")
+block_id = -1
+equipment_slot_mode = 1
+stat_data = SubResource("Resource_0r5as")
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_7dklb"]
+script = ExtResource("4_iwh46")
+health_modifier = 1.15
+health_offset = 8.0
+damage_modifier = 1.15
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
 
 [sub_resource type="Resource" id="Resource_see1o"]
 script = ExtResource("2_gp7j7")
+item_id = 32
+item_name = "Diamond Armour"
+stack_size = 1
+icon = ExtResource("35_see1o")
+block_id = -1
+equipment_slot_mode = 2
+stat_data = SubResource("Resource_7dklb")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_biu8j"]
+script = ExtResource("4_iwh46")
+damage_offset = 5.0
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_2as62"]
+script = ExtResource("2_gp7j7")
+item_id = 33
+item_name = "Diamond Sword"
+stack_size = 1
+icon = ExtResource("36_iwcbe")
+block_id = -1
+equipment_slot_mode = 4
+stat_data = SubResource("Resource_biu8j")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_mh8cg"]
+script = ExtResource("4_iwh46")
+damage_offset = 0.5
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_owovl"]
+script = ExtResource("2_gp7j7")
+item_id = 34
+item_name = "Leather Sword"
+stack_size = 1
+icon = ExtResource("37_0r5as")
+block_id = -1
+equipment_slot_mode = 4
+stat_data = SubResource("Resource_mh8cg")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_4jhjs"]
+script = ExtResource("4_iwh46")
+damage_offset = 2.0
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_kcb13"]
+script = ExtResource("2_gp7j7")
+item_id = 35
+item_name = "Gold Sword"
+stack_size = 1
+icon = ExtResource("38_7dklb")
+block_id = -1
+equipment_slot_mode = 4
+stat_data = SubResource("Resource_4jhjs")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_cxdr3"]
+script = ExtResource("4_iwh46")
+health_offset = 1.0
+speed_offset = 0.7
+jump_offset = 0.5
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_qgj71"]
+script = ExtResource("2_gp7j7")
+item_id = 36
+item_name = "Gold Helmet"
+stack_size = 1
+icon = ExtResource("39_0r5as")
+block_id = -1
+equipment_slot_mode = 1
+stat_data = SubResource("Resource_cxdr3")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_ss5yv"]
+script = ExtResource("4_iwh46")
+health_modifier = 1.2
+speed_offset = 0.25
+swing_speed_offset = 0.02
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_ch3gx"]
+script = ExtResource("2_gp7j7")
+item_id = 37
+item_name = "Gold Armour"
+stack_size = 1
+icon = ExtResource("40_7dklb")
+block_id = -1
+equipment_slot_mode = 2
+stat_data = SubResource("Resource_ss5yv")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_klbtk"]
+script = ExtResource("4_iwh46")
+speed_modifier = 1.1
+damage_offset = 0.5
+mine_strength = 4
+swing_speed = 0.025
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_eusoi"]
+script = ExtResource("2_gp7j7")
+item_id = 38
+item_name = "Gold Pickaxe"
+stack_size = 1
+icon = ExtResource("41_biu8j")
+block_id = -1
+equipment_slot_mode = 3
+stat_data = SubResource("Resource_klbtk")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_vpnuh"]
+script = ExtResource("4_iwh46")
+damage_offset = 1.5
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_vosl2"]
+script = ExtResource("2_gp7j7")
+item_id = 39
+item_name = "Penny Sword"
+stack_size = 1
+icon = ExtResource("42_2as62")
+block_id = -1
+equipment_slot_mode = 4
+stat_data = SubResource("Resource_vpnuh")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_q0we7"]
+script = ExtResource("4_iwh46")
+health_offset = 2.0
+speed_offset = 1.3
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_efb7l"]
+script = ExtResource("2_gp7j7")
+item_id = 40
+item_name = "Plastic Helmet"
+stack_size = 1
+icon = ExtResource("43_mh8cg")
+block_id = -1
+equipment_slot_mode = 1
+stat_data = SubResource("Resource_q0we7")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_qp6jy"]
+script = ExtResource("4_iwh46")
+health_offset = 4.0
+jump_offset = 1.0
+damage_modifier = 1.2
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_raduy"]
+script = ExtResource("2_gp7j7")
+item_id = 41
+item_name = "Plastic Armour"
+stack_size = 1
+icon = ExtResource("44_owovl")
+block_id = -1
+equipment_slot_mode = 2
+stat_data = SubResource("Resource_qp6jy")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_p7upy"]
+script = ExtResource("4_iwh46")
+mine_strength = 5
+swing_speed = 0.18
+metadata/_custom_type_script = "uid://djcpbulvvrjuf"
+
+[sub_resource type="Resource" id="Resource_be4m6"]
+script = ExtResource("2_gp7j7")
+item_id = 42
+item_name = "Plastic Pickaxe"
+icon = ExtResource("45_4jhjs")
+block_id = -1
+equipment_slot_mode = 3
+stat_data = SubResource("Resource_p7upy")
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_fubh6"]
+script = ExtResource("2_gp7j7")
+item_id = 43
+item_name = "Heavy Furnace"
+icon = ExtResource("46_cxdr3")
+block_id = 16
+metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
+
+[sub_resource type="Resource" id="Resource_xncr4"]
+script = ExtResource("2_gp7j7")
+item_id = 44
+item_name = "Anvil"
+icon = ExtResource("47_qgj71")
+block_id = 17
 metadata/_custom_type_script = "uid://cjhkyagc4mdgn"
 
 [node name="ItemDatabase" type="Node" unique_id=1572723925]
 script = ExtResource("1_ptkgt")
-item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn"), SubResource("Resource_1tuwj"), SubResource("Resource_iwh46"), SubResource("Resource_7vfln"), SubResource("Resource_ci6rp"), SubResource("Resource_wo6et"), SubResource("Resource_jw16n"), SubResource("Resource_4pnrd"), SubResource("Resource_efpqa"), SubResource("Resource_310cl"), SubResource("Resource_ldqej"), SubResource("Resource_ud80n"), SubResource("Resource_gutlp"), SubResource("Resource_j4i65"), SubResource("Resource_c6kvi"), SubResource("Resource_ui66f"), SubResource("Resource_6fy5s"), SubResource("Resource_mnwqx"), SubResource("Resource_5tp5t"), SubResource("Resource_78d1o"), SubResource("Resource_xx0cy"), SubResource("Resource_n0470"), SubResource("Resource_u4baj"), SubResource("Resource_k1wlb"), SubResource("Resource_dssb6"), SubResource("Resource_33137"), SubResource("Resource_1tj1n"), SubResource("Resource_w81ab"), SubResource("Resource_hr6jk"), SubResource("Resource_t8n80"), SubResource("Resource_ftda2"), SubResource("Resource_see1o")])
+item = Array[ExtResource("2_gp7j7")]([SubResource("Resource_v05ge"), SubResource("Resource_gn7kn"), SubResource("Resource_1tuwj"), SubResource("Resource_iwh46"), SubResource("Resource_7vfln"), SubResource("Resource_ci6rp"), SubResource("Resource_wo6et"), SubResource("Resource_jw16n"), SubResource("Resource_4pnrd"), SubResource("Resource_efpqa"), SubResource("Resource_310cl"), SubResource("Resource_ldqej"), SubResource("Resource_ud80n"), SubResource("Resource_gutlp"), SubResource("Resource_j4i65"), SubResource("Resource_c6kvi"), SubResource("Resource_ui66f"), SubResource("Resource_6fy5s"), SubResource("Resource_mnwqx"), SubResource("Resource_5tp5t"), SubResource("Resource_78d1o"), SubResource("Resource_xx0cy"), SubResource("Resource_n0470"), SubResource("Resource_u4baj"), SubResource("Resource_k1wlb"), SubResource("Resource_dssb6"), SubResource("Resource_33137"), SubResource("Resource_1tj1n"), SubResource("Resource_w81ab"), SubResource("Resource_hr6jk"), SubResource("Resource_t8n80"), SubResource("Resource_ftda2"), SubResource("Resource_see1o"), SubResource("Resource_2as62"), SubResource("Resource_owovl"), SubResource("Resource_kcb13"), SubResource("Resource_qgj71"), SubResource("Resource_ch3gx"), SubResource("Resource_eusoi"), SubResource("Resource_vosl2"), SubResource("Resource_efb7l"), SubResource("Resource_raduy"), SubResource("Resource_be4m6"), SubResource("Resource_fubh6"), SubResource("Resource_xncr4")])
