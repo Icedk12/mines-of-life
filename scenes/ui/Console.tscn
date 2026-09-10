@@ -29,6 +29,12 @@ theme_override_fonts/bold_font = ExtResource("1_qdcll")
 theme_override_fonts/bold_italics_font = ExtResource("1_qdcll")
 theme_override_fonts/italics_font = ExtResource("1_qdcll")
 theme_override_fonts/mono_font = ExtResource("1_qdcll")
+theme_override_font_sizes/normal_font_size = 15
+text = "#   # ### #   # #####  ####     ###  #####    #     ### ##### ##### 
+## ##  #  ##  # #     #        #   # #        #      #  #     #     
+# # #  #  # # # ####   ###     #   # ####     #      #  ####  ####  
+#   #  #  #  ## #         #    #   # #        #      #  #     #     
+#   # ### #   # ##### ####      ###  #        ##### ### #     ##### "
 scroll_following = true
 
 [node name="LineEdit" type="LineEdit" parent="VBoxContainer" unique_id=432487183]

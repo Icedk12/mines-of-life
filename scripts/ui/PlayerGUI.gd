@@ -11,6 +11,7 @@ class_name PlayerGUI extends Control
 
 @export var xp_bar : TextureProgressBar
 @export var health_bar : TextureProgressBar
+@export var stat_lbl : Label
 var current_tween : Tween
 
 func _ready() -> void:
@@ -44,3 +45,4 @@ func _xp_update(current : float, max : float) -> void:
 
 func _level_up(new_level : int) -> void:
 	upgrade_panel_holder.draw_hand()
+	stat_lbl.text = "LEVEL: %s" %new_level
