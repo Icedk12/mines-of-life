@@ -34,4 +34,4 @@ scroll_following = true
 [node name="LineEdit" type="LineEdit" parent="VBoxContainer" unique_id=432487183]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qdcll")
-placeholder_text = "..."
+placeholder_text = "type help for a list of commands"
