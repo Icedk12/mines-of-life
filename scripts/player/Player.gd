@@ -4,6 +4,7 @@ class_name Player extends CharacterBody2D
 @onready var sprite : Sprite2D = $Sprite
 @onready var camera : ShakeableCamera2D = $Camera
 
+@export var main : Main
 @export var stat_manager : StatManager
 @export var xp_component : XPComponent
 @export var player_gui : PlayerGUI

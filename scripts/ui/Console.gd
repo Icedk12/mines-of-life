@@ -75,10 +75,17 @@ func _on_text_submitted(input_text: String) -> void:
 func _on_close_requested() -> void:
 	hide()
 
-func validate_args(_args: Array[String]) -> void:
+func validate_args(_args: Array[String]) -> bool:
 	if _args.size() == 0:
 		log_message("no argument provided")
-		return
+		return false
+	return true
+
+func validate_cheats(_args: Array[String]) -> bool:
+	if not GameSettings.cheats:
+		log_message("cheats are not enabled. use 'cheats' to enable")
+		return false
+	return true
 
 ########################## COMMANDS ########################
 
@@ -113,15 +120,13 @@ func _cmd_player_settings(_args: Array[String]) -> void:
 	log_message("cheats: %s" % GameSettings.cheats)
 
 func _cmd_cheats(_args: Array[String]) -> void:
-	validate_args(_args)
+	if not validate_args(_args): return
 	GameSettings.cheats = true if _args[0] == "true" else false
 	log_message("set cheats to: %s" % GameSettings.cheats)
 
 func _cmd_heal(_args: Array[String]) -> void:
-	validate_args(_args)
-	if not GameSettings.cheats:
-		log_message("cheats are not enabled. use 'cheats' to enable")
-		return
+	if not validate_args(_args): return
+	if not validate_cheats(_args): return
 		
 	if not _args[0].is_valid_int() and not _args[0].is_valid_float():
 		log_message("invalid heal amount")
@@ -129,10 +134,8 @@ func _cmd_heal(_args: Array[String]) -> void:
 	log_message("healed player by %s health" % _args[0])
 	
 func _cmd_damage(_args: Array[String]) -> void:
-	validate_args(_args)
-	if not GameSettings.cheats:
-		log_message("cheats are not enabled. use 'cheats' to enable")
-		return
+	if not validate_args(_args): return
+	if not validate_cheats(_args): return
 		
 	if not _args[0].is_valid_int() and not _args[0].is_valid_float():
 		log_message("invalid damage amount")
@@ -145,7 +148,7 @@ func _cmd_reload(_args: Array[String]) -> void:
 	get_tree().reload_current_scene()
 
 func _cmd_zoom(_args: Array[String]) -> void:
-	validate_args(_args)
+	if not validate_args(_args): return
 	
 	if not _args[0].is_valid_int() and not _args[0].is_valid_float():
 		log_message("invalid zoom amount")
@@ -154,7 +157,8 @@ func _cmd_zoom(_args: Array[String]) -> void:
 	log_message("zoomed camera to %s" % Vector2(float(_args[0]), float(_args[0])))
 
 func _cmd_add_xp(_args: Array[String]) -> void:
-	validate_args(_args)
+	if not validate_args(_args): return
+	if not validate_cheats(_args): return
 	
 	if not _args[0].is_valid_int() and not _args[0].is_valid_float():
 		log_message("invalid xp amount")
@@ -163,7 +167,8 @@ func _cmd_add_xp(_args: Array[String]) -> void:
 	log_message("gave %s xp to player" % _args[0])
 
 func _cmd_add_upgrade(_args: Array[String]) -> void:
-	validate_args(_args)
+	if not validate_args(_args): return
+	if not validate_cheats(_args): return
 	
 	if not _args[0].is_valid_int() and not _args[0].is_valid_float():
 		log_message("invalid arg")

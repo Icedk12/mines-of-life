@@ -90,6 +90,7 @@ metadata/_custom_type_script = "uid://71hg30844ma2"
 [sub_resource type="Resource" id="Resource_sxcmc"]
 script = ExtResource("6_e4y3p")
 scene = ExtResource("18_76sct")
+spawn_chance = 0.012
 metadata/_custom_type_script = "uid://71hg30844ma2"
 
 [node name="Level" type="Node2D" unique_id=131454242 node_paths=PackedStringArray("level_generator", "_layer1")]

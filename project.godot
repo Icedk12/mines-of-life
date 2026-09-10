@@ -13,7 +13,7 @@ config_version=5
 config/name="Mines of Life"
 run/main_scene="uid://roccjewn3t63"
 config/features=PackedStringArray("4.7", "Forward Plus")
-boot_splash/bg_color=Color(0.078431375, 0.20392157, 0.39215687, 1)
+boot_splash/bg_color=Color(0.038397167, 0.038397167, 0.03839716, 1)
 boot_splash/stretch_mode=0
 boot_splash/use_filter=false
 boot_splash/image="uid://bm3occsshl2iq"
@@ -34,8 +34,6 @@ FullscreenManager="*uid://cqw3x551uw0wc"
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
 window/size/mode=3
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"

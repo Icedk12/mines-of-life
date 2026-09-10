@@ -8,6 +8,8 @@ oversampling_override = 1.0
 title = "mol-debug"
 position = Vector2i(0, 36)
 size = Vector2i(600, 400)
+transient = true
+exclusive = true
 unresizable = true
 theme_override_fonts/title_font = ExtResource("1_qdcll")
 theme_override_font_sizes/title_font_size = 14
@@ -21,6 +23,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer" unique_id=779860704]
 layout_mode = 2
