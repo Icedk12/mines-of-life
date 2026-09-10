@@ -2,7 +2,7 @@ class_name XPComponent extends CharacterComponent
 
 signal xp_changed(current : float, max : float)
 signal level_up(new_level : int)
-
+@export var health_component : HealthComponent
 @export var base_max_xp : float = 100.0 ## XP required to go from level 1 to level 2
 @export var scale_factor : float = 1.1 ## Each level's requirement is multiplied by this
 
@@ -17,6 +17,7 @@ func add_xp(xp_to_add : float) -> void:
 		xp -= max_xp
 		level += 1
 		max_xp = base_max_xp * pow(scale_factor, level - 1)
+		health_component.heal(1000)
 		level_up.emit(level)
 		
 	xp_changed.emit(xp, max_xp)

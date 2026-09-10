@@ -62,7 +62,7 @@ func refresh() -> void:
 	count_label.set_text_value(str(recipe.output_amount) if recipe.output_amount > 1 else "")
 
 	var craftable := crafting_component.can_craft(recipe)
-	modulate.a = 1.0 if craftable else 0.4
+	modulate.a = 1.0 if craftable else 0.1
 	mouse_filter = Control.MOUSE_FILTER_STOP #if craftable else Control.MOUSE_FILTER_IGNORE
 
 func _gui_input(event: InputEvent) -> void:

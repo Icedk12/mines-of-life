@@ -1,6 +1,5 @@
 class_name ChunkStorage
 
-
 static func _save_dir(world_seed: int) -> String:
 	return "user://world_saves/%d" % world_seed
 
@@ -27,8 +26,7 @@ static func load_chunk(world_seed: int, chunk_key: Vector2i) -> Dictionary:
 	f.close()
 	return data if data is Dictionary else {}
 
-## Saves a chunk's modified-tile deltas to disk. The file's mere existence is what marks the chunk as "already generated" so ore/structure generation doesn't reroll on the next visit.
-## The tiles blend together but i would be lost without their chunks.
+## saves chunk data to appdata world saves folder
 static func save_chunk(world_seed: int, chunk_key: Vector2i, local_modified_tiles: Dictionary) -> void:
 	var dir := _save_dir(world_seed)
 	var err := DirAccess.make_dir_recursive_absolute(dir)
@@ -62,3 +60,25 @@ static func clear_world(world_seed: int) -> void:
 			dir.remove(file_name)
 		file_name = dir.get_next()
 	dir.list_dir_end()
+
+static func get_folder_size(path: String) -> int:
+	var total_size: int = 0
+	var dir = DirAccess.open(path)
+	
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		
+		while file_name != "":
+			var full_path = path + "/" + file_name
+			if dir.current_is_dir():
+				if file_name != "." and file_name != "..":
+					total_size += get_folder_size(full_path)
+			else:
+				var file = FileAccess.open(full_path, FileAccess.READ)
+				if file:
+					total_size += file.get_length()
+			
+			file_name = dir.get_next()
+			
+	return total_size
